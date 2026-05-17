@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemistry Library</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('chemTheme')||'light'}catch(e){document.documentElement.dataset.theme='light'}</script>
+<style>
+:root{--bg:#f8f6f0;--paper:#fffdf7;--surface:#f3f0e8;--border:#ded8ca;--accent:#7c3aed;--pink:#db2777;--teal:#0f766e;--amber:#f59e0b;--text:#171717;--muted:#57534e;--shadow:0 18px 42px rgba(68,64,60,.12);--body-bg:#f8f6f0;--header-bg:#fffdf7}
+[data-theme="dark"]{--bg:#000;--paper:#101010;--surface:#171717;--border:#2c2c2c;--accent:#a78bfa;--pink:#f472b6;--teal:#5eead4;--amber:#fbbf24;--text:#f5f5f5;--muted:#c7c7c7;--shadow:0 24px 60px rgba(0,0,0,.5);--body-bg:#000;--header-bg:#0b0b0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:var(--body-bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body *{color:var(--text)}
+header{height:68px;background:var(--header-bg);border-bottom:1px solid var(--border);box-shadow:var(--shadow);padding:0 1.1rem;display:flex;align-items:center;gap:.75rem}
+.logo{display:flex;align-items:center;font-weight:850;font-size:1.08rem;color:var(--text)}
+.logo::before{content:"▣";display:grid;place-items:center;width:2.1rem;height:2.1rem;margin-right:.65rem;border-radius:10px;background:var(--surface);color:var(--accent);box-shadow:inset 0 0 0 1px var(--border)}
+.logo span{color:var(--muted);font-weight:800;font-size:.62rem;margin-left:.55rem;letter-spacing:.08em;font-family:monospace;text-transform:uppercase}
+.theme-toggle{margin-left:auto;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:.48rem .76rem;font:800 .78rem Inter,system-ui,sans-serif;cursor:pointer}
+.theme-toggle:hover{background:var(--paper)}
+main{padding:1rem}
+.panel{border:1px solid var(--border);border-radius:18px;background:var(--paper);box-shadow:var(--shadow);overflow:hidden}
+.head{padding:1.35rem;border-bottom:1px solid var(--border);background:var(--paper)}
+.kicker{font-family:monospace;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--pink);margin-bottom:.2rem}
+h1{font-size:1.55rem;line-height:1.1;color:var(--text)}
+.head p{color:var(--text);font-size:.92rem;margin-top:.35rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:0}
+.folder{display:block;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--paper);text-decoration:none;color:inherit;padding:1rem;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;min-height:128px;position:relative;overflow:hidden}
+.folder::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 20%,rgba(219,39,119,.16),transparent 35%),radial-gradient(circle at 90% 15%,rgba(15,118,110,.14),transparent 34%);opacity:0;transition:.18s}
+.folder::after{content:"";position:absolute;inset:auto 0 0 0;height:4px;background:linear-gradient(90deg,var(--accent),var(--pink),var(--amber),var(--teal));opacity:.18;transition:.18s}
+.folder:hover{background:var(--surface);transform:translateY(-5px) scale(1.012);box-shadow:var(--shadow);z-index:2}
+.folder:hover::before{opacity:1}
+.folder:hover::after{height:7px;opacity:.95}
+.folder.empty{opacity:.78}
+.icon{display:grid;place-items:center;width:4.25rem;height:4.25rem;border-radius:18px;background:var(--surface);border:1px solid var(--border);color:var(--accent);font-size:2.35rem;margin-bottom:.95rem;box-shadow:0 14px 30px rgba(124,58,237,.12);transition:transform .18s ease,box-shadow .18s ease}
+.folder:hover .icon{transform:translateY(-3px) scale(1.1) rotate(-3deg);box-shadow:0 20px 38px rgba(219,39,119,.18)}
+h2{font-size:1rem;color:var(--text);margin-bottom:.25rem}
+.folder p{font-size:.82rem;color:var(--text)}
+.status{display:inline-block;margin-top:.8rem;font-family:monospace;font-size:.62rem;font-weight:800;color:var(--pink);text-transform:uppercase;letter-spacing:.08em;transition:.18s}
+.folder:hover .status{color:var(--accent);letter-spacing:.13em}
+.icon,.theme-toggle{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important}
+[data-theme="dark"] .icon,[data-theme="dark"] .theme-toggle{background:#171717!important;border-color:#3a3a3a!important;color:#fff!important}
+</style>
+</head>
+<body>
+<header><div class="logo">Chemistry Library <span>By Subrat Biswas</span></div><button class="theme-toggle" id="themeToggle" type="button">Dark</button></header>
+<main>
+  <section class="panel">
+    <div class="head">
+      <div class="kicker">File Manager</div>
+      <h1>Chemistry Subjects</h1>
+      <p>Open a subject folder to view chapters and topic previews.</p>
+    </div>
+    <div class="grid">
+      <a class="folder" href="Organic%20Chemistry/index.html"><span class="icon">📁</span><h2>Organic Chemistry</h2><p>Virtual textbook index with internal preview reader.</p><span class="status">Open</span></a>
+      <a class="folder empty" href="Analytical%20Chemistry/index.html"><span class="icon">📁</span><h2>Analytical Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></a>
+      <a class="folder empty" href="Medicinal%20Chemistry/index.html"><span class="icon">📁</span><h2>Medicinal Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></a>
+      <a class="folder empty" href="Spectroscopy/index.html"><span class="icon">📁</span><h2>Spectroscopy</h2><p>Folder prepared for future spectra and references.</p><span class="status">Coming Soon</span></a>
+      <a class="folder empty" href="Physical%20Chemistry/index.html"><span class="icon">📁</span><h2>Physical Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></a>
+      <a class="folder empty" href="Inorganic%20Chemistry/index.html"><span class="icon">📁</span><h2>Inorganic Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></a>
+    </div>
+  </section>
+</main>
+<script>
+const root=document.documentElement;
+const toggle=document.getElementById('themeToggle');
+function saveTheme(mode){try{localStorage.setItem('chemTheme',mode)}catch(e){}}
+function setTheme(mode){root.dataset.theme=mode;saveTheme(mode);toggle.textContent=mode==='dark'?'Light':'Dark';}
+setTheme(root.dataset.theme||'light');
+toggle.addEventListener('click',()=>setTheme(root.dataset.theme==='dark'?'light':'dark'));
+</script>
+</body>
+</html>
