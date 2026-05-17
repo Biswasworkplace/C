@@ -55,14 +55,14 @@ aside::-webkit-scrollbar{width:8px;} aside::-webkit-scrollbar-thumb{background:#
 .nc.active{background:linear-gradient(90deg,#ede9fe,#fce7f3);border-color:#c4b5fd;color:var(--accent);}
 .nnum{display:grid;place-items:center;min-width:1.55rem;height:1.35rem;border-radius:6px;background:#fff;border:1px solid #ddd6fe;color:var(--pink);font-family:'IBM Plex Mono',monospace;font-size:.6rem;font-weight:800;flex-shrink:0;}
 .nd{width:auto!important;height:auto!important;border-radius:0!important;flex-shrink:0;background:transparent!important;}
-.nd::before{content:'📁';font-size:1rem;}
+.nd::before{content:'📁';font-size:1.45rem;line-height:1;}
 .ch{order:-1;margin-left:0;font-size:.58rem;color:var(--text-dimmer);transition:transform .2s;}
 .nc.active .ch{transform:rotate(90deg);}
 .ns{display:none;padding:.15rem 0 .45rem;}
 .ns.open{display:block;}
 .ni{display:block;margin:.04rem 0;padding:.34rem .45rem .34rem 2.65rem;font-size:.8rem;font-weight:600;color:var(--text-dim);cursor:pointer;transition:.15s;text-decoration:none;border-radius:7px;line-height:1.35;position:relative;}
 .ni::before{content:'└';position:absolute;left:1.65rem;color:#cbd5e1;}
-.ni::after{content:'📂';position:absolute;left:2.02rem;top:.31rem;font-size:.82rem;}
+.ni::after{content:'📂';position:absolute;left:1.92rem;top:.18rem;font-size:1.15rem;}
 .ni:hover{color:#0f172a;background:#fdf2f8;transform:translateX(4px);}
 main{overflow-y:auto;min-width:0;}
 .workspace-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1rem 1rem 0;border:1px solid rgba(255,255,255,.72);border-radius:14px;background:linear-gradient(90deg,#fff,#ecfeff);padding:.62rem .75rem;box-shadow:0 12px 28px rgba(88,28,135,.08);}
@@ -75,6 +75,20 @@ main{overflow-y:auto;min-width:0;}
 .empty-state.visible{display:block;}
 .empty-state h1{font-size:1.6rem;margin-bottom:.4rem;color:var(--text);}
 .empty-state p{color:var(--text);font-size:.95rem;}
+.category-home{display:none;margin:1rem;border:1px solid var(--border);border-radius:14px;background:var(--paper);box-shadow:var(--shadow);overflow:hidden;}
+.category-home.visible{display:block;}
+.category-home-head{padding:1rem 1.1rem;border-bottom:1px solid var(--border);background:var(--paper);}
+.category-home-head h1{font-size:1.35rem;margin-bottom:.25rem;color:var(--text);}
+.category-home-head p{font-size:.92rem;color:var(--text);}
+.category-grid{display:grid;grid-template-columns:1fr;gap:0;}
+.category-tile{border:0;border-bottom:1px solid var(--border);background:var(--paper);padding:.8rem 1rem;text-align:left;cursor:pointer;min-height:78px;transition:transform .16s ease,box-shadow .16s ease,background .16s ease;position:relative;display:grid;grid-template-columns:4.5rem 1fr auto;align-items:center;gap:.9rem;overflow:hidden;}
+.category-tile::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--cc,var(--accent));opacity:.7;transition:.16s;}
+.category-tile:hover{background:var(--surface);transform:translateX(5px);box-shadow:inset 5px 0 0 var(--cc,var(--accent));z-index:2;}
+.category-tile:hover::after{opacity:1;width:8px;}
+.category-icon{display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:14px;background:var(--surface);border:1px solid var(--border);font-size:2.2rem;box-shadow:0 10px 22px rgba(0,0,0,.1);}
+.category-tile h2{font-size:1rem;line-height:1.2;margin-bottom:.18rem;color:var(--text);}
+.category-tile p{font-size:.78rem;color:var(--text);}
+.category-tile p::after{content:"  ›";font-size:1.2rem;font-weight:900;margin-left:.5rem;}
 .hero{position:relative;margin:1rem;border:1px solid rgba(255,255,255,.72);border-radius:16px;padding:clamp(1.4rem,4vw,2.4rem);background:linear-gradient(135deg,#fff,#faf5ff 42%,#fff7ed);box-shadow:var(--shadow);overflow:hidden;}
 .hero::after{content:'Index';position:absolute;right:clamp(1rem,6vw,4rem);top:.8rem;font-size:clamp(3rem,10vw,7rem);font-weight:900;color:rgba(219,39,119,.07);line-height:1;pointer-events:none;}
 .htag{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.65rem;font-weight:700;}
@@ -106,11 +120,11 @@ main{overflow-y:auto;min-width:0;}
 .ss .tg{display:none;}
 .ss.open .tg{display:grid;}
 .tc{background:#fff;border:0;border-bottom:1px solid var(--border);border-radius:0;padding:.66rem 1rem;text-decoration:none;display:block;position:relative;overflow:hidden;transition:background .16s ease,transform .16s ease,box-shadow .16s ease;}
-.tc::before{content:'📄';position:absolute;left:1rem;top:50%;transform:translateY(-50%);opacity:.75;}
+.tc::before{content:'📄';position:absolute;left:.85rem;top:50%;transform:translateY(-50%);opacity:.9;font-size:1.28rem;}
 .tc:hover{background:#faf5ff;transform:translateX(4px);box-shadow:inset 4px 0 0 var(--pink);}
 .tc:hover::before{opacity:1;}
 .tc.active{background:#ede9fe;}
-.tn{font-size:.94rem;font-weight:600;color:#1e293b;line-height:1.35;display:flex;align-items:center;gap:.55rem;padding-left:1.75rem;}
+.tn{font-size:.94rem;font-weight:600;color:#1e293b;line-height:1.35;display:flex;align-items:center;gap:.55rem;padding-left:2rem;}
 .ei{color:var(--text-dimmer);font-size:.75rem;margin-left:auto;flex-shrink:0;opacity:.55;transition:.13s;}
 .tc:hover .ei{opacity:1;color:var(--accent);}
 #sr{margin:1rem;padding:0;border:1px solid var(--border);border-radius:12px;background:var(--paper);box-shadow:0 10px 30px rgba(15,23,42,.05);display:none;overflow:hidden;}
@@ -230,6 +244,13 @@ body *{color:var(--text)!important;}
   <div id="emptyState" class="empty-state visible">
     <h1>Please choose topic from index</h1>
     <p>Select a folder from the left index to view its topics.</p>
+  </div>
+  <div id="categoryHome" class="category-home">
+    <div class="category-home-head">
+      <h1>Organic Chemistry Index</h1>
+      <p>Choose a folder to view its subfolders and topic pages.</p>
+    </div>
+    <div id="categoryGrid" class="category-grid"></div>
   </div>
   <div class="hero" id="hero">
     <div class="htag">● By Subrat Biswas</div>
@@ -945,7 +966,7 @@ const cats=[
 ];
 
 // BUILD
-const sb=document.getElementById('sb'),sw=document.getElementById('sw'),sr=document.getElementById('sr'),qp=document.getElementById('qp'),si=document.getElementById('si'),emptyState=document.getElementById('emptyState'),workspaceBar=document.querySelector('.workspace-bar');
+const sb=document.getElementById('sb'),sw=document.getElementById('sw'),sr=document.getElementById('sr'),qp=document.getElementById('qp'),si=document.getElementById('si'),emptyState=document.getElementById('emptyState'),categoryHome=document.getElementById('categoryHome'),categoryGrid=document.getElementById('categoryGrid'),workspaceBar=document.querySelector('.workspace-bar');
 const viewer=document.getElementById('viewer'),viewerFrame=document.getElementById('viewerFrame'),viewerTitle=document.getElementById('viewerTitle'),viewerClose=document.getElementById('viewerClose');
 const library=document.getElementById('library'),organicApp=document.getElementById('organicApp'),openOrganic=document.getElementById('openOrganic'),backLibrary=document.getElementById('backLibrary');
 const themeToggle=document.getElementById('themeToggle');
@@ -978,8 +999,13 @@ cats.forEach((cat,ci)=>{
   pill.addEventListener('click',()=>{showSec(ci);document.querySelectorAll('.nc')[ci].click();});
   qp.appendChild(pill);
 
-  const s2=document.createElement('div');s2.className='sc';s2.id=`sec-${ci}`;
+  const tile=document.createElement('button');tile.className='category-tile';tile.type='button';tile.style.setProperty('--cc',cat.c);
   const cnt=cat.ss.reduce((a,s)=>a+s.tp.length,0);
+  tile.innerHTML=`<span class="category-icon">📁</span><div><h2>${cat.t}</h2><p>${cat.ss.length} folders · ${cnt} pages</p></div>`;
+  tile.addEventListener('click',()=>{showSec(ci);document.querySelectorAll('.nc')[ci].click();});
+  categoryGrid.appendChild(tile);
+
+  const s2=document.createElement('div');s2.className='sc';s2.id=`sec-${ci}`;
   s2.innerHTML=`<div class="sh"><span class="sn">§${String(ci+1).padStart(2,'0')}</span><span class="si2">${cat.i}</span><h2 class="st" style="color:${cat.c}">${cat.t}</h2><span class="sct">${cnt} topics</span></div>`;
   cat.ss.forEach((ss,si2)=>{
     const sd=document.createElement('div');sd.className='ss';sd.id=`ss-${ci}-${si2}`;
@@ -1002,6 +1028,7 @@ showAll();
 function showSec(ci){
   closeViewer();
   emptyState.classList.remove('visible');
+  categoryHome.classList.remove('visible');
   sw.style.display='';
   sw.classList.remove('all-v');
   document.querySelectorAll('.sc').forEach(s=>s.classList.remove('visible'));
@@ -1020,7 +1047,8 @@ function showAll(){
   sw.style.display='none';
   sr.classList.remove('visible');sr.style.display='none';
   document.getElementById('hero').style.display='none';
-  emptyState.classList.add('visible');
+  emptyState.classList.remove('visible');
+  categoryHome.classList.add('visible');
   cur=null;
 }
 
@@ -1041,6 +1069,7 @@ si.addEventListener('input',()=>{
   const q=si.value.trim().toLowerCase();
   if(!q){sr.classList.remove('visible');sr.style.display='none';if(cur!==null){document.getElementById(`sec-${cur}`).classList.add('visible');}else showAll();return;}
   emptyState.classList.remove('visible');
+  categoryHome.classList.remove('visible');
   sw.style.display='';
   sw.classList.remove('all-v');document.querySelectorAll('.sc').forEach(s=>s.classList.remove('visible'));
   document.getElementById('hero').style.display='none';
@@ -1067,6 +1096,7 @@ function openTopic(title,url,card){
   viewerTitle.textContent=title;
   viewerFrame.src=url;
   emptyState.classList.remove('visible');
+  categoryHome.classList.remove('visible');
   sw.style.display='none';
   sr.style.display='none';
   sr.classList.remove('visible');
