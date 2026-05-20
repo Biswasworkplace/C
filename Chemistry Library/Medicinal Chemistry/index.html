@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medicinal Chemistry Library</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('chemTheme')||'light'}catch(e){document.documentElement.dataset.theme='light'}</script>
+<style>
+:root{--bg:#f8f6f0;--paper:#fffdf7;--surface:#f3f0e8;--surface2:#ebe5d9;--border:#ded8ca;--accent:#7c3aed;--pink:#db2777;--teal:#0f766e;--amber:#f59e0b;--text:#171717;--muted:#57534e;--shadow:0 18px 42px rgba(68,64,60,.12);--header-bg:#fffdf7}
+[data-theme="dark"]{--bg:#000;--paper:#101010;--surface:#171717;--surface2:#202020;--border:#2c2c2c;--accent:#a78bfa;--pink:#f472b6;--teal:#5eead4;--amber:#fbbf24;--text:#f5f5f5;--muted:#c7c7c7;--shadow:0 24px 60px rgba(0,0,0,.5);--header-bg:#0b0b0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body *{color:var(--text)}
+header{position:sticky;top:0;z-index:10;min-height:68px;background:var(--header-bg);border-bottom:1px solid var(--border);box-shadow:var(--shadow);padding:.8rem 1rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.brand{font-weight:900;font-size:1.05rem}.brand span{display:block;color:var(--muted);font-family:monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;margin-top:.12rem}
+.search{flex:1;min-width:220px;max-width:560px}.search input{width:100%;border:1px solid var(--border);background:var(--surface);border-radius:10px;padding:.62rem .85rem;color:var(--text);font:700 .9rem Inter,system-ui,sans-serif;outline:none}
+.theme-toggle,.back-link{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:.48rem .76rem;font:800 .78rem Inter,system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.layout{display:block;min-height:calc(100vh - 68px)}
+aside{display:none}
+main{min-width:0;padding:1rem}
+.folder{border:1px solid var(--border);background:var(--paper);border-radius:10px;margin-bottom:.55rem;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.05)}
+.folder-btn,.chapter-btn,.topic-btn{width:100%;border:0;background:transparent;text-align:left;cursor:pointer;font-family:inherit}
+.folder-btn{display:flex;align-items:center;gap:.55rem;padding:.78rem .82rem;font-weight:900;font-size:.86rem}
+.folder-btn:hover,.chapter-btn:hover,.topic-btn:hover{background:var(--surface2)}
+.folder-num{display:grid;place-items:center;min-width:2.1rem;height:1.55rem;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--pink);font-family:monospace;font-size:.68rem}
+.folder-title{flex:1}.folder-count{color:var(--muted);font-size:.72rem}
+.chapters{display:none;border-top:1px solid var(--border);background:var(--paper)}.folder.open .chapters{display:block}
+.chapter{border-bottom:1px solid var(--border)}.chapter:last-child{border-bottom:0}
+.chapter-btn{display:flex;gap:.55rem;align-items:center;padding:.62rem .8rem;font-weight:800;font-size:.8rem}
+.chapter-no{min-width:2.2rem;color:var(--accent);font-family:monospace;font-size:.68rem}.chapter-title{flex:1}.topic-count{color:var(--muted);font-size:.68rem}
+.topics{display:none;background:var(--surface);padding:.35rem}.chapter.open .topics{display:grid;gap:.25rem}
+.topic-btn{padding:.5rem .65rem .5rem 2.15rem;border-radius:8px;font-size:.78rem;font-weight:700;color:var(--muted);position:relative}
+.topic-btn::before{content:"";position:absolute;left:1rem;top:.82rem;width:.38rem;height:.38rem;border-radius:50%;background:var(--teal)}
+.topic-btn.active{background:var(--paper);color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
+.panel{background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.hero{padding:1.2rem 1.25rem;border-bottom:1px solid var(--border);background:linear-gradient(135deg,var(--paper),var(--surface))}
+.kicker{font-family:monospace;font-size:.68rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);margin-bottom:.25rem}
+h1{font-size:1.55rem;line-height:1.12}.hero p{color:var(--muted);font-size:.92rem;margin-top:.35rem}
+.content{padding:1.15rem 1.25rem;line-height:1.7}.content h2{font-size:1.25rem;margin-bottom:.2rem}.content h3{font-size:.95rem;margin:1rem 0 .35rem;color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.8rem 0}.chip{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:.32rem .55rem;font-size:.74rem;font-weight:800;color:var(--muted)}
+.note-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.75rem;margin:.85rem 0}.note{border:1px solid var(--border);background:var(--surface);border-radius:10px;padding:.8rem}.note strong{display:block;margin-bottom:.25rem}
+.pathbar{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:0 0 1rem;padding:.65rem .75rem;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-family:monospace;font-size:.78rem;font-weight:800;color:var(--muted)}
+.pathbar button{border:1px solid var(--border);background:var(--paper);border-radius:8px;padding:.35rem .55rem;font:800 .75rem Inter,system-ui,sans-serif;cursor:pointer}
+.explorer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.75rem}
+.folder-card,.file-card{border:1px solid var(--border);background:var(--paper);border-radius:12px;min-height:132px;padding:.9rem;text-align:left;cursor:pointer;box-shadow:0 12px 26px rgba(0,0,0,.06);transition:transform .16s,box-shadow .16s,background .16s;border-left:5px solid var(--accent);font-family:inherit}
+.folder-card:hover,.file-card:hover{background:var(--surface);transform:translateY(-4px);box-shadow:var(--shadow)}
+.folder-card.chapter{border-left-color:var(--teal)}
+.file-card{border-left-color:var(--pink)}
+.folder-icon,.file-icon{display:grid;place-items:center;width:3.2rem;height:3.2rem;border-radius:12px;background:var(--surface);border:1px solid var(--border);font-size:1.6rem;margin-bottom:.7rem}
+.folder-card h2,.file-card h2{font-size:.95rem;line-height:1.22;margin-bottom:.25rem}
+.folder-card p,.file-card p{font-size:.78rem;color:var(--muted);line-height:1.35}
+.folder-card .meta,.file-card .meta{display:inline-block;margin-top:.7rem;font-family:monospace;font-size:.66rem;font-weight:900;color:var(--pink);letter-spacing:.06em;text-transform:uppercase}
+ul{padding-left:1.1rem;margin:.45rem 0}li{margin:.25rem 0}.empty{padding:2rem;text-align:center;color:var(--muted)}
+mark{background:#fef3c7;color:#111827;border-radius:3px;padding:0 .08rem}
+@media(max-width:860px){main{padding:.75rem}.explorer-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}.folder-card,.file-card{min-height:120px}}
+</style>
+</head>
+<body>
+<header>
+  <a class="back-link" href="../index.html">Back</a>
+  <div class="brand">Medicinal Chemistry <span>Folders, subfolders and topic notes</span></div>
+  <div class="search"><input id="search" type="search" placeholder="Search chapter or topic..."></div>
+  <button class="theme-toggle" id="themeToggle" type="button">Dark</button>
+</header>
+<div class="layout">
+  <aside id="tree" aria-label="Medicinal chemistry folder index"></aside>
+  <main>
+    <section class="panel">
+      <div class="hero">
+        <div class="kicker" id="crumb">Medicinal Chemistry Library</div>
+        <h1 id="title">Select a folder, subfolder, or topic</h1>
+        <p id="summary">Parts behave like folders, chapters behave like subfolders, and topics open detailed notes in this reader.</p>
+      </div>
+      <div class="content" id="content"></div>
+    </section>
+  </main>
+</div>
+<script>
+const data=[
+  {part:"Part I",title:"Introduction to Medicinal Chemistry",chapters:[{num:"1",title:"Fundamentals of Medicinal Chemistry",subs:["Definition and Scope","History and Development of Drugs","Drug Discovery Process","Lead Identification and Optimization","Pharmacodynamics and Pharmacokinetics","Structure-Activity Relationship (SAR)","Pharmacophore Concept","Drug Metabolism and Biotransformation","Prodrugs and Soft Drugs","Drug Design Approaches"]}]},
+  {part:"Part II",title:"Autonomic Nervous System Drugs",chapters:[{num:"2",title:"Cholinergic Drugs",subs:["Cholinergic Agonists","Anticholinesterase Agents","Cholinergic Blocking Agents","Neuromuscular Blocking Agents"]},{num:"3",title:"Adrenergic Drugs",subs:["Adrenergic Agonists","Alpha Blockers","Beta Blockers","Adrenergic Neuron Blocking Agents"]}]},
+  {part:"Part III",title:"Central Nervous System Drugs",chapters:[{num:"4",title:"Sedatives and Hypnotics",subs:["Barbiturates","Benzodiazepines","Non-Benzodiazepine Hypnotics"]},{num:"5",title:"Antipsychotic Drugs",subs:["Typical Antipsychotics","Atypical Antipsychotics"]},{num:"6",title:"Antidepressants",subs:["Tricyclic Antidepressants","SSRIs","SNRIs","MAO Inhibitors","Atypical Antidepressants"]},{num:"7",title:"Antiepileptic Drugs",subs:["Sodium Channel Blockers","GABA Enhancers","Calcium Channel Modulators"]},{num:"8",title:"Opioid Analgesics",subs:["Natural Opioids","Semisynthetic Opioids","Synthetic Opioids","Opioid Antagonists"]},{num:"9",title:"Non-Opioid Analgesics",subs:["NSAIDs","COX-2 Inhibitors","Antipyretics"]},{num:"10",title:"General and Local Anesthetics",subs:["Inhalational Anesthetics","Intravenous Anesthetics","Ester Local Anesthetics","Amide Local Anesthetics"]},{num:"11",title:"Anti-Parkinsonian Drugs",subs:["Dopamine Precursors","Dopamine Agonists","MAO-B Inhibitors","COMT Inhibitors"]},{num:"12",title:"Anti-Alzheimer Drugs",subs:["Cholinesterase Inhibitors","NMDA Receptor Antagonists"]}]},
+  {part:"Part IV",title:"Cardiovascular Drugs",chapters:[{num:"13",title:"Antihypertensive Drugs",subs:["ACE Inhibitors","ARBs","Calcium Channel Blockers","Diuretics","Beta Blockers","Vasodilators"]},{num:"14",title:"Antianginal Drugs",subs:["Organic Nitrates","Calcium Channel Blockers","Potassium Channel Activators"]},{num:"15",title:"Antiarrhythmic Drugs",subs:["Sodium Channel Blockers","Beta Blockers","Potassium Channel Blockers","Calcium Channel Blockers"]},{num:"16",title:"Antihyperlipidemic Drugs",subs:["Statins","Fibrates","Bile Acid Sequestrants","Cholesterol Absorption Inhibitors"]},{num:"17",title:"Anticoagulants and Antiplatelet Drugs",subs:["Heparins","Vitamin K Antagonists","Direct Oral Anticoagulants","Antiplatelet Agents","Thrombolytics"]},{num:"18",title:"Congestive Heart Failure Drugs",subs:["Cardiac Glycosides","Inotropes","ARNI Drugs"]}]},
+  {part:"Part V",title:"Endocrine System Drugs",chapters:[{num:"19",title:"Antidiabetic Drugs",subs:["Insulin Preparations","Sulfonylureas","Biguanides","DPP-4 Inhibitors","GLP-1 Agonists","SGLT2 Inhibitors"]},{num:"20",title:"Thyroid and Antithyroid Drugs",subs:["Thyroid Hormones","Thioamides","Iodine Preparations"]},{num:"21",title:"Steroidal Drugs",subs:["Corticosteroids","Androgens","Estrogens","Progestins","Anabolic Steroids"]},{num:"22",title:"Oral Contraceptives",subs:["Combined Pills","Progesterone-Only Pills","Emergency Contraceptives"]}]},
+  {part:"Part VI",title:"Respiratory System Drugs",chapters:[{num:"23",title:"Antiasthmatic Drugs",subs:["Beta-2 Agonists","Corticosteroids","Leukotriene Antagonists","Methylxanthines"]},{num:"24",title:"Antitussives and Expectorants",subs:["Opioid Antitussives","Non-Opioid Antitussives","Mucolytics","Expectorants"]},{num:"25",title:"Antihistamines",subs:["First Generation Antihistamines","Second Generation Antihistamines"]}]},
+  {part:"Part VII",title:"Gastrointestinal Drugs",chapters:[{num:"26",title:"Antiulcer Drugs",subs:["Proton Pump Inhibitors","H2 Receptor Blockers","Antacids","Cytoprotective Agents"]},{num:"27",title:"Antiemetic Drugs",subs:["Dopamine Antagonists","5-HT3 Antagonists","NK1 Antagonists"]},{num:"28",title:"Laxatives and Antidiarrheal Drugs",subs:["Bulk Forming Agents","Osmotic Laxatives","Stimulant Laxatives","Antimotility Agents"]}]},
+  {part:"Part VIII",title:"Anti-Infective Agents",chapters:[{num:"29",title:"Antibacterial Drugs",subs:["Beta-Lactam Antibiotics","Aminoglycosides","Tetracyclines","Macrolides","Fluoroquinolones","Sulfonamides","Glycopeptides"]},{num:"30",title:"Antitubercular Drugs",subs:["First-Line Drugs","Second-Line Drugs"]},{num:"31",title:"Antileprotic Drugs",subs:[]},{num:"32",title:"Antifungal Drugs",subs:["Polyenes","Azoles","Echinocandins"]},{num:"33",title:"Antiviral Drugs",subs:["Anti-HIV Drugs","Anti-Herpes Drugs","Anti-Influenza Drugs","Anti-Hepatitis Drugs"]},{num:"34",title:"Antimalarial Drugs",subs:["Quinoline Derivatives","Artemisinin Derivatives"]},{num:"35",title:"Antiamoebic and Antiprotozoal Drugs",subs:[]},{num:"36",title:"Anthelmintic Drugs",subs:[]}]},
+  {part:"Part IX",title:"Anticancer and Immunological Drugs",chapters:[{num:"37",title:"Anticancer Drugs",subs:["Alkylating Agents","Antimetabolites","Natural Product Anticancer Drugs","Hormonal Anticancer Drugs","Targeted Anticancer Therapy","Monoclonal Antibodies","Immunotherapy"]},{num:"38",title:"Immunosuppressants",subs:["Calcineurin Inhibitors","mTOR Inhibitors","Cytotoxic Immunosuppressants"]},{num:"39",title:"Immunostimulants and Vaccines",subs:[]}]},
+  {part:"Part X",title:"Chemotherapeutic Agents",chapters:[{num:"40",title:"Antiseptics and Disinfectants",subs:[]},{num:"41",title:"Chelating Agents",subs:[]},{num:"42",title:"Diagnostic Agents and Contrast Media",subs:[]}]},
+  {part:"Part XI",title:"Vitamins and Nutritional Agents",chapters:[{num:"43",title:"Vitamins",subs:["Fat Soluble Vitamins","Water Soluble Vitamins"]},{num:"44",title:"Hematinics",subs:["Iron Preparations","Folic Acid","Vitamin B12"]},{num:"45",title:"Electrolyte and Fluid Replacement Therapy",subs:[]}]},
+  {part:"Part XII",title:"Advanced and Modern Therapeutics",chapters:[{num:"46",title:"Biotechnology Derived Drugs",subs:["Recombinant Proteins","Monoclonal Antibodies","Gene Therapy"]},{num:"47",title:"Peptide and Protein Drugs",subs:[]},{num:"48",title:"Nanomedicine and Targeted Drug Delivery",subs:[]},{num:"49",title:"Personalized Medicine and Pharmacogenomics",subs:[]},{num:"50",title:"Recent Advances in Medicinal Chemistry",subs:["AI in Drug Design","PROTACs","CRISPR Therapeutics","RNA-Based Drugs","Antibody Drug Conjugates (ADCs)"]}]}
+];
+const tree=document.getElementById('tree'),content=document.getElementById('content'),title=document.getElementById('title'),summary=document.getElementById('summary'),crumb=document.getElementById('crumb'),search=document.getElementById('search');
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+function topics(ch){return ch.subs.length?ch.subs:["Overview","Classification","SAR and pharmacophore","Mechanism of action","Therapeutic uses","Adverse effects"];}
+function countTopics(part){return part.chapters.reduce((n,ch)=>n+topics(ch).length,0)}
+function setPath(items){
+  return `<div class="pathbar"><button type="button" onclick="showHome()">Medicinal Chemistry</button>${items.map(item=>`<span>/</span><button type="button" onclick="${item.action}">${esc(item.label)}</button>`).join('')}</div>`;
+}
+function folderCard(label,meta,kind,action){
+  return `<button class="folder-card ${kind||''}" type="button" onclick="${action}"><span class="folder-icon">📁</span><h2>${esc(label)}</h2><p>${esc(meta)}</p><span class="meta">Open folder</span></button>`;
+}
+function fileCard(label,meta,action){
+  return `<button class="file-card" type="button" onclick="${action}"><span class="file-icon">📄</span><h2>${esc(label)}</h2><p>${esc(meta)}</p><span class="meta">Open topic</span></button>`;
+}
+function showHome(){
+  crumb.textContent='Medicinal Chemistry Library';
+  title.textContent='Medicinal Chemistry Folders';
+  summary.textContent='Open a part folder to see chapter subfolders, then open a chapter to see topic files.';
+  content.innerHTML=setPath([])+`<div class="explorer-grid">${data.map((part,pi)=>folderCard(part.title,`${part.part} · ${part.chapters.length} subfolders · ${countTopics(part)} topic files`,'',`showPartByIndex(${pi})`)).join('')}</div>`;
+}
+function showPartByIndex(pi){showPart(data[pi],pi)}
+function showChapterByIndex(pi,ci){showChapter(data[pi],data[pi].chapters[ci],pi,ci)}
+function showTopicByIndex(pi,ci,ti){showTopic(data[pi],data[pi].chapters[ci],topics(data[pi].chapters[ci])[ti],pi,ci)}
+function showPart(part){
+  const pi=data.indexOf(part);
+  crumb.textContent=`Medicinal Chemistry / ${part.part}`;
+  title.textContent=part.title;
+  summary.textContent=`${part.chapters.length} chapter subfolders and ${countTopics(part)} topic files.`;
+  content.innerHTML=setPath([{label:part.title,action:`showPartByIndex(${pi})`}])+`<div class="explorer-grid">${part.chapters.map((ch,ci)=>folderCard(`Ch ${ch.num}. ${ch.title}`,`${topics(ch).length} topic files`,'chapter',`showChapterByIndex(${pi},${ci})`)).join('')}</div>`;
+}
+function showChapter(part,ch){
+  const pi=data.indexOf(part),ci=part.chapters.indexOf(ch);
+  crumb.textContent=`${part.part} / Chapter ${ch.num}`;
+  title.textContent=ch.title;
+  summary.textContent=`${topics(ch).length} topic files inside this subfolder.`;
+  content.innerHTML=setPath([{label:part.title,action:`showPartByIndex(${pi})`},{label:`Ch ${ch.num}`,action:`showChapterByIndex(${pi},${ci})`}])+`<div class="explorer-grid">${topics(ch).map((tp,ti)=>fileCard(tp,`${ch.title} · ${part.title}`,`showTopicByIndex(${pi},${ci},${ti})`)).join('')}</div>`;
+}
+function showTopic(part,ch,tp,pi=data.indexOf(part),ci=part.chapters.indexOf(ch)){
+  crumb.textContent=`${part.part} / Chapter ${ch.num} / Topic`;
+  title.textContent=tp;
+  summary.textContent=`${ch.title} - ${part.title}`;
+  content.innerHTML=setPath([{label:part.title,action:`showPartByIndex(${pi})`},{label:`Ch ${ch.num}`,action:`showChapterByIndex(${pi},${ci})`}])+notes(part,ch,tp);
+}
+function showSearch(q){
+  const needle=q.trim().toLowerCase();
+  crumb.textContent='Medicinal Chemistry / Search';
+  title.textContent=`Search results for "${q}"`;
+  summary.textContent='Matching folders, subfolders, and topic files.';
+  const cards=[];
+  data.forEach((part,pi)=>{
+    if(part.title.toLowerCase().includes(needle)||part.part.toLowerCase().includes(needle))cards.push(folderCard(part.title,`${part.part} · ${part.chapters.length} subfolders`,'',`showPartByIndex(${pi})`));
+    part.chapters.forEach((ch,ci)=>{
+      if(ch.title.toLowerCase().includes(needle))cards.push(folderCard(`Ch ${ch.num}. ${ch.title}`,`${part.title} · ${topics(ch).length} topic files`,'chapter',`showChapterByIndex(${pi},${ci})`));
+      topics(ch).forEach((tp,ti)=>{if(tp.toLowerCase().includes(needle))cards.push(fileCard(tp,`Ch ${ch.num}. ${ch.title}`,`showTopicByIndex(${pi},${ci},${ti})`));});
+    });
+  });
+  content.innerHTML=setPath([])+(cards.length?`<div class="explorer-grid">${cards.join('')}</div>`:'<div class="empty">No folder, subfolder, or topic file found.</div>');
+}
+function notes(part,ch,tp){
+  return `<h2>${esc(tp)}</h2>
+  <div class="chips"><span class="chip">${esc(part.title)}</span><span class="chip">Chapter ${esc(ch.num)}</span><span class="chip">${esc(ch.title)}</span></div>
+  <h3>Core idea</h3><p><strong>${esc(tp)}</strong> is studied by connecting chemical structure with pharmacological response. Focus on the functional groups, ionisation state, hydrogen bonding pattern, lipophilicity, metabolic soft spots, and the target interaction that explain activity.</p>
+  <div class="note-grid">
+    <div class="note"><strong>Classification</strong><p>Place the topic in its therapeutic class, receptor/enzyme target, and major chemical scaffold family.</p></div>
+    <div class="note"><strong>SAR</strong><p>Compare electron donating or withdrawing groups, steric bulk, pKa, logP, polarity, and bioisosteric replacements.</p></div>
+    <div class="note"><strong>ADME</strong><p>Check absorption, distribution, metabolism, elimination, protein binding, permeability, and likely metabolic pathways.</p></div>
+  </div>
+  <h3>Mechanism and therapeutic logic</h3><ul><li>Identify the biological target and whether the drug acts as agonist, antagonist, inhibitor, modulator, or replacement therapy.</li><li>Connect the pharmacophore to potency, selectivity, onset, duration, and side effects.</li><li>Watch for class-specific safety issues, contraindications, and drug interactions.</li></ul>
+  <h3>Exam points</h3><ul><li>Remember one prototype drug, one structural feature, and one major adverse effect for the class.</li><li>For SAR questions, explain why a substituent changes binding or ADME, not only that it changes activity.</li><li>For synthesis or process questions, note scalable functional groups, impurity risks, salt formation, and stability.</li></ul>`;
+}
+const root=document.documentElement,toggle=document.getElementById('themeToggle');
+function setTheme(mode){root.dataset.theme=mode;try{localStorage.setItem('chemTheme',mode)}catch(e){}toggle.textContent=mode==='dark'?'Light':'Dark'}
+setTheme(root.dataset.theme||'light');toggle.onclick=()=>setTheme(root.dataset.theme==='dark'?'light':'dark');
+search.addEventListener('input',()=>{const q=search.value.trim();q?showSearch(q):showHome();});
+showHome();
+</script>
+</body>
+</html>

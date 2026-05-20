@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharma Interview Preparation</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('biswas-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<style>
+:root{--bg:#07111f;--panel:#ffffff;--panel2:#edf7fb;--text:#06111f;--muted:#496477;--line:#8fb6c2;--accent:#005f73;--gold:#ffe66d;--green:#1d9e75;--shadow:0 18px 42px rgba(0,0,0,.18)}
+[data-theme="dark"]{--bg:#07111f;--panel:#0f2437;--panel2:#102a2f;--text:#ffffff;--muted:#d8edf5;--line:#8fb6c2;--accent:#56c7bd;--gold:#ffe66d;--green:#1d9e75}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{min-height:100vh;background:radial-gradient(circle at 8% 8%,rgba(86,199,189,.16),transparent 28rem),linear-gradient(135deg,#07111f,#0f2437 58%,#102a2f);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}
+.top{position:sticky;top:0;z-index:20;background:rgba(7,17,31,.9);backdrop-filter:blur(14px);border-bottom:1px solid rgba(143,182,194,.35);padding:.75rem 1rem}
+.top-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:.8rem;justify-content:space-between}
+.brand{font-weight:900;letter-spacing:.02em}.brand span{display:block;font-size:.68rem;color:var(--muted);font-family:monospace;text-transform:uppercase;letter-spacing:.1em}
+.nav{display:flex;gap:.45rem;overflow:auto}.nav a{white-space:nowrap;border:1px solid rgba(143,182,194,.42);border-radius:8px;padding:.42rem .65rem;font-size:.78rem;font-weight:800;color:var(--muted);background:rgba(255,255,255,.04)}.nav a:hover{color:var(--gold);border-color:var(--gold)}
+main{max-width:1240px;margin:0 auto;padding:1.2rem}
+.hero{padding:clamp(2rem,5vw,4rem) 0 1.5rem}
+.kicker{font-family:monospace;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);font-size:.72rem;font-weight:900;margin-bottom:.5rem}
+h1{font-size:clamp(2rem,5vw,4.2rem);line-height:1.05;margin-bottom:.75rem;font-weight:900}
+.hero p{max-width:820px;color:var(--muted);font-size:1.04rem}
+.dept-map{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.8rem;margin:1.3rem 0 2rem}
+.dept-link{display:block;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:.9rem;box-shadow:var(--shadow);transition:transform .18s,border-color .18s}
+.dept-link:hover{transform:translateY(-4px);border-color:var(--gold)}
+.dept-link strong{display:block;color:var(--accent);font-size:.93rem}.dept-link span{display:block;margin-top:.25rem;color:var(--muted);font-size:.76rem}
+.dept{border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:var(--shadow);overflow:hidden;margin:1rem 0 1.3rem}
+.dept-head{padding:1rem 1.1rem;background:linear-gradient(135deg,var(--accent),#0f6b7f);color:#fff;display:flex;align-items:flex-start;gap:.85rem}
+.dept-no{display:grid;place-items:center;min-width:2.35rem;height:2.1rem;border-radius:8px;background:var(--gold);color:#06111f;font-family:monospace;font-weight:900}
+.dept-title h2{font-size:1.25rem;line-height:1.2}.dept-title p{font-size:.86rem;opacity:.9;margin-top:.2rem;color:#fff}
+.qa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.75rem;padding:1rem}
+.qa-card{border:1px solid rgba(143,182,194,.55);border-radius:10px;background:linear-gradient(145deg,var(--panel),var(--panel2));padding:.9rem;transition:transform .16s,border-color .16s}
+.qa-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.qa-q{font-weight:900;color:var(--accent);font-size:.92rem;margin-bottom:.35rem}.qa-a{font-size:.88rem;color:var(--text)}
+.qa-index{display:inline-grid;place-items:center;min-width:2.25rem;height:1.55rem;margin-right:.45rem;border-radius:7px;background:var(--gold);color:#06111f;font-family:monospace;font-size:.72rem;font-weight:900}
+.tag-row{display:flex;flex-wrap:wrap;gap:.45rem;padding:0 1rem 1rem}.tag{border:1px solid var(--line);border-radius:999px;padding:.28rem .55rem;font-size:.72rem;font-weight:800;color:var(--muted);background:var(--panel2)}
+.dept-tools{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;padding:1rem 1rem 0}
+.dept-count{font-family:monospace;font-size:.74rem;font-weight:900;color:var(--gold);letter-spacing:.08em;text-transform:uppercase}
+.jump-row{display:flex;gap:.45rem;overflow:auto;padding:.75rem 0}.jump-row a{white-space:nowrap;border:1px solid rgba(143,182,194,.42);border-radius:999px;padding:.36rem .6rem;font-size:.74rem;font-weight:800;color:var(--muted);background:rgba(255,255,255,.04)}
+.jump-row a:hover{color:var(--gold);border-color:var(--gold)}
+.tip{border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;background:var(--panel);padding:1rem;margin:1rem 0 2rem;color:var(--text)}
+footer{text-align:center;color:var(--muted);font-size:.78rem;padding:1.4rem;border-top:1px solid rgba(143,182,194,.35)}
+@media(max-width:720px){.top-inner{align-items:flex-start;flex-direction:column}.nav{width:100%}.qa-grid{grid-template-columns:1fr;padding:.75rem}.dept-head{padding:.85rem}.dept-map{grid-template-columns:1fr 1fr}main{padding:.8rem}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="index.html">Shubh.Online <span>Pharma Interview Desk</span></a>
+    <nav class="nav" aria-label="Departments">
+      <a href="#chemical">Chemical Research</a><a href="#analytical">Analytical</a><a href="#regulatory">Regulatory</a><a href="#formulation">Formulation</a><a href="#qa">QA</a><a href="#production">Production</a><a href="#qc">QC</a><a href="#clinical">Clinical</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="hero">
+    <div class="kicker">Department-wise Interview Preparation</div>
+    <h1>Pharma Interview Questions by Department</h1>
+    <p>Use this page as a quick pharma interview map. Each department has practical questions, interview-ready answers, and focus areas a candidate should revise before R&D, plant, QA, QC, regulatory, formulation, clinical, or support-function interviews.</p>
+  </section>
+  <section class="dept-map" aria-label="Department map">
+    <a class="dept-link" href="#chemical"><strong>01 Chemical Research / API R&D</strong><span>Route design, synthesis, scale-up, impurities</span></a>
+    <a class="dept-link" href="#analytical"><strong>02 Analytical R&D</strong><span>HPLC, GC, validation, characterization</span></a>
+    <a class="dept-link" href="#regulatory"><strong>03 Regulatory Affairs</strong><span>DMF, ANDA, ICH, submissions</span></a>
+    <a class="dept-link" href="#formulation"><strong>04 Formulation R&D</strong><span>Dosage forms, excipients, stability</span></a>
+    <a class="dept-link" href="#qa"><strong>05 Quality Assurance</strong><span>GMP, deviation, CAPA, audits</span></a>
+    <a class="dept-link" href="#qc"><strong>06 Quality Control</strong><span>Testing, specifications, OOS/OOT</span></a>
+    <a class="dept-link" href="#production"><strong>07 Production / Manufacturing</strong><span>Batch process, equipment, yields</span></a>
+    <a class="dept-link" href="#tech-transfer"><strong>08 Technology Transfer</strong><span>Lab to plant, process package, validation</span></a>
+    <a class="dept-link" href="#ip"><strong>09 IP / Patent</strong><span>Patent search, non-infringing route</span></a>
+    <a class="dept-link" href="#clinical"><strong>10 Clinical / PV / Medical</strong><span>Trials, safety, pharmacovigilance</span></a>
+    <a class="dept-link" href="#packaging"><strong>11 Packaging / Supply Chain</strong><span>Primary pack, artwork, logistics</span></a>
+    <a class="dept-link" href="#ehs"><strong>12 EHS / Validation / Engineering</strong><span>Safety, cleaning, utilities, qualification</span></a>
+  </section>
+
+  <section class="dept" id="chemical"><div class="dept-head"><div class="dept-no">01</div><div class="dept-title"><h2>Chemical Research / API R&D</h2><p>For synthetic organic chemistry, route scouting, process development, and scale-up roles.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is route design in API R&D?</div><div class="qa-a">Selecting a practical, scalable, safe, cost-effective and non-infringing synthetic pathway to make the API with controlled quality.</div></div>
+    <div class="qa-card"><div class="qa-q">What do you check before scale-up?</div><div class="qa-a">Exotherm, mixing, addition rate, solvent load, impurity profile, isolation, drying, safety, yield, purity, and reproducibility.</div></div>
+    <div class="qa-card"><div class="qa-q">How do you control process impurities?</div><div class="qa-a">Identify source, understand formation pathway, optimize critical parameters, use purge studies, and set a control strategy.</div></div>
+    <div class="qa-card"><div class="qa-q">What is a non-infringing route?</div><div class="qa-a">A route designed after patent review that avoids protected intermediates, reagents, conditions, polymorphs, or claims.</div></div>
+  </div><div class="tag-row"><span class="tag">Route scouting</span><span class="tag">DoE</span><span class="tag">QbD</span><span class="tag">Impurity synthesis</span><span class="tag">Scale-up</span></div></section>
+
+  <section class="dept" id="analytical"><div class="dept-head"><div class="dept-no">02</div><div class="dept-title"><h2>Analytical R&D</h2><p>For method development, validation, characterization, and impurity profiling roles.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is analytical method validation?</div><div class="qa-a">Documented proof that a method is suitable for intended use, assessed by accuracy, precision, specificity, linearity, range, robustness, LOD and LOQ.</div></div>
+    <div class="qa-card"><div class="qa-q">HPLC vs GC?</div><div class="qa-a">HPLC suits non-volatile or thermally labile compounds; GC suits volatile, thermally stable compounds and residual solvents.</div></div>
+    <div class="qa-card"><div class="qa-q">What is system suitability?</div><div class="qa-a">Pre-run check that confirms the chromatographic system is performing properly using criteria like resolution, tailing, plates and %RSD.</div></div>
+    <div class="qa-card"><div class="qa-q">How is unknown impurity identified?</div><div class="qa-a">Use LC-MS, HRMS, NMR, forced degradation, isolation, synthesis of standard, and comparison by retention time and spectra.</div></div>
+  </div><div class="tag-row"><span class="tag">HPLC</span><span class="tag">GC</span><span class="tag">LC-MS</span><span class="tag">NMR</span><span class="tag">Validation</span></div></section>
+
+  <section class="dept" id="regulatory"><div class="dept-head"><div class="dept-no">03</div><div class="dept-title"><h2>Regulatory Affairs</h2><p>For dossier, DMF, ANDA/NDA, query response, and global submission roles.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is a DMF?</div><div class="qa-a">Drug Master File contains confidential CMC information about API manufacturing, controls, stability, specifications and quality systems.</div></div>
+    <div class="qa-card"><div class="qa-q">What are key ICH guidelines for API?</div><div class="qa-a">ICH Q7 for GMP, Q8/Q9/Q10/Q11 for development and quality, Q3A/Q3C/Q3D for impurities, M7 for mutagenic impurities.</div></div>
+    <div class="qa-card"><div class="qa-q">What is CTD format?</div><div class="qa-a">Common Technical Document format used for regulatory submissions, organized into modules for quality, nonclinical and clinical data.</div></div>
+    <div class="qa-card"><div class="qa-q">How do you answer regulatory queries?</div><div class="qa-a">Understand the deficiency, gather data, align with guideline, write clear justification, and provide supporting documents or commitments.</div></div>
+  </div><div class="tag-row"><span class="tag">DMF</span><span class="tag">ANDA</span><span class="tag">CTD</span><span class="tag">ICH</span><span class="tag">Query response</span></div></section>
+
+  <section class="dept" id="formulation"><div class="dept-head"><div class="dept-no">04</div><div class="dept-title"><h2>Formulation R&D</h2><p>For tablet, capsule, liquid, injectable, topical, and formulation development roles.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is preformulation?</div><div class="qa-a">Study of API properties such as solubility, pKa, polymorphism, hygroscopicity, particle size, stability and excipient compatibility.</div></div>
+    <div class="qa-card"><div class="qa-q">Role of excipients?</div><div class="qa-a">Excipients aid manufacturability, stability, dissolution, flow, compression, taste, preservation and drug release.</div></div>
+    <div class="qa-card"><div class="qa-q">What is dissolution testing?</div><div class="qa-a">In vitro test measuring drug release from dosage form under controlled medium, temperature and apparatus conditions.</div></div>
+    <div class="qa-card"><div class="qa-q">What is QbD in formulation?</div><div class="qa-a">Defining QTPP, CQAs, CMAs and CPPs, then using risk assessment and DoE to build robust formulation and process.</div></div>
+  </div><div class="tag-row"><span class="tag">Preformulation</span><span class="tag">Excipients</span><span class="tag">Dissolution</span><span class="tag">Stability</span><span class="tag">QbD</span></div></section>
+
+  <section class="dept" id="qa"><div class="dept-head"><div class="dept-no">05</div><div class="dept-title"><h2>Quality Assurance</h2><p>For GMP compliance, audits, deviation, CAPA, change control, and documentation roles.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is GMP?</div><div class="qa-a">Good Manufacturing Practice ensures medicines are consistently produced and controlled according to quality standards.</div></div>
+    <div class="qa-card"><div class="qa-q">Deviation vs CAPA?</div><div class="qa-a">Deviation is departure from approved procedure; CAPA is corrective and preventive action to fix root cause and prevent recurrence.</div></div>
+    <div class="qa-card"><div class="qa-q">What is change control?</div><div class="qa-a">Formal system to evaluate, approve, implement and document changes that may affect quality, validation or regulatory filing.</div></div>
+    <div class="qa-card"><div class="qa-q">What is data integrity?</div><div class="qa-a">Data must be attributable, legible, contemporaneous, original, accurate, complete, consistent, enduring and available.</div></div>
+  </div><div class="tag-row"><span class="tag">GMP</span><span class="tag">Deviation</span><span class="tag">CAPA</span><span class="tag">Audit</span><span class="tag">Data integrity</span></div></section>
+
+  <section class="dept" id="qc"><div class="dept-head"><div class="dept-no">06</div><div class="dept-title"><h2>Quality Control</h2><p>For routine testing, release, stability, microbiology, and lab compliance roles.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is OOS?</div><div class="qa-a">Out-of-specification result that falls outside approved specification and requires formal laboratory and manufacturing investigation.</div></div>
+    <div class="qa-card"><div class="qa-q">OOS vs OOT?</div><div class="qa-a">OOS is outside specification; OOT is a result within spec but outside expected trend or historical behavior.</div></div>
+    <div class="qa-card"><div class="qa-q">What is reference standard?</div><div class="qa-a">Qualified material used to compare identity, purity, potency or assay response during testing.</div></div>
+    <div class="qa-card"><div class="qa-q">What is stability testing?</div><div class="qa-a">Study of product quality under defined temperature and humidity to establish shelf life and storage conditions.</div></div>
+  </div><div class="tag-row"><span class="tag">OOS</span><span class="tag">OOT</span><span class="tag">Stability</span><span class="tag">Release testing</span><span class="tag">Microbiology</span></div></section>
+
+  <section class="dept" id="production"><div class="dept-head"><div class="dept-no">07</div><div class="dept-title"><h2>Production / Manufacturing</h2><p>For plant operations, batch manufacturing, equipment handling, and process execution roles.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is BMR?</div><div class="qa-a">Batch Manufacturing Record documents materials, equipment, process steps, in-process checks, yield and deviations for a batch.</div></div>
+    <div class="qa-card"><div class="qa-q">What is line clearance?</div><div class="qa-a">Verification that area and equipment are free from previous product, documents, labels and materials before starting next operation.</div></div>
+    <div class="qa-card"><div class="qa-q">Why yield reconciliation?</div><div class="qa-a">To compare theoretical, actual and loss quantities, ensuring material accountability and detecting abnormal process loss.</div></div>
+    <div class="qa-card"><div class="qa-q">What are common scale-up issues?</div><div class="qa-a">Heat transfer, mixing, filtration time, drying efficiency, foaming, crystallization, impurity increase and equipment limitation.</div></div>
+  </div><div class="tag-row"><span class="tag">BMR</span><span class="tag">Plant scale</span><span class="tag">Line clearance</span><span class="tag">Yield</span><span class="tag">Equipment</span></div></section>
+
+  <section class="dept" id="tech-transfer"><div class="dept-head"><div class="dept-no">08</div><div class="dept-title"><h2>Technology Transfer</h2><p>For lab-to-plant transfer, process package, validation support, and receiving-site execution.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is technology transfer?</div><div class="qa-a">Transfer of product and process knowledge from development site to manufacturing site for reproducible commercial execution.</div></div>
+    <div class="qa-card"><div class="qa-q">What is included in process package?</div><div class="qa-a">Process description, flow diagram, critical parameters, specifications, impurity controls, safety data, cleaning and validation needs.</div></div>
+    <div class="qa-card"><div class="qa-q">What is PPQ?</div><div class="qa-a">Process Performance Qualification demonstrates that the commercial process can consistently deliver acceptable quality.</div></div>
+    <div class="qa-card"><div class="qa-q">What is risk in tech transfer?</div><div class="qa-a">Equipment mismatch, raw material variability, operator training, hold time, mixing difference and incomplete knowledge transfer.</div></div>
+  </div><div class="tag-row"><span class="tag">Process package</span><span class="tag">PPQ</span><span class="tag">Scale-up</span><span class="tag">Training</span><span class="tag">Receiving site</span></div></section>
+
+  <section class="dept" id="ip"><div class="dept-head"><div class="dept-no">09</div><div class="dept-title"><h2>IP / Patent / Portfolio</h2><p>For patent search, freedom-to-operate, literature review, and non-infringing route strategy.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is FTO?</div><div class="qa-a">Freedom to operate assessment checks whether a process, product, polymorph or use may infringe active patent claims.</div></div>
+    <div class="qa-card"><div class="qa-q">What is prior art?</div><div class="qa-a">Existing public knowledge such as patents, papers, products or disclosures before a filing date.</div></div>
+    <div class="qa-card"><div class="qa-q">Why patent review in API R&D?</div><div class="qa-a">To avoid protected routes, identify alternate chemistry, reduce litigation risk and support launch strategy.</div></div>
+    <div class="qa-card"><div class="qa-q">What is claim analysis?</div><div class="qa-a">Reading patent claims to understand the legal scope, protected subject matter and possible design-around options.</div></div>
+  </div><div class="tag-row"><span class="tag">FTO</span><span class="tag">Prior art</span><span class="tag">Claims</span><span class="tag">Non-infringing route</span><span class="tag">Patent landscape</span></div></section>
+
+  <section class="dept" id="clinical"><div class="dept-head"><div class="dept-no">10</div><div class="dept-title"><h2>Clinical Research / Pharmacovigilance / Medical Affairs</h2><p>For clinical operations, safety reporting, medical writing, and post-marketing surveillance roles.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is pharmacovigilance?</div><div class="qa-a">Science of detecting, assessing, understanding and preventing adverse effects or medicine-related problems.</div></div>
+    <div class="qa-card"><div class="qa-q">What is SAE?</div><div class="qa-a">Serious adverse event causing death, life-threatening condition, hospitalization, disability, congenital anomaly or other serious risk.</div></div>
+    <div class="qa-card"><div class="qa-q">What is informed consent?</div><div class="qa-a">Voluntary documented agreement from participant after understanding trial purpose, risks, benefits and rights.</div></div>
+    <div class="qa-card"><div class="qa-q">Role of medical affairs?</div><div class="qa-a">Scientific communication, KOL engagement, medical information, publications and support for evidence-based product use.</div></div>
+  </div><div class="tag-row"><span class="tag">Clinical trials</span><span class="tag">PV</span><span class="tag">SAE</span><span class="tag">ICF</span><span class="tag">Medical writing</span></div></section>
+
+  <section class="dept" id="packaging"><div class="dept-head"><div class="dept-no">11</div><div class="dept-title"><h2>Packaging / Supply Chain / Procurement</h2><p>For packaging development, artwork, vendor management, planning and logistics roles.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">Primary vs secondary packaging?</div><div class="qa-a">Primary packaging directly contacts product; secondary packaging protects and presents the primary pack.</div></div>
+    <div class="qa-card"><div class="qa-q">Why packaging compatibility?</div><div class="qa-a">To ensure pack does not interact with product and maintains quality, stability, moisture protection and safety.</div></div>
+    <div class="qa-card"><div class="qa-q">What is vendor qualification?</div><div class="qa-a">Assessment and approval of suppliers based on quality systems, capability, documentation and regulatory expectations.</div></div>
+    <div class="qa-card"><div class="qa-q">Supply chain focus in pharma?</div><div class="qa-a">Availability, traceability, cold chain if needed, compliance, inventory, lead time, risk and continuity of supply.</div></div>
+  </div><div class="tag-row"><span class="tag">Artwork</span><span class="tag">Vendor</span><span class="tag">Cold chain</span><span class="tag">Logistics</span><span class="tag">Packaging compatibility</span></div></section>
+
+  <section class="dept" id="ehs"><div class="dept-head"><div class="dept-no">12</div><div class="dept-title"><h2>EHS / Engineering / Validation</h2><p>For safety, utilities, cleaning validation, equipment qualification and plant support roles.</p></div></div><div class="qa-grid">
+    <div class="qa-card"><div class="qa-q">What is HAZOP?</div><div class="qa-a">Hazard and operability study used to identify process hazards and operational risks in chemical manufacturing.</div></div>
+    <div class="qa-card"><div class="qa-q">IQ, OQ, PQ?</div><div class="qa-a">Installation Qualification, Operational Qualification and Performance Qualification prove equipment is installed, works and performs as intended.</div></div>
+    <div class="qa-card"><div class="qa-q">What is cleaning validation?</div><div class="qa-a">Documented evidence that cleaning removes residues to acceptable limits and prevents cross-contamination.</div></div>
+    <div class="qa-card"><div class="qa-q">Why MSDS/SDS important?</div><div class="qa-a">It provides hazard, handling, storage, PPE, spill and emergency information for chemicals.</div></div>
+  </div><div class="tag-row"><span class="tag">HAZOP</span><span class="tag">SDS</span><span class="tag">IQ/OQ/PQ</span><span class="tag">Cleaning validation</span><span class="tag">Utilities</span></div></section>
+
+  <div class="tip"><strong>Interview tip:</strong> Department answer dete time sirf definition mat bolo. Ek real example add karo: "In API R&D, impurity source identify karke parameter optimization aur purge study se control strategy banate hain."</div>
+</main>
+<script>
+const deptSeeds=[
+  {id:'chemical',no:'01',title:'Chemical Research / API R&D',sub:'Route design, synthesis, scale-up, impurities, process safety and API development.',tags:['Route scouting','DoE','QbD','Impurity synthesis','Scale-up','Patent review'],topics:['route selection','retrosynthetic analysis','non-infringing route','process impurity','genotoxic impurity','nitrosamine risk','reagent selection','solvent selection','reaction optimization','DoE study','QbD approach','critical process parameter','critical quality attribute','scale-up observation','heat transfer','mixing effect','crystallization','filtration','drying','polymorphism','salt formation','purge study','mass balance','yield improvement','process safety','work-up design','catalyst control','chiral purity','intermediate specification','technology transfer package']},
+  {id:'analytical',no:'02',title:'Analytical R&D',sub:'Method development, validation, characterization, impurity profiling and stability support.',tags:['HPLC','GC','LC-MS','NMR','Validation','Stability'],topics:['HPLC method development','GC residual solvent method','LC-MS impurity identification','NMR characterization','FTIR interpretation','method validation','specificity','linearity','accuracy','precision','robustness','LOD and LOQ','system suitability','peak purity','forced degradation','stability indicating method','unknown impurity','reference standard','sample preparation','mobile phase selection','column selection','chromatographic resolution','peak tailing','mass balance','assay method','dissolution method','calibration curve','standard preparation','OOS investigation','analytical transfer']},
+  {id:'regulatory',no:'03',title:'Regulatory Affairs',sub:'DMF, ANDA/NDA, ICH guidelines, query response and global submission strategy.',tags:['DMF','ANDA','CTD','ICH','Query response','CMC'],topics:['DMF filing','ANDA submission','NDA submission','CTD module','CMC section','ICH Q7','ICH Q8','ICH Q9','ICH Q10','ICH Q11','ICH M7','ICH Q3A','ICH Q3C','ICH Q3D','regulatory query','deficiency response','change filing','post approval change','specification justification','control strategy','stability data','process validation summary','impurity justification','residual solvent limit','elemental impurity risk','nitrosamine assessment','GMP certificate','CEP','USFDA expectation','EMA expectation']},
+  {id:'formulation',no:'04',title:'Formulation R&D',sub:'Dosage forms, excipient compatibility, dissolution, stability and QbD-based development.',tags:['Preformulation','Excipients','Dissolution','Stability','QbD','Bioavailability'],topics:['preformulation study','API solubility','pKa and logP','particle size','polymorphism','hygroscopicity','excipient compatibility','tablet formulation','capsule formulation','wet granulation','dry granulation','direct compression','binder selection','disintegrant selection','lubricant effect','coating process','dissolution testing','bioavailability','modified release','stability study','ICH stability zones','QTPP','CQA','CMA','CPP','DoE in formulation','content uniformity','blend uniformity','scale-up batch','packaging compatibility']},
+  {id:'qa',no:'05',title:'Quality Assurance',sub:'GMP, documentation, deviation, CAPA, change control, audits and data integrity.',tags:['GMP','Deviation','CAPA','Audit','Data integrity','Change control'],topics:['GMP principle','SOP management','deviation handling','CAPA system','change control','document control','batch record review','line clearance','data integrity','ALCOA plus','internal audit','vendor audit','training record','risk assessment','FMEA','quality management system','complaint handling','recall procedure','self inspection','validation master plan','qualification protocol','annual product quality review','quality agreement','GMP inspection','root cause analysis','effectiveness check','market complaint','product quality review','quality risk management','documentation error']},
+  {id:'qc',no:'06',title:'Quality Control',sub:'Routine testing, release, stability, microbiology, specifications and lab compliance.',tags:['OOS','OOT','Release testing','Stability','Microbiology','Specifications'],topics:['raw material testing','finished product testing','API release testing','specification','OOS investigation','OOT trend','stability testing','reference standard','working standard','standardization','assay testing','impurity testing','water content','loss on drying','residue on ignition','microbial limit test','endotoxin test','environmental monitoring','sample management','retain sample','instrument calibration','HPLC troubleshooting','GC troubleshooting','laboratory incident','COA preparation','analyst qualification','method transfer','glassware calibration','reagent management','data review']},
+  {id:'production',no:'07',title:'Production / Manufacturing',sub:'Batch execution, plant operations, equipment, yield, safety and manufacturing controls.',tags:['BMR','Plant scale','Equipment','Yield','Line clearance','Operations'],topics:['BMR execution','line clearance','dispensing','reactor charging','temperature control','addition rate','centrifuge operation','filter dryer','vacuum drying','yield reconciliation','material balance','in-process control','hold time','equipment cleaning','campaign manufacturing','batch failure','process deviation','solvent recovery','plant safety','PPE use','equipment logbook','shift handover','SOP compliance','changeover','area classification','utility failure','mixing issue','crystallization in plant','filtration delay','drying endpoint']},
+  {id:'tech-transfer',no:'08',title:'Technology Transfer',sub:'Lab-to-plant transfer, process package, receiving-site execution and validation readiness.',tags:['Process package','PPQ','Scale-up','Receiving site','Training','Validation'],topics:['technology transfer plan','process transfer package','critical parameter transfer','analytical method transfer','engineering batch','exhibit batch','PPQ batch','process validation','site readiness','gap assessment','equipment equivalency','scale-up factor','batch record preparation','training plan','risk assessment','knowledge transfer','receiving unit responsibility','sending unit responsibility','manufacturing instruction','control strategy transfer','cleaning method transfer','raw material source','vendor qualification','process robustness','hold time transfer','change control during transfer','technical report','process flow diagram','sampling plan','commercial launch readiness']},
+  {id:'ip',no:'09',title:'IP / Patent / Portfolio',sub:'Patent search, freedom-to-operate, claim analysis and non-infringing strategy.',tags:['FTO','Prior art','Claims','Patent landscape','Route design','Portfolio'],topics:['patent landscape','freedom to operate','prior art search','claim interpretation','Markush structure','process patent','product patent','polymorph patent','salt patent','intermediate patent','non-infringing route','design around strategy','patent expiry','data exclusivity','ANDA paragraph filing','novelty','inventive step','obviousness','infringement risk','literature search','SciFinder search','Reaxys search','patent family','legal status','jurisdiction','blocking patent','route comparison','launch strategy','portfolio prioritization','IP risk memo']},
+  {id:'clinical',no:'10',title:'Clinical Research / Pharmacovigilance / Medical Affairs',sub:'Clinical trials, adverse events, medical writing and post-marketing safety.',tags:['Clinical trials','PV','SAE','ICF','Medical writing','Safety'],topics:['clinical trial phases','informed consent','protocol deviation','GCP principle','case report form','randomization','blinding','SAE reporting','adverse event','pharmacovigilance','signal detection','PSUR','risk management plan','medical writing','clinical study report','investigator brochure','ethics committee','trial monitoring','source document verification','patient safety','causality assessment','expectedness assessment','medical information','label update','post marketing surveillance','ICSR processing','MedDRA coding','benefit risk assessment','KOL engagement','medical affairs role']},
+  {id:'packaging',no:'11',title:'Packaging / Supply Chain / Procurement',sub:'Packaging development, artwork, vendor qualification, logistics and pharma supply continuity.',tags:['Artwork','Vendor','Cold chain','Logistics','Packaging','Procurement'],topics:['primary packaging','secondary packaging','pack compatibility','blister pack','HDPE bottle','desiccant use','container closure system','artwork control','barcode and serialization','label claim','vendor qualification','supplier audit','procurement planning','inventory control','cold chain','temperature excursion','warehouse condition','FEFO principle','GDP distribution','supply risk','lead time','alternate vendor','material code','packaging specification','change in pack material','transport validation','damage control','stock reconciliation','demand planning','logistics compliance']},
+  {id:'ehs',no:'12',title:'EHS / Engineering / Validation',sub:'Process safety, HAZOP, utilities, cleaning validation, equipment qualification and plant support.',tags:['HAZOP','SDS','IQ/OQ/PQ','Cleaning validation','Utilities','Safety'],topics:['HAZOP study','SDS review','PPE selection','solvent handling','flammability risk','dust explosion','process safety','emergency response','spill control','waste management','effluent treatment','cleaning validation','MACO calculation','swab sampling','rinse sampling','equipment qualification','IQ protocol','OQ protocol','PQ protocol','utility qualification','HVAC qualification','water system','compressed air','calibration program','preventive maintenance','breakdown maintenance','change part qualification','safety permit','hot work permit','confined space entry']}
+];
+
+const answerTemplates=[
+  t=>`In interview, define ${t} in one line, then connect it to product quality, patient safety, compliance, cost, and reproducibility. A strong answer includes what is checked, how it is documented, and how risk is controlled.`,
+  t=>`${t} is important because it can directly affect quality, yield, impurity profile, regulatory acceptability, or manufacturing robustness. Explain the practical impact and give one real example from lab, plant, or documentation.`,
+  t=>`For ${t}, first understand the objective, then identify critical inputs, acceptance criteria, responsible department, required documents, and escalation path if results are abnormal.`,
+  t=>`Common mistakes in ${t} are incomplete documentation, weak root-cause thinking, ignoring historical data, and not linking the observation to quality risk. Mention prevention and verification.`,
+  t=>`A good control strategy for ${t} includes predefined limits, monitoring frequency, validated method or procedure, trained personnel, and documented review by QA or the responsible function.`,
+  t=>`If asked a case study on ${t}, answer in steps: collect facts, review batch or analytical data, identify possible causes, assess patient or quality risk, define CAPA, and check effectiveness.`,
+  t=>`Regulatory or audit expectation for ${t} is traceable, scientifically justified, contemporaneous, reviewed, and aligned with approved procedures or filed commitments.`,
+  t=>`For troubleshooting ${t}, compare current data with development history, previous batches, method suitability, material quality, equipment condition, and operator or environmental variables.`
+];
+
+function makeQuestion(topic,deptTitle,i){
+  const starters=['What is','Why is','How do you control','What documents are needed for','What are risks in','How do you investigate','What is the audit expectation for','How do you troubleshoot'];
+  const starter=starters[i%starters.length];
+  if(starter==='What is')return `${starter} ${topic} in ${deptTitle}?`;
+  if(starter==='Why is')return `${starter} ${topic} important in ${deptTitle}?`;
+  return `${starter} ${topic}?`;
+}
+function makeAnswer(topic,i){
+  return answerTemplates[i%answerTemplates.length](topic);
+}
+function qaCards(dept){
+  let html='';
+  for(let i=0;i<200;i++){
+    const topic=dept.topics[i%dept.topics.length];
+    html+=`<div class="qa-card"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${makeQuestion(topic,dept.title,i)}</div><div class="qa-a">${makeAnswer(topic,i)}</div></div>`;
+  }
+  return html;
+}
+function renderInterviewBank(){
+  const main=document.querySelector('main');
+  if(!main)return;
+  main.innerHTML=`<section class="hero">
+    <div class="kicker">Department-wise Interview Preparation</div>
+    <h1>Pharma Interview Questions by Department</h1>
+    <p>Each department contains 200 interview Q&A cards. Total bank: ${deptSeeds.length*200} Q&A covering R&D, analytical, regulatory, formulation, QA, QC, production, technology transfer, IP, clinical/PV, packaging/supply chain, and EHS/validation.</p>
+    <div class="jump-row">${deptSeeds.map(d=>`<a href="#${d.id}">${d.no} ${d.title.split('/')[0].trim()}</a>`).join('')}</div>
+  </section>
+  <section class="dept-map" aria-label="Department map">${deptSeeds.map(d=>`<a class="dept-link" href="#${d.id}"><strong>${d.no} ${d.title}</strong><span>${d.sub}</span></a>`).join('')}</section>
+  ${deptSeeds.map(d=>`<section class="dept" id="${d.id}"><div class="dept-head"><div class="dept-no">${d.no}</div><div class="dept-title"><h2>${d.title}</h2><p>${d.sub}</p></div></div><div class="dept-tools"><div class="dept-count">200 Q&A</div></div><div class="tag-row">${d.tags.map(tag=>`<span class="tag">${tag}</span>`).join('')}</div><div class="qa-grid">${qaCards(d)}</div></section>`).join('')}
+  <div class="tip"><strong>Interview tip:</strong> Har answer ko 3-part format me bolo: definition, practical example, and quality/regulatory impact.</div>`;
+}
+renderInterviewBank();
+</script>
+<footer>Shubh.Online - Pharma interview preparation by department</footer>
+</body>
+</html>

@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organic Chemistry — Virtual Textbook Index</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('chemTheme')||'light'}catch(e){document.documentElement.dataset.theme='light'}</script>
+<style>
+:root {
+  --bg:#f8f6f0; --paper:#fffdf7; --surface:#f3f0e8; --surface2:#ebe5d9; --border:#ded8ca;
+  --accent:#7c3aed; --accent2:#0f766e; --pink:#db2777; --amber:#f59e0b; --text:#171717; --text-dim:#57534e; --text-dimmer:#78716c;
+  --shadow:0 18px 42px rgba(68,64,60,.12);--body-bg:#f8f6f0;--header-bg:#fffdf7;
+}
+[data-theme="dark"]{--bg:#000;--paper:#101010;--surface:#171717;--surface2:#202020;--border:#2c2c2c;--accent:#a78bfa;--accent2:#5eead4;--pink:#f472b6;--amber:#fbbf24;--text:#f5f5f5;--text-dim:#c7c7c7;--text-dimmer:#9ca3af;--shadow:0 24px 60px rgba(0,0,0,.5);--body-bg:#000;--header-bg:#0b0b0b}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;background:var(--bg);}
+body{background:var(--body-bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:16px;line-height:1.55;}
+body *{color:var(--text);}
+header{position:sticky;top:0;z-index:100;height:68px;background:var(--header-bg);border-bottom:1px solid var(--border);box-shadow:var(--shadow);padding:0 1.1rem;display:flex;align-items:center;gap:1rem;}
+.logo{display:flex;align-items:center;font-weight:850;font-size:1.05rem;color:var(--text);white-space:nowrap;}
+.logo::before{content:'▣';display:grid;place-items:center;width:2.1rem;height:2.1rem;margin-right:.65rem;border-radius:10px;background:var(--surface);color:var(--accent);box-shadow:inset 0 0 0 1px var(--border);}
+.logo span{color:var(--text-dim);font-weight:800;font-size:.62rem;margin-left:.55rem;letter-spacing:.08em;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;}
+.sw{flex:1;max-width:560px;position:relative;}
+.sw input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.62rem 1rem .62rem 2.35rem;color:var(--text)!important;font:600 .9rem Inter,ui-sans-serif,system-ui,sans-serif;outline:none;transition:.18s;}
+.sw input:focus{background:#fff;border-color:#93c5fd;box-shadow:0 0 0 4px rgba(37,99,235,.12);}
+.sw input::placeholder{color:var(--text-dimmer);}
+.si{position:absolute;left:.86rem;top:50%;transform:translateY(-50%);color:var(--text-dimmer);font-weight:700;}
+.hinfo{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--text-dim);margin-left:auto;white-space:nowrap;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:.46rem .68rem;}
+.hinfo strong{color:var(--text);}
+.theme-toggle{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:.48rem .76rem;font:800 .78rem Inter,system-ui,sans-serif;cursor:pointer}
+.theme-toggle:hover{background:var(--paper)}
+.app{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:calc(100vh - 64px);}
+.app.hidden,.library.hidden{display:none;}
+.library{min-height:calc(100vh - 64px);padding:1rem;}
+.library-panel{border:1px solid var(--border);border-radius:14px;background:var(--paper);box-shadow:var(--shadow);overflow:hidden;}
+.library-head{padding:1.15rem 1.25rem;border-bottom:1px solid var(--border);background:linear-gradient(#fff,#f8fafc);}
+.library-kicker{font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.2rem;}
+.library-head h1{font-size:1.55rem;line-height:1.1;color:#0f172a;}
+.library-head p{color:var(--text-dim);font-size:.92rem;margin-top:.35rem;}
+.subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:0;}
+.subject-folder{appearance:none;border:0;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:#fff;text-align:left;padding:1rem;cursor:pointer;transition:.15s;min-height:128px;}
+.subject-folder:hover{background:#eff6ff;}
+.subject-folder.unavailable{cursor:default;opacity:.68;}
+.subject-folder.unavailable:hover{background:#fff;}
+.folder-icon{display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:10px;background:#dbeafe;border:1px solid #bfdbfe;color:var(--accent);font-size:1.25rem;margin-bottom:.75rem;}
+.subject-folder h2{font-size:1rem;color:#0f172a;margin-bottom:.25rem;}
+.subject-folder p{font-size:.82rem;color:var(--text-dim);}
+.subject-folder .status{display:inline-block;margin-top:.8rem;font-family:'IBM Plex Mono',monospace;font-size:.62rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;}
+.library-mode .sw,.library-mode .hinfo{display:none;}
+aside{border-right:1px solid var(--border);background:linear-gradient(#fff,#faf5ff 54%,#ecfeff);overflow-y:auto;height:calc(100vh - 64px);position:sticky;top:64px;padding:.75rem .55rem;}
+aside::-webkit-scrollbar{width:8px;} aside::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:20px;}
+.nc{display:flex;align-items:center;gap:.42rem;padding:.48rem .48rem;cursor:pointer;font-size:.78rem;font-weight:750;color:#334155;border:1px solid transparent;border-radius:8px;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,color .16s ease;user-select:none;}
+.nc:hover{color:#0f172a;background:#f3e8ff;border-color:#ddd6fe;transform:translateX(4px);box-shadow:0 10px 20px rgba(124,58,237,.12);}
+.nc.active{background:linear-gradient(90deg,#ede9fe,#fce7f3);border-color:#c4b5fd;color:var(--accent);}
+.nnum{display:grid;place-items:center;min-width:1.55rem;height:1.35rem;border-radius:6px;background:#fff;border:1px solid #ddd6fe;color:var(--pink);font-family:'IBM Plex Mono',monospace;font-size:.6rem;font-weight:800;flex-shrink:0;}
+.nd{width:auto!important;height:auto!important;border-radius:0!important;flex-shrink:0;background:transparent!important;}
+.nd::before{content:'📁';font-size:1.45rem;line-height:1;}
+.ch{order:-1;margin-left:0;font-size:.58rem;color:var(--text-dimmer);transition:transform .2s;}
+.nc.active .ch{transform:rotate(90deg);}
+.ns{display:none;padding:.15rem 0 .45rem;}
+.ns.open{display:block;}
+.ni{display:block;margin:.04rem 0;padding:.34rem .45rem .34rem 2.65rem;font-size:.8rem;font-weight:600;color:var(--text-dim);cursor:pointer;transition:.15s;text-decoration:none;border-radius:7px;line-height:1.35;position:relative;}
+.ni::before{content:'└';position:absolute;left:1.65rem;color:#cbd5e1;}
+.ni::after{content:'📂';position:absolute;left:1.92rem;top:.18rem;font-size:1.15rem;}
+.ni:hover{color:#0f172a;background:#fdf2f8;transform:translateX(4px);}
+main{overflow-y:auto;min-width:0;}
+.workspace-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1rem 1rem 0;border:1px solid rgba(255,255,255,.72);border-radius:14px;background:linear-gradient(90deg,#fff,#ecfeff);padding:.62rem .75rem;box-shadow:0 12px 28px rgba(88,28,135,.08);}
+.workspace-bar.hidden{display:none;}
+.path{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:700;color:var(--text-dim);}
+.path strong{color:var(--accent);}
+.back-btn{border:1px solid #c4b5fd;background:#fff;color:var(--accent);border-radius:8px;padding:.45rem .68rem;font:750 .8rem Inter,ui-sans-serif,system-ui,sans-serif;cursor:pointer;}
+.back-btn:hover{background:#faf5ff;border-color:#c4b5fd;color:var(--pink);}
+.empty-state{display:none;margin:1rem;border:1px solid var(--border);border-radius:14px;background:var(--paper);box-shadow:var(--shadow);padding:3rem 1.5rem;text-align:center;}
+.empty-state.visible{display:block;}
+.empty-state h1{font-size:1.6rem;margin-bottom:.4rem;color:var(--text);}
+.empty-state p{color:var(--text);font-size:.95rem;}
+.category-home{display:none;margin:1rem;border:1px solid var(--border);border-radius:14px;background:var(--paper);box-shadow:var(--shadow);overflow:hidden;}
+.category-home.visible{display:block;}
+.category-home-head{padding:1rem 1.1rem;border-bottom:1px solid var(--border);background:var(--paper);}
+.category-home-head h1{font-size:1.35rem;margin-bottom:.25rem;color:var(--text);}
+.category-home-head p{font-size:.92rem;color:var(--text);}
+.category-grid{display:grid;grid-template-columns:1fr;gap:0;}
+.category-tile{border:0;border-bottom:1px solid var(--border);background:var(--paper);padding:.8rem 1rem;text-align:left;cursor:pointer;min-height:78px;transition:transform .16s ease,box-shadow .16s ease,background .16s ease;position:relative;display:grid;grid-template-columns:4.5rem 1fr auto;align-items:center;gap:.9rem;overflow:hidden;}
+.category-tile::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--cc,var(--accent));opacity:.7;transition:.16s;}
+.category-tile:hover{background:var(--surface);transform:translateX(5px);box-shadow:inset 5px 0 0 var(--cc,var(--accent));z-index:2;}
+.category-tile:hover::after{opacity:1;width:8px;}
+.category-icon{display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:14px;background:var(--surface);border:1px solid var(--border);font-size:2.2rem;box-shadow:0 10px 22px rgba(0,0,0,.1);}
+.category-tile h2{font-size:1rem;line-height:1.2;margin-bottom:.18rem;color:var(--text);}
+.category-tile p{font-size:.78rem;color:var(--text);}
+.category-tile p::after{content:"  ›";font-size:1.2rem;font-weight:900;margin-left:.5rem;}
+.hero{position:relative;margin:1rem;border:1px solid rgba(255,255,255,.72);border-radius:16px;padding:clamp(1.4rem,4vw,2.4rem);background:linear-gradient(135deg,#fff,#faf5ff 42%,#fff7ed);box-shadow:var(--shadow);overflow:hidden;}
+.hero::after{content:'Index';position:absolute;right:clamp(1rem,6vw,4rem);top:.8rem;font-size:clamp(3rem,10vw,7rem);font-weight:900;color:rgba(219,39,119,.07);line-height:1;pointer-events:none;}
+.htag{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.65rem;font-weight:700;}
+.hero h1{position:relative;z-index:1;font-size:clamp(1.9rem,4vw,3.4rem);line-height:1.04;margin-bottom:.85rem;color:#0f172a;font-weight:900;}
+.hero h1 em{color:var(--pink);font-style:normal;}
+.hero p{position:relative;z-index:1;color:var(--text-dim);max-width:680px;font-size:1rem;font-weight:500;}
+.hnote{position:relative;z-index:1;margin-top:1.1rem;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--text-dim);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.58rem .9rem;display:inline-block;}
+.hnote a{color:var(--accent);text-decoration:none;font-weight:700;}
+.pills{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.35rem;}
+.pill{font-size:.76rem;font-weight:800;padding:.42rem .68rem;border-radius:9px;border:1px solid #ddd6fe;background:linear-gradient(135deg,#fff,#faf5ff);color:#334155;cursor:pointer;transition:transform .16s ease,box-shadow .16s ease,background .16s ease;}
+.pill::before{content:'📁 ';display:inline-block;transition:.16s}.pill:hover{background:linear-gradient(135deg,#ede9fe,#fce7f3);border-color:#c4b5fd;color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 24px rgba(124,58,237,.14)}.pill:hover::before{transform:scale(1.18) rotate(-5deg)}
+.sc{margin:1rem;padding:0;border:1px solid rgba(255,255,255,.72);border-radius:14px;background:var(--paper);box-shadow:0 14px 34px rgba(88,28,135,.08);display:none;overflow:hidden;}
+.sc.visible{display:block;animation:fi .18s ease;}
+.all-v .sc{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.sh{display:flex;align-items:center;gap:.75rem;margin:0;padding:.88rem 1rem;border-bottom:1px solid var(--border);background:linear-gradient(90deg,#fff,#faf5ff,#ecfeff);}
+.sn{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--text-dimmer);}
+.si2{display:grid;place-items:center;width:2rem;height:2rem;border-radius:8px;background:linear-gradient(135deg,#ede9fe,#fce7f3);border:1px solid #ddd6fe;font-size:.95rem;flex-shrink:0;}
+.st{font-size:1.18rem;font-weight:850;color:#0f172a;}
+.sct{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--text-dimmer);margin-left:auto;}
+.ss{margin:0;}
+.sst{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);padding:.65rem 1rem;background:linear-gradient(90deg,#fff,#fff7ed);border-bottom:1px solid var(--border);cursor:pointer;display:flex;align-items:center;gap:.55rem;transition:background .16s ease,color .16s ease,letter-spacing .16s ease;}
+.sst:hover{background:linear-gradient(90deg,#faf5ff,#ecfeff);color:var(--pink);letter-spacing:.11em;}
+.sst::before{content:'▶';font-size:.58rem;color:var(--text-dimmer);transition:.2s;}
+.sst::after{content:'📁';font-size:.9rem;margin-left:.05rem;}
+.ss.open .sst{background:linear-gradient(90deg,#ede9fe,#fce7f3);color:var(--accent);}
+.ss.open .sst::before{transform:rotate(90deg);}
+.tg{display:grid;grid-template-columns:1fr;gap:0;max-width:none;}
+.ss .tg{display:none;}
+.ss.open .tg{display:grid;}
+.tc{background:#fff;border:0;border-bottom:1px solid var(--border);border-radius:0;padding:.66rem 1rem;text-decoration:none;display:block;position:relative;overflow:hidden;transition:background .16s ease,transform .16s ease,box-shadow .16s ease;}
+.tc::before{content:'📄';position:absolute;left:.85rem;top:50%;transform:translateY(-50%);opacity:.9;font-size:1.28rem;}
+.tc:hover{background:#faf5ff;transform:translateX(4px);box-shadow:inset 4px 0 0 var(--pink);}
+.tc:hover::before{opacity:1;}
+.tc.active{background:#ede9fe;}
+.tn{font-size:.94rem;font-weight:600;color:#1e293b;line-height:1.35;display:flex;align-items:center;gap:.55rem;padding-left:2rem;}
+.ei{color:var(--text-dimmer);font-size:.75rem;margin-left:auto;flex-shrink:0;opacity:.55;transition:.13s;}
+.tc:hover .ei{opacity:1;color:var(--accent);}
+#sr{margin:1rem;padding:0;border:1px solid var(--border);border-radius:12px;background:var(--paper);box-shadow:0 10px 30px rgba(15,23,42,.05);display:none;overflow:hidden;}
+#sr.visible{display:block;}
+.srh{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--text-dim);padding:.8rem 1rem;border-bottom:1px solid var(--border);background:#f8fafc;}
+.srh strong{color:var(--accent);}
+.nr{color:var(--text-dim);font-style:italic;padding:3rem;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.78rem;}
+mark{background:#dbeafe;color:var(--accent);border-radius:3px;padding:0 .08rem;}
+.rc{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--text-dimmer);margin:.2rem 0 0 1.75rem;}
+.viewer{display:none;margin:.45rem 1rem 1rem;border:1px solid var(--border);border-radius:12px;background:var(--paper);box-shadow:var(--shadow);overflow:hidden;}
+.viewer.visible{display:block;}
+.viewer-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.72rem .9rem;border-bottom:1px solid var(--border);background:linear-gradient(#fff,#f8fafc);}
+.viewer-label{display:none;}
+#viewerTitle{font-size:.92rem;color:#0f172a;}
+.viewer-actions{display:flex;align-items:center;gap:.45rem;}
+.viewer-btn{border:1px solid var(--border);background:#fff;color:#334155;border-radius:8px;padding:.44rem .65rem;font:700 .78rem Inter,ui-sans-serif,system-ui,sans-serif;cursor:pointer;}
+.viewer-btn:hover{background:#eff6ff;border-color:#bfdbfe;color:var(--accent);}
+.viewer-frame-wrap{position:relative;background:#fff;}
+#viewerFrame{display:block;width:100%;height:calc(100vh - 138px);min-height:720px;border:0;background:#fff;}
+.viewer-note{padding:.6rem .9rem;border-top:1px solid var(--border);background:#f8fafc;color:var(--text-dim);font-size:.78rem;}
+footer{padding:1rem 1.2rem;border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--text-dimmer);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;background:#f8fafc;}
+footer a{color:var(--accent);text-decoration:none;font-weight:700;}
+aside,.workspace-bar,.hero,.sc,.sh,.sst,.tc,#sr,.srh,.viewer,.viewer-bar,.viewer-note,footer{background:var(--paper);color:var(--text);}
+aside{background:var(--surface);}
+.workspace-bar,.hero,.sc,#sr,.viewer{border-color:var(--border);box-shadow:var(--shadow);}
+.head,.library-head{background:var(--paper);}
+.tc,.subject-folder{background:var(--paper);}
+.tc:hover,.subject-folder:hover,.nc:hover,.ni:hover,.sst:hover{background:var(--surface);}
+.st,.hero h1,#viewerTitle,.subject-folder h2,.library-head h1{color:var(--text)!important;}
+.hero p,.subject-folder p,.library-head p,.viewer-note,.rc,.hinfo,.path,.sn,.sct,.srh,.sst,.tn,.ni,.nc{color:var(--text)!important;}
+#viewerFrame,.viewer-frame-wrap{background:var(--paper);}
+[data-theme="dark"] .sw input,[data-theme="dark"] .tc,[data-theme="dark"] .viewer-frame-wrap,[data-theme="dark"] #viewerFrame{background:#0b0b0b;color:var(--text);}
+body *{color:var(--text)!important;}
+.folder-icon,.icon,.nd::before,.ni::after,.tc::before,.pill::before,.sst::after{color:inherit!important;}
+.nc,.nc *,.nd,.nd::before,.ch,.si2,.st,.sst,.sst *{
+  color:var(--text)!important;
+}
+.pills,.pill,.pill *,.htag,.hero .pill,.hero .pill *{
+  color:var(--text)!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+.pill{
+  display:inline-flex!important;
+  align-items:center!important;
+  background:var(--surface)!important;
+  border:1px solid var(--border)!important;
+  box-shadow:0 8px 18px rgba(0,0,0,.08)!important;
+}
+[data-theme="dark"] .pill{
+  background:#171717!important;
+  border-color:#3a3a3a!important;
+  color:#fff!important;
+}
+.nc .nd{filter:none!important;}
+.nc.active,.nc.active *,.nc:hover,.nc:hover *{
+  color:var(--text)!important;
+}
+.st[style],.sst[style]{
+  color:var(--text)!important;
+}
+.nnum,.si2,.folder-icon,.theme-toggle,.back-btn,.viewer-btn,.hinfo,.sw input{
+  background:var(--surface)!important;
+  border-color:var(--border)!important;
+  color:var(--text)!important;
+}
+.nnum{box-shadow:inset 0 0 0 1px var(--border);font-weight:900;}
+.nc.active,.ss.open .sst,.tc.active{background:var(--surface2)!important;}
+.tc,.subject-folder,.viewer-bar,.viewer-note,.srh,.sh,.sst{border-color:var(--border)!important;}
+[data-theme="dark"] .nnum,[data-theme="dark"] .si2,[data-theme="dark"] .folder-icon,[data-theme="dark"] .theme-toggle,[data-theme="dark"] .back-btn,[data-theme="dark"] .viewer-btn,[data-theme="dark"] .hinfo,[data-theme="dark"] .sw input{
+  background:#171717!important;
+  border-color:#3a3a3a!important;
+  color:#fff!important;
+}
+[data-theme="dark"] .tc,[data-theme="dark"] .subject-folder,[data-theme="dark"] .viewer,[data-theme="dark"] .sc,[data-theme="dark"] #sr{
+  background:#101010!important;
+  border-color:#2c2c2c!important;
+}
+[data-theme="dark"] .nc.active,[data-theme="dark"] .ss.open .sst,[data-theme="dark"] .tc.active{
+  background:#202020!important;
+}
+@media(max-width:900px){.app{grid-template-columns:1fr;}aside{display:none;}header{height:auto;min-height:64px;flex-wrap:wrap;padding-top:.75rem;padding-bottom:.75rem}.sw{order:3;max-width:none;flex-basis:100%;}.hinfo{display:none;}}
+@media(max-width:560px){body{font-size:15px}.logo span{display:none}.hero,.sc,#sr,.viewer{margin:.75rem}.hero h1{font-size:2rem}.sh{align-items:flex-start;flex-wrap:wrap}.sct{margin-left:0;width:100%;}#viewerFrame{height:calc(100vh - 168px);min-height:560px;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Organic Chemistry <span>By Subrat Biswas</span></div>
+  <div class="sw"><span class="si">⌕</span><input type="text" id="si" placeholder="Search any topic… (press / to focus)" autocomplete="off"></div>
+  <div class="hinfo"><strong id="tc">0</strong> topics · <strong>20</strong> categories</div>
+  <button class="theme-toggle" id="themeToggle" type="button">Dark</button>
+</header>
+<div class="library hidden" id="library">
+  <div class="library-panel">
+    <div class="library-head">
+      <div class="library-kicker">File Manager</div>
+      <h1>Chemistry Subjects</h1>
+      <p>Open a subject folder to view chapters and topic previews inside this workspace.</p>
+    </div>
+    <div class="subject-grid">
+      <button class="subject-folder" id="openOrganic" type="button"><span class="folder-icon">📁</span><h2>Organic Chemistry</h2><p>Virtual textbook index with internal preview reader.</p><span class="status">Ready</span></button>
+      <button class="subject-folder unavailable" type="button"><span class="folder-icon">📁</span><h2>Analytical Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></button>
+      <button class="subject-folder unavailable" type="button"><span class="folder-icon">📁</span><h2>Medicinal Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></button>
+      <button class="subject-folder unavailable" type="button"><span class="folder-icon">📁</span><h2>Spectroscopy</h2><p>Folder prepared for future spectra and references.</p><span class="status">Coming Soon</span></button>
+      <button class="subject-folder unavailable" type="button"><span class="folder-icon">📁</span><h2>Physical Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></button>
+      <button class="subject-folder unavailable" type="button"><span class="folder-icon">📁</span><h2>Inorganic Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></button>
+    </div>
+  </div>
+</div>
+<div class="app" id="organicApp">
+<aside id="sb"></aside>
+<main>
+  <div class="workspace-bar">
+    <div class="path">Chemistry Library / <strong>Organic Chemistry</strong></div>
+    <button class="back-btn" id="backLibrary" type="button">Back to Subjects</button>
+  </div>
+  <div id="emptyState" class="empty-state visible">
+    <h1>Please choose topic from index</h1>
+    <p>Select a folder from the left index to view its topics.</p>
+  </div>
+  <div id="categoryHome" class="category-home">
+    <div class="category-home-head">
+      <h1>Organic Chemistry Index</h1>
+      <p>Choose a folder to view its subfolders and topic pages.</p>
+    </div>
+    <div id="categoryGrid" class="category-grid"></div>
+  </div>
+  <div class="hero" id="hero">
+    <div class="htag">● By Subrat Biswas</div>
+    <h1>Virtual Textbook of<br><em>Organic Chemistry</em></h1>
+    <p>Every topic from the complete index opens inside this file-manager reader. Click any file to preview that chapter instantly.</p>
+    <div class="hnote">Internal reader mode - external addresses are hidden from the interface.</div>
+    <div class="pills" id="qp"></div>
+  </div>
+  <div id="sr"></div>
+  <div id="viewer" class="viewer">
+    <div class="viewer-bar">
+      <div><span class="viewer-label">Preview</span><strong id="viewerTitle">Select a topic</strong></div>
+      <div class="viewer-actions"><button class="viewer-btn" id="viewerClose" type="button">Close</button></div>
+    </div>
+    <div class="viewer-frame-wrap">
+      <iframe id="viewerFrame" title="Organic chemistry topic preview"></iframe>
+    </div>
+    <div class="viewer-note">If a chapter does not appear here, that source page may block embedded previews in browsers.</div>
+  </div>
+  <div id="sw" class="all-v"></div>
+  <footer>
+    <span>By Subrat Biswas — Virtual Textbook of Organic Chemistry</span>
+    <span>Internal Preview Mode</span>
+  </footer>
+</main>
+</div>
+<script>
+const B="https://www2.chemistry.msu.edu/faculty/reusch/virttxtjml/";
+const SP="https://www2.chemistry.msu.edu/faculty/reusch/virttxtjml/Spectrpy/";
+
+const cats=[
+{t:"Structure & Bonding",i:"⬡",c:"#7ec98a",ss:[
+  {t:"Atomic & Molecular Orbitals",tp:[
+    {n:"Structure & Bonding – overview",u:B+"intro2.htm#start"},
+    {n:"Electron Configurations of Atoms (aufbau principle)",u:B+"intro2.htm#strc1"},
+    {n:"Chemical Bonding & Valence",u:B+"intro2.htm#strc2"},
+    {n:"Charge Distribution in Molecules",u:B+"intro2.htm#strc3"},
+    {n:"Shape of Molecules / VSEPR",u:B+"intro3.htm#strc4"},
+    {n:"Atomic and Molecular Orbitals",u:B+"intro3.htm#strc8"},
+    {n:"Isomers – overview",u:B+"intro3.htm#strc5"},
+    {n:"Analysis of Molecular Formulas",u:B+"intro3.htm#strc6"},
+    {n:"Resonance",u:B+"intro3.htm#strc7"},
+  ]},
+  {t:"Physical Properties & Bonding",tp:[
+    {n:"Intermolecular Forces",u:B+"physprop.htm#exp3"},
+    {n:"Boiling & Melting Points",u:B+"physprop.htm#exp4"},
+    {n:"Hydrogen Bonding",u:B+"physprop.htm#exp5"},
+    {n:"Crystalline Solids",u:B+"physprop.htm#xtal1"},
+    {n:"Water Solubility & Hydrophilicity",u:B+"physprop.htm#exp6"},
+    {n:"Electronegativity & Polar Covalent Bonds",u:B+"intro2.htm#strc3"},
+    {n:"Bond Dipole & Molecular Dipole",u:B+"intro2.htm#strc3"},
+    {n:"Formal Charge",u:B+"intro2.htm#strc3"},
+    {n:"Lewis Formula / Structural Formulas",u:B+"intro2.htm#strc2"},
+    {n:"Van der Waals Attraction",u:B+"physprop.htm#exp3"},
+    {n:"Inductive Effect",u:B+"react1.htm#rx4ac"},
+    {n:"Hyperconjugation",u:B+"alhalrx1.htm#hal2"},
+    {n:"Bond Energy",u:B+"react2.htm#rx6"},
+    {n:"Anisotropy",u:SP+"nmr/nmr1.htm#nmr1"},
+  ]},
+  {t:"Carbon Allotropes & Special Molecules",tp:[
+    {n:"Allotropes of Carbon (diamond, graphite, fullerenes)",u:B+"misc/carbnanom.htm"},
+    {n:"Buckminsterfullerene / C60",u:B+"misc/carbnanom.htm"},
+    {n:"Annulenes",u:B+"react3.htm#rx9"},
+    {n:"Bullvalene / Fluxional Molecules",u:B+"pericycl.htm#top1"},
+    {n:"Barrelene / Bicyclic Cage Structures",u:B+"nomen1.htm#nom1"},
+  ]},
+]},
+{t:"Nomenclature",i:"Aa",c:"#7eacc9",ss:[
+  {t:"IUPAC Naming Rules",tp:[
+    {n:"Alkane Nomenclature",u:B+"nomen1.htm#nom1"},
+    {n:"Cycloalkane Nomenclature",u:B+"nomen1.htm#nom2"},
+    {n:"Alkene & Alkyne Nomenclature",u:B+"nomen1.htm#nom3"},
+    {n:"Substituted Benzene Nomenclature",u:B+"nomen1.htm#nom4"},
+    {n:"Other Functional Groups – Nomenclature",u:B+"nomexmp2.htm#nom5"},
+    {n:"Nomenclature Priority of IUPAC Suffixes",u:B+"nomexmp1.htm#nom6"},
+    {n:"Alcohol Nomenclature",u:B+"alcohol1.htm#alcnom"},
+    {n:"Amine Nomenclature",u:B+"amine1.htm#aminom"},
+    {n:"Carboxylic Acid Nomenclature",u:B+"crbacid1.htm#crbnom"},
+    {n:"Aldehyde & Ketone Nomenclature",u:B+"aldket1.htm#aknom"},
+    {n:"Carboxylic Acid Derivative Nomenclature",u:B+"crbacid2.htm#crbdnm"},
+    {n:"Ether Nomenclature",u:B+"ether1.htm#eth1"},
+    {n:"Bicyclic Compound Nomenclature",u:B+"nomen1.htm#nom1"},
+    {n:"Heterocyclic Nomenclature / Hantzsch-Widman",u:B+"heterocy.htm#top1"},
+    {n:"Functional Groups – overview & defined",u:B+"intro2.htm#func1"},
+    {n:"E/Z & cis/trans Notation",u:B+"sterisom.htm#isom1"},
+    {n:"anti/syn Stereo Nomenclature",u:B+"sterism3.htm#isom17b"},
+    {n:"erythro/threo Notation",u:B+"sterism3.htm#isom17b"},
+    {n:"Alkyl Groups (primary, secondary, tertiary, quaternary)",u:B+"nomen1.htm#nom1"},
+    {n:"Geminal & Vicinal / Aliphatic / Vinyl / Allyl / Benzyl",u:B+"nomen1.htm#nom1"},
+  ]},
+]},
+{t:"Stereochemistry",i:"✦",c:"#c9a87e",ss:[
+  {t:"Chirality & Optical Activity",tp:[
+    {n:"Chirality & Symmetry",u:B+"sterism2.htm#isom10"},
+    {n:"Symmetry Elements & Symmetry Point Groups",u:B+"symmetry/symmtry.htm#start"},
+    {n:"Enantiomorphism / Enantiomers",u:B+"sterism2.htm#isom11"},
+    {n:"Optical Activity / Polarimeter / Specific Rotation",u:B+"sterism2.htm#isom12"},
+    {n:"Achirality / Meso Compounds (achiral diastereomers)",u:B+"sterism3.htm#isom17"},
+    {n:"Dextrorotatory & Levorotatory",u:B+"sterism2.htm#isom12"},
+    {n:"Enantiomeric Excess / Diastereomeric Excess",u:B+"sterism3.htm#isom13"},
+    {n:"Racemate / Racemization / Conglomerate Solid",u:B+"sterism3.htm#isom18"},
+  ]},
+  {t:"Configuration & Notation",tp:[
+    {n:"Configurational Nomenclature (R/S, CIP)",u:B+"sterism3.htm#isom13"},
+    {n:"CIP Examples (lactic acid, carvone)",u:B+"sterism3.htm#isom13"},
+    {n:"CIP in Morphine, Strychnine & Taxol",u:B+"sterism3.htm#isom13"},
+    {n:"Fischer Projection Formulas",u:B+"sterism3.htm#isom16"},
+    {n:"Wedge & Dashed Bond Notation",u:B+"sterism2.htm#isom10"},
+    {n:"Other Configurational Notations",u:B+"sterism3.htm#isom17b"},
+    {n:"Compounds with Several Stereogenic Centers",u:B+"sterism3.htm#isom14"},
+    {n:"Stereogenic Nitrogen / Aziridine Inversion",u:B+"sterism3.htm#isom15"},
+    {n:"Axial, Helical & Planar Chirality / Atropisomers",u:B+"sterism3.htm#isom19"},
+    {n:"Pseudoasymmetric Center",u:B+"sterism3.htm#isom14"},
+    {n:"Conformational Enantiomorphism",u:B+"sterism3.htm#isom19"},
+    {n:"Biphenyl Stereoisomers",u:B+"sterism3.htm#isom19"},
+    {n:"Summary of Isomerism",u:B+"suppmnt1.htm#exp2"},
+  ]},
+  {t:"Resolution & Stereoselective Synthesis",tp:[
+    {n:"Resolution of Racemates",u:B+"sterism3.htm#isom18"},
+    {n:"Pasteur's Resolution of Tartaric Acid",u:B+"sterism3.htm#isom18"},
+    {n:"Acidic & Basic Resolving Agents",u:B+"sterism3.htm#isom18"},
+    {n:"Kinetic Resolution / Dynamic Kinetic Resolution",u:B+"sterslct.htm#top1"},
+    {n:"Stereoselective Synthesis – overview",u:B+"sterslct.htm#top1"},
+    {n:"Diastereoselectivity",u:B+"sterslct.htm#top1"},
+    {n:"Aldol Diastereoselectivity / Zimmerman-Traxler TS",u:B+"sterslct.htm#top1"},
+    {n:"Enolborinate Intermediates",u:B+"sterslct.htm#top1"},
+    {n:"Cram's Rule / Felkin-Ahn Rule",u:B+"sterslct.htm#top1"},
+    {n:"Chelation Effects in Carbonyl Addition",u:B+"sterslct.htm#top1"},
+    {n:"Sharpless Enantioselective Epoxidation",u:B+"sterslct.htm#top1"},
+    {n:"Chiral Auxiliary / Asymmetric Induction",u:B+"sterslct.htm#top1"},
+    {n:"Enantioselective Reduction",u:B+"sterslct.htm#top1"},
+    {n:"Prochiral / re & si Enantiotopic Faces",u:B+"sterslct.htm#top1"},
+    {n:"Homotopic, Enantiotopic & Diastereotopic Groups",u:B+"sterslct.htm#top1"},
+  ]},
+  {t:"Conformational Analysis",tp:[
+    {n:"Conformational Isomers – overview",u:B+"sterisom.htm#isom4"},
+    {n:"Ethane Conformers (staggered, eclipsed)",u:B+"sterisom.htm#isom5"},
+    {n:"Butane Conformers (anti, gauche)",u:B+"sterisom.htm#isom6"},
+    {n:"Cycloalkane Conformers",u:B+"sterism2.htm#isom7"},
+    {n:"Cyclohexane Chair, Boat & Twist Conformers",u:B+"sterism2.htm#isom7"},
+    {n:"Substituted Cyclohexanes / A-values",u:B+"sterism2.htm#isom8"},
+    {n:"Decalin Conformations",u:B+"sterism2.htm#isom8"},
+    {n:"s-cis & s-trans Conformers of Dienes",u:B+"addene2.htm#dien1"},
+    {n:"Allylic Strain 1,2 & 1,3",u:B+"addene2.htm#dien1"},
+    {n:"Ring Strain / Angle Strain / Torsional Strain",u:B+"sterism2.htm#isom7"},
+    {n:"Bredt's Rule",u:B+"alhalrx3.htm#hal6"},
+  ]},
+]},
+{t:"Chemical Reactivity",i:"→",c:"#c97e7e",ss:[
+  {t:"Reaction Fundamentals",tp:[
+    {n:"Chemical Reactivity – overview",u:B+"react1.htm#rx1"},
+    {n:"Reaction Classification by Structural Change",u:B+"react1.htm#rx2a"},
+    {n:"Four Reaction Classes (addition, elimination, substitution, rearrangement)",u:B+"react1.htm#rx2a"},
+    {n:"Classification by Reaction Type",u:B+"react1.htm#rx2ab"},
+    {n:"Acid-Base Reactions (Brønsted & Lewis)",u:B+"react1.htm#rx1b"},
+    {n:"Oxidations & Reductions",u:B+"react1.htm#rx2b"},
+    {n:"Reactions by Functional Group",u:B+"react1.htm#rx3"},
+    {n:"Reaction Variables – Reactants, Reagents, Products",u:B+"react1.htm#rx4a"},
+    {n:"Product Selectivity",u:B+"react1.htm#rx4ab"},
+    {n:"Electronic, Steric & Solvent Effects",u:B+"react1.htm#rx4ac"},
+    {n:"Curved Arrow Notation",u:B+"react1.htm#rx4b"},
+    {n:"Reactive Intermediates",u:B+"react1.htm#rx4c"},
+    {n:"Reaction Illustrations",u:B+"react2.htm#rx5"},
+    {n:"Reaction Rate & Kinetics",u:B+"react2.htm#rx7c"},
+    {n:"Reaction Energetics / Activation Energy / TS",u:B+"react2.htm#rx7"},
+    {n:"Bond Energy",u:B+"react2.htm#rx6"},
+    {n:"Nucleophilicity & Basicity / Alpha Effect",u:B+"react3.htm#rx10"},
+    {n:"Acid-Base Catalysis",u:B+"react3.htm#rx11"},
+    {n:"Hammett Equation (σ & ρ constants)",u:B+"react1.htm#rx4ac"},
+    {n:"Hammond Postulate / Curtin-Hammett Principle",u:B+"react2.htm#rx7"},
+    {n:"Kinetic vs. Equilibrium Control",u:B+"react2.htm#rx7"},
+    {n:"Microscopic Reversibility",u:B+"alcohol1.htm#alcrx4"},
+  ]},
+  {t:"Acids & Bases",tp:[
+    {n:"Brønsted Theory (acids & bases)",u:B+"react1.htm#rx1b"},
+    {n:"Acidity Constant Ka & pKa",u:B+"react1.htm#rx1b"},
+    {n:"Henderson-Hasselbalch Equation",u:B+"react1.htm#rx1b"},
+    {n:"Lewis Acids",u:B+"react1.htm#rx4c"},
+    {n:"Conjugate Acid/Base Pairs",u:B+"react1.htm#rx1b"},
+    {n:"Carbon Acids & α-Hydrogens",u:B+"special3.htm#top4"},
+    {n:"Structural Effects on Acidity (hybridization, inductive, resonance)",u:B+"special3.htm#top4"},
+    {n:"Solvent Effects on pKa",u:B+"react1.htm#rx4ac"},
+    {n:"Superacid",u:B+"react1.htm#rx1b"},
+    {n:"Kinetic Acidity / Equilibrium Acidity",u:B+"special3.htm#top4"},
+    {n:"Enolate Anion – Ambident Character",u:B+"aldket3.htm#alkyl1"},
+    {n:"Regioselectivity of Enolate Anion Formation",u:B+"aldket3.htm#alkyl1"},
+    {n:"Enol & Keto Tautomers / Tautomerization",u:B+"addyne1.htm#add3"},
+    {n:"LDA / NaH / Superbases",u:B+"aldket3.htm#alkyl1"},
+  ]},
+]},
+{t:"Alkyl Halide Reactions",i:"X",c:"#b07ec9",ss:[
+  {t:"Nucleophilic Substitution",tp:[
+    {n:"Alkyl Halide General Reactivity",u:B+"alhalrx1.htm#hal1"},
+    {n:"SN2 Mechanism",u:B+"alhalrx1.htm#hal2e"},
+    {n:"SN1 Mechanism / Solvolysis",u:B+"alhalrx2.htm#hal5"},
+    {n:"Solvent Effects on SN Reactions",u:B+"alhalrx2.htm#hal5"},
+    {n:"Steric Hindrance in Substitution",u:B+"alhalrx1.htm#hal2e"},
+    {n:"Nucleophilicity & Leaving Group Ability",u:B+"react3.htm#rx10"},
+    {n:"Anchimeric Assistance / Neighboring Group Participation",u:B+"rearrang.htm#top1"},
+  ]},
+  {t:"Elimination Reactions",tp:[
+    {n:"E2 Mechanism / Anti-Stereospecificity",u:B+"alhalrx3.htm#hal6"},
+    {n:"E1 Mechanism",u:B+"alhalrx3.htm#hal8"},
+    {n:"Zaitsev Rule",u:B+"alhalrx3.htm#hal6a"},
+    {n:"Hofmann Rule",u:B+"alhalrx3.htm#hal6a"},
+    {n:"β-Hydrogen Requirement",u:B+"alhalrx3.htm#hal6"},
+    {n:"Summary: Substitution vs. Elimination",u:B+"alhalrx3.htm#hal9"},
+    {n:"Dihalide Elimination Reactions",u:B+"alhalrx4.htm#hal11"},
+  ]},
+  {t:"Organometallic Formation",tp:[
+    {n:"Formation of Organometallics from Alkyl Halides",u:B+"alhalrx4.htm#hal10"},
+    {n:"Grignard Reagents",u:B+"orgmetal.htm#met10"},
+    {n:"Alkyl Lithium Reagents",u:B+"orgmetal.htm#met10"},
+    {n:"Organocadmium & Organozinc Reagents",u:B+"orgmetal.htm#met10"},
+    {n:"Gilman Reagents (organocuprates)",u:B+"orgmetal.htm#met10"},
+  ]},
+]},
+{t:"Alkenes, Alkynes & Dienes",i:"⌇",c:"#7ec9b8",ss:[
+  {t:"Alkene Reactions",tp:[
+    {n:"Electrophilic Additions – overview",u:B+"addene1.htm#add1"},
+    {n:"Addition of Strong Brønsted Acids / Markovnikov Rule",u:B+"addene1.htm#add1b"},
+    {n:"Lewis Acid Additions to Alkenes",u:B+"addene1.htm#add2"},
+    {n:"Halogen Additions & Bromonium Ion Intermediate",u:B+"addene1.htm#add3b"},
+    {n:"Oxymercuration, Hypohalous Acids & Other Electrophiles",u:B+"addene2.htm#add3c"},
+    {n:"Reduction of Alkenes (hydroboration, hydrogenation)",u:B+"addene2.htm#add4"},
+    {n:"Stereoselectivity of Hydroboration",u:B+"addene2.htm#add4"},
+    {n:"Oxidation of Alkenes (epoxidation, ozonolysis, OsO4)",u:B+"addene2.htm#add4b"},
+    {n:"Radical Additions to Alkenes",u:B+"addene2.htm#add5"},
+    {n:"Allylic Substitution (NBS, halogenation)",u:B+"addene2.htm#add6"},
+    {n:"Cyclopropanation / Simmons-Smith / Carbene",u:B+"carbene.htm#top1"},
+    {n:"Alkene Metathesis / Grubbs Catalyst",u:B+"orgmetal.htm#met10"},
+    {n:"Heck Reaction",u:B+"orgmetal.htm#met10"},
+  ]},
+  {t:"Dienes",tp:[
+    {n:"Dienes – isolated, conjugated & cumulated (allenes)",u:B+"addene2.htm#dien1"},
+    {n:"1,2- & 1,4-Addition to Conjugated Dienes",u:B+"addene2.htm#dien2"},
+    {n:"Diels-Alder [4+2] Cycloaddition",u:B+"addene2.htm#dien3"},
+    {n:"Diels-Alder – endo effect & regioselectivity",u:B+"addene2.htm#dien3"},
+    {n:"Molecular Orbital Model of Conjugated Dienes",u:B+"addene2.htm#dien1"},
+    {n:"Diene Stability / Heats of Hydrogenation",u:B+"addene2.htm#dien1"},
+  ]},
+  {t:"Alkyne Reactions",tp:[
+    {n:"Alkyne Addition Reactions – overview",u:B+"addyne1.htm#add1"},
+    {n:"Hydrogenation of Alkynes (Lindlar's catalyst)",u:B+"addyne1.htm#add1"},
+    {n:"Electrophilic Additions to Alkynes",u:B+"addyne1.htm#add1bb"},
+    {n:"Hydration of Alkynes & Tautomerism",u:B+"addyne1.htm#add3"},
+    {n:"Hydroboration of Alkynes (disiamylborane)",u:B+"addyne1.htm#add4"},
+    {n:"Nucleophilic Addition & Reduction (Na in NH3)",u:B+"addyne1.htm#add6"},
+    {n:"Acidity of Terminal Alkynes / Sodium Acetylide",u:B+"addyne1.htm#add7"},
+    {n:"Preparation of Alkynes from Dihalides",u:B+"addyne1.htm#add7"},
+  ]},
+]},
+{t:"Alcohols, Ethers & Epoxides",i:"◈",c:"#c9c27e",ss:[
+  {t:"Alcohols",tp:[
+    {n:"Alcohol Nomenclature",u:B+"alcohol1.htm#alcnom"},
+    {n:"Substitution of the Hydroxyl Hydrogen",u:B+"alcohol1.htm#alcrx1"},
+    {n:"Williamson Ether Synthesis",u:B+"alcohol1.htm#alcrx1"},
+    {n:"Nucleophilic Substitution of OH (with HX)",u:B+"alcohol1.htm#alcrx2b"},
+    {n:"Sulfonate Esters – Mesylates, Tosylates, Triflates",u:B+"alcohol1.htm#alcrx3"},
+    {n:"Phosphorus Reagents for OH (PCl3, POCl3, PBr3)",u:B+"alcohol1.htm#alcrx3"},
+    {n:"Thionyl Chloride Reactions with Alcohols",u:B+"alcohol1.htm#alcrx3"},
+    {n:"Dehydration of Alcohols",u:B+"alcohol1.htm#alcrx4"},
+    {n:"Oxidation of Alcohols (PCC, PDC, Jones, MnO2, DMSO, TEMPO)",u:B+"alcohol2.htm#alcrx5"},
+    {n:"Oppenauer Oxidation / Meerwein-Verley-Ponndorf Reduction",u:B+"alcohol2.htm#alcrx5"},
+    {n:"Glycols & Glycol Cleavage (periodate, OsO4, Pb(OAc)4)",u:B+"alcohol2.htm#alcrx6"},
+    {n:"Pinacols & Pinacol Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Mitsunobu Reaction",u:B+"special2.htm#top6"},
+    {n:"Hydroxyl Substitution – special methods",u:B+"special2.htm#top6"},
+  ]},
+  {t:"Ethers & Epoxides",tp:[
+    {n:"Ether Nomenclature & Preparation",u:B+"ether1.htm#eth1"},
+    {n:"Alkoxymercuration",u:B+"ether1.htm#eth1"},
+    {n:"Ether Reactions",u:B+"ether1.htm#eth2"},
+    {n:"Crown Ethers",u:B+"ether1.htm#eth1"},
+    {n:"Silyl Ethers as Protecting Groups",u:B+"ether1.htm#eth1"},
+    {n:"Epoxides / Oxiranes – preparation & reactions",u:B+"ether1.htm#eth3"},
+    {n:"Epoxide Ring-Opening / Intramolecular Epoxide Opening",u:B+"ether1.htm#eth4"},
+    {n:"Iodolactonization",u:B+"ether1.htm#eth4"},
+    {n:"Payne Rearrangement",u:B+"rearang2.htm#top1"},
+  ]},
+]},
+{t:"Aldehydes & Ketones",i:"⊡",c:"#c97ea8",ss:[
+  {t:"Reversible Carbonyl Additions",tp:[
+    {n:"Aldehydes & Ketones – overview, nomenclature & properties",u:B+"aldket1.htm#aknom"},
+    {n:"Acetal Formation / Stable Hydrates & Hemiacetals",u:B+"aldket1.htm#akadd2"},
+    {n:"Cyanohydrin Formation",u:B+"aldket1.htm#akadd1"},
+    {n:"Imine Formation (Schiff Base) / Oxime",u:B+"aldket1.htm#akadd3"},
+    {n:"Enamine Formation",u:B+"aldket1.htm#akadd3"},
+    {n:"Semicarbazone / Phenylhydrazone Formation",u:B+"aldket1.htm#akadd3"},
+    {n:"Water or Alcohol Addition",u:B+"aldket1.htm#akadd2"},
+  ]},
+  {t:"Irreversible Carbonyl Additions",tp:[
+    {n:"Metal Hydride Reduction (NaBH4, LiAlH4, DIBAH)",u:B+"aldket2.htm#akred1"},
+    {n:"Organometallic Additions (R-Li, Grignard, R-MgX)",u:B+"aldket2.htm#akred1"},
+    {n:"Bürgi-Dunitz Trajectory",u:B+"sterslct.htm#top1"},
+    {n:"Stereoselectivity of Carbonyl Addition",u:B+"sterslct.htm#top1"},
+    {n:"Cram's Rule / Felkin-Ahn / Karabatsos Rule",u:B+"sterslct.htm#top1"},
+    {n:"Wolff-Kishner Reduction",u:B+"aldket2.htm#akred2"},
+    {n:"Clemmensen Reduction",u:B+"aldket2.htm#akred2"},
+    {n:"Thioacetal Hydrogenolysis (deoxygenation)",u:B+"aldket2.htm#akred2"},
+  ]},
+  {t:"Reactions at α-Carbon",tp:[
+    {n:"The Aldol Reaction",u:B+"aldket3.htm#aldol1"},
+    {n:"Crossed / Mixed Aldol Reactions",u:B+"aldket3.htm#aldol2"},
+    {n:"Dehydration of Aldol Products",u:B+"aldket3.htm#aldol2"},
+    {n:"Claisen-Schmidt Reaction",u:B+"aldket3.htm#aldol2"},
+    {n:"Directed Aldol / Mukaiyama Aldol",u:B+"sterslct.htm#top1"},
+    {n:"Enolate Anion Alkylation (O vs C, ambident)",u:B+"aldket3.htm#alkyl1"},
+    {n:"Electrophilic Substitution at α-Carbon",u:B+"aldket3.htm#alkyl1"},
+    {n:"Cannizzaro Reaction",u:B+"aldket3.htm#aldol1"},
+    {n:"Haloform Reaction",u:B+"aldket3.htm#alkyl1"},
+  ]},
+  {t:"Carbonyl Oxidation & Wittig",tp:[
+    {n:"Oxidation of Aldehydes (Tollens', Fehling's, Benedict's)",u:B+"aldket2.htm#akox1"},
+    {n:"Baeyer-Villiger Oxidative Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Wittig Reaction & Oxaphosphatane Mechanism",u:B+"aldket2.htm#akred3"},
+    {n:"Horner-Wadsworth-Emmons Reaction",u:B+"aldket2.htm#akred3"},
+    {n:"Peterson's Reagent / Lombardo's Reagent",u:B+"orgmetal.htm#met10"},
+    {n:"Dimethylsulfonium Methylide (sulfur ylide)",u:B+"rearang2.htm#top1"},
+  ]},
+]},
+{t:"Carboxylic Acids & Derivatives",i:"⌬",c:"#88c97e",ss:[
+  {t:"Carboxylic Acids",tp:[
+    {n:"Carboxylic Acid Nomenclature & Properties",u:B+"crbacid1.htm#crbnom"},
+    {n:"Acidity of Carboxylic Acids",u:B+"crbacid1.htm#crbaci"},
+    {n:"Substituent Effects on Acidity",u:B+"crbacid1.htm#crbaci"},
+    {n:"Resonance Stabilization of Carboxylate Anion",u:B+"crbacid1.htm#crbaci"},
+    {n:"Salt Formation / Reactions of Carboxylic Acids",u:B+"crbacid1.htm#crbrx1"},
+    {n:"Fischer Esterification / Esterification Mechanism",u:B+"crbacid1.htm#crbrx1"},
+    {n:"Reduction of Carboxylic Acids",u:B+"crbacid2.htm#crbrx3"},
+    {n:"Organometallic Reagents with Carboxylic Acids",u:B+"crbacid2.htm#crbrx3"},
+    {n:"Decarboxylation",u:B+"crbacid2.htm#crbrx4"},
+    {n:"Fatty Acids (oleic, stearic, linoleic, palmitic)",u:B+"lipids.htm#lipid1"},
+  ]},
+  {t:"Derivatives (esters, amides, anhydrides, acid chlorides)",tp:[
+    {n:"Carboxylic Acid Derivatives – nomenclature & properties",u:B+"crbacid2.htm#crbdnm"},
+    {n:"Acyl Substitution Reactions",u:B+"crbacid2.htm#crbrx5"},
+    {n:"Amide Hydrolysis / Aminolysis / Alcoholysis",u:B+"crbacid2.htm#crbrx5"},
+    {n:"Reduction of Derivatives (DIBAL, LiAlH4)",u:B+"crbacid2.htm#crbrx6"},
+    {n:"Organometallic Reagents with Derivatives",u:B+"crbacid2.htm#crbrx6"},
+    {n:"DCC Coupling / Carbonyldiimidazole",u:B+"proteins.htm#aacd1"},
+    {n:"Dehydration of Primary Amides to Nitriles",u:B+"crbacid2.htm#crbrx5"},
+    {n:"Ester Cleavage (dealkylation)",u:B+"crbacid2.htm#crbrx5"},
+    {n:"Acyloin Condensation",u:B+"crbacid3.htm#claisn"},
+  ]},
+  {t:"Condensations at α-Carbon",tp:[
+    {n:"Claisen Condensation",u:B+"crbacid3.htm#claisn"},
+    {n:"Dieckmann Condensation",u:B+"crbacid3.htm#claisn"},
+    {n:"Malonic Ester Alkylation",u:B+"crbacid3.htm#malon1"},
+    {n:"Acetoacetic Ester Alkylation",u:B+"crbacid3.htm#malon1"},
+    {n:"β-Dicarbonyl Compounds & Enolates",u:B+"crbacid3.htm#malon1"},
+    {n:"Michael Reaction",u:B+"crbacid3.htm#mich1"},
+    {n:"Mannich Reaction",u:B+"crbacid3.htm#mich1"},
+    {n:"Robinson Annulation / Stork Enamine Synthesis",u:B+"crbacid3.htm#mich1"},
+    {n:"Knoevenagel Condensation",u:B+"crbacid3.htm#mich1"},
+    {n:"Benzoin Condensation / Acyloins from Thiazolium",u:B+"rearang2.htm#top1"},
+    {n:"Stetter Reaction",u:B+"rearang2.htm#top1"},
+  ]},
+]},
+{t:"Amines",i:"N",c:"#c98a7e",ss:[
+  {t:"Amine Properties & Preparation",tp:[
+    {n:"Amine Nomenclature (1°, 2°, 3°, quaternary)",u:B+"amine1.htm#aminom"},
+    {n:"Amine Properties – Basicity, Boiling Points, Solubility",u:B+"amine1.htm#aminprop"},
+    {n:"Basicity & pKa of Amines",u:B+"amine1.htm#aminprop"},
+    {n:"Preparation of Primary Amines",u:B+"amine1.htm#aminprep"},
+    {n:"Preparation of 2° & 3° Amines",u:B+"amine1.htm#aminprep"},
+    {n:"Reductive Amination",u:B+"amine1.htm#aminprep"},
+    {n:"Gabriel Synthesis",u:B+"amine1.htm#aminprep"},
+    {n:"Leuckart Reaction",u:B+"amine1.htm#aminprep"},
+    {n:"Natural Compounds – alkaloids",u:B+"amine2.htm#aramin"},
+  ]},
+  {t:"Amine Reactions",tp:[
+    {n:"Substitution at Nitrogen",u:B+"amine1.htm#aminrx1"},
+    {n:"Hofmann Elimination",u:B+"amine1.htm#aminrx2"},
+    {n:"Cope Elimination / Amine Oxide Elimination",u:B+"amine1.htm#aminrx2"},
+    {n:"Reaction with Nitrous Acid (1°, 2°, 3°)",u:B+"amine1.htm#aminrx3"},
+    {n:"Deamination of 1°-Amines",u:B+"amine1.htm#aminrx3"},
+    {n:"Hinsberg Test",u:B+"amine1.htm#aminrx1"},
+    {n:"Aryl Amines & Diazonium Salts",u:B+"amine2.htm#aramin"},
+    {n:"Diazonium Substitution Reactions",u:B+"amine2.htm#diazo"},
+    {n:"Diazonium Coupling Reactions",u:B+"amine2.htm#diazo"},
+    {n:"Reduction of Nitro Groups",u:B+"amine2.htm#aramin"},
+    {n:"Chichibabin Reaction",u:B+"heterocy.htm#top1"},
+    {n:"Amine Oxides & Nitroxide Radicals",u:B+"nonionic.htm#rad1"},
+  ]},
+]},
+{t:"Aromatic Compounds",i:"⬡",c:"#7e98c9",ss:[
+  {t:"Aromaticity",tp:[
+    {n:"Benzene & Aromaticity – overview",u:B+"react3.htm#rx8"},
+    {n:"Benzene Molecular Orbitals",u:B+"react3.htm#rx8"},
+    {n:"Fused Ring Aromatic Compounds (naphthalene, anthracene…)",u:B+"react3.htm#rx8c"},
+    {n:"Other Aromatic Compounds (non-benzenoid)",u:B+"react3.htm#rx9"},
+    {n:"Hückel Rule (4n+2 rule)",u:B+"react3.htm#rx9a"},
+    {n:"Antiaromaticity & Annulenes",u:B+"react3.htm#rx9"},
+    {n:"Aromatic Stabilization / Resonance Energy",u:B+"react3.htm#rx8"},
+    {n:"Cyclooctatetraene",u:B+"react3.htm#rx9"},
+    {n:"Birch Reduction of Benzene",u:B+"amine2.htm#aramin"},
+  ]},
+  {t:"Electrophilic Aromatic Substitution",tp:[
+    {n:"EAS Mechanism (benzenonium ion / arenium ion)",u:B+"benzene1.htm#benz1"},
+    {n:"Halogenation of Benzene",u:B+"benzene1.htm#benz2"},
+    {n:"Nitration of Benzene",u:B+"benzene1.htm#benz2"},
+    {n:"Sulfonation of Benzene / Hydrolysis of Aryl Sulfonics",u:B+"benzene1.htm#benz2"},
+    {n:"Friedel-Crafts Alkylation & Acylation",u:B+"benzene1.htm#benz3"},
+    {n:"Rearrangement in Friedel-Crafts Alkylation",u:B+"rearrang.htm#top1"},
+    {n:"Substituent Effects – Activating & Deactivating",u:B+"benzene2.htm#benz4"},
+    {n:"Substitution Orientation & Reactivity Correlation",u:B+"benzene2.htm#benz5"},
+    {n:"Disubstituted Benzenes / Modifying Substituent Influence",u:B+"benzene2.htm#benz6"},
+    {n:"EAS of 5-membered Heterocycles",u:B+"heterocy.htm#top1"},
+    {n:"EAS of 6-membered Heterocycles",u:B+"heterocy.htm#top1"},
+    {n:"Directed Ortho Metalation",u:B+"benzene2.htm#benz6"},
+    {n:"Vilsmeier Reagent",u:B+"heterocy.htm#top1"},
+  ]},
+  {t:"Benzene Derivative Reactions",tp:[
+    {n:"Phenols – Acidity, EAS & Oxidation",u:B+"phenol1.htm#phen1"},
+    {n:"Benzyne",u:B+"benzene2.htm#benz7"},
+    {n:"Nucleophilic Substitution of Benzene (SNAr)",u:B+"benzene2.htm#benz7"},
+    {n:"Oxidation of Alkyl Side-Chains",u:B+"benzene1.htm#benz3"},
+    {n:"Reduction of Nitro Groups & Aryl Ketones",u:B+"amine2.htm#aramin"},
+    {n:"Organometallics from Halobenzenes",u:B+"alhalrx4.htm#hal10"},
+    {n:"Heck, Suzuki & Stille Cross-Coupling Reactions",u:B+"orgmetal.htm#met10"},
+    {n:"Benzoin Condensation / Benzilic Acid Rearrangement",u:B+"rearang2.htm#top1"},
+    {n:"Benzene Addition & Elimination Reactions",u:B+"react3.htm#rx8"},
+  ]},
+]},
+{t:"Pericyclic Reactions",i:"⟳",c:"#c9c27e",ss:[
+  {t:"Pericyclic Reactions",tp:[
+    {n:"Pericyclic Reactions – overview & concertedness",u:B+"pericycl.htm#top1"},
+    {n:"[2+2] Cycloaddition (thermal & photochemical)",u:B+"pericycl.htm#top1"},
+    {n:"[4+2] Diels-Alder (pericyclic perspective)",u:B+"pericycl.htm#top1"},
+    {n:"Dipolar Cycloadditions",u:B+"pericycl.htm#top1"},
+    {n:"Cheletropic Addition (e.g. SO2)",u:B+"pericycl.htm#top1"},
+    {n:"Electrocyclic Reactions – conrotatory & disrotatory",u:B+"pericycl.htm#top1"},
+    {n:"Sigmatropic Rearrangements [1,5]-H, [2,3], [3,3]",u:B+"pericycl.htm#top1"},
+    {n:"Cope Rearrangement / Degenerate Cope / Oxy-Cope",u:B+"pericycl.htm#top1"},
+    {n:"Claisen Rearrangement [3,3]",u:B+"pericycl.htm#top1"},
+    {n:"[1,2]-Shifts & Wittig Rearrangements",u:B+"pericycl.htm#top1"},
+    {n:"Ene Reactions & Intramolecular Ene",u:B+"pericycl.htm#top1"},
+    {n:"Antarafacial & Suprafacial",u:B+"pericycl.htm#top1"},
+    {n:"Orbital Correlation Diagrams / Möbius TS",u:B+"pericycl.htm#top1"},
+    {n:"Lewis Acid Catalysis of Cycloadditions",u:B+"pericycl.htm#top1"},
+  ]},
+]},
+{t:"Rearrangements",i:"⇄",c:"#c97e7e",ss:[
+  {t:"Cationic Rearrangements",tp:[
+    {n:"Cationic Rearrangements – overview",u:B+"rearrang.htm#top1"},
+    {n:"Wagner-Meerwein Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Pinacol Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Tiffeneau-Demjanov Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Baeyer-Villiger Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Beckmann Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Hofmann Rearrangement (amides → amines)",u:B+"rearrang.htm#top1"},
+    {n:"Curtius Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Lossen Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Schmidt Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Stieglitz Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Wolff Rearrangement / Arndt-Eistert Synthesis",u:B+"rearrang.htm#top1"},
+    {n:"Terpene Rearrangements",u:B+"rearrang.htm#top1"},
+    {n:"Ring Expansion Rearrangement",u:B+"rearrang.htm#top1"},
+    {n:"Acyl Carbene & Acyl Nitrene Rearrangements",u:B+"rearrang.htm#top1"},
+  ]},
+  {t:"Anionic Rearrangements",tp:[
+    {n:"Anionic Rearrangements – overview",u:B+"rearang2.htm#top1"},
+    {n:"Brook Rearrangement",u:B+"rearang2.htm#top1"},
+    {n:"Favorskii Rearrangement",u:B+"rearang2.htm#top1"},
+    {n:"Benzilic Acid Rearrangement",u:B+"rearang2.htm#top1"},
+    {n:"Sommelet-Hauser Rearrangement",u:B+"rearang2.htm#top1"},
+    {n:"Stevens Rearrangement",u:B+"rearang2.htm#top1"},
+    {n:"Wittig [1,2] & [2,3] Rearrangements",u:B+"rearang2.htm#top1"},
+    {n:"Grob Fragmentation",u:B+"rearang2.htm#top1"},
+    {n:"Payne Rearrangement",u:B+"rearang2.htm#top1"},
+    {n:"Barton Reaction",u:B+"rearang2.htm#top1"},
+  ]},
+]},
+{t:"Free Radicals",i:"•",c:"#a8c97e",ss:[
+  {t:"Radical Chemistry",tp:[
+    {n:"Free Radicals – formation & overview",u:B+"nonionic.htm#rad1"},
+    {n:"Radical Stability Order",u:B+"nonionic.htm#rad1"},
+    {n:"Bond Homolysis / Photochemical Homolysis",u:B+"nonionic.htm#rad1"},
+    {n:"Radical Chain Reactions / Chain Reaction Mechanism",u:B+"nonionic.htm#rad2"},
+    {n:"Free Radical Bromination",u:B+"nonionic.htm#rad2"},
+    {n:"Allylic Radical / Benzyl Radical",u:B+"nonionic.htm#rad1"},
+    {n:"Radical Additions to Alkenes I & II",u:B+"nonionic.htm#rad3"},
+    {n:"Radical Polymerization",u:B+"nonionic.htm#rad3"},
+    {n:"Radical Cyclizations",u:B+"nonionic.htm#rad3"},
+    {n:"Tributyltin Hydride Reactions",u:B+"nonionic.htm#rad3"},
+    {n:"Dissolving Metal Reductions (Birch, Na in NH3, ketyls)",u:B+"nonionic.htm#rad4"},
+    {n:"Nitroxide Radicals / TEMPO / Galvinoxyl",u:B+"nonionic.htm#rad1"},
+    {n:"Hunsdiecker Reaction",u:B+"nonionic.htm#rad3"},
+    {n:"Cage Effect in Radical Reactions",u:B+"nonionic.htm#rad1"},
+    {n:"EPR / ESR Spectroscopy",u:B+"nonionic.htm#rad1"},
+    {n:"Paneth's Experiment",u:B+"nonionic.htm#rad1"},
+    {n:"Alkane Combustion & Halogenation",u:B+"funcrx1.htm#combust"},
+  ]},
+]},
+{t:"Organometallic Chemistry",i:"⊕",c:"#7eacc9",ss:[
+  {t:"Organometallic Chemistry",tp:[
+    {n:"Organometallic Chemistry – overview",u:B+"orgmetal.htm#met10"},
+    {n:"Main-Group Organometallics (Li, Mg, Cd, Zn)",u:B+"orgmetal.htm#met10"},
+    {n:"Grignard Reagents",u:B+"orgmetal.htm#met10"},
+    {n:"Alkyl Lithium / LDA",u:B+"orgmetal.htm#met10"},
+    {n:"Gilman Reagents (organocuprates) & Acyl Chlorides",u:B+"orgmetal.htm#met10"},
+    {n:"Metal Exchange Reactions",u:B+"orgmetal.htm#met10"},
+    {n:"Transition Metal Complexes, Ligands & Configurations",u:B+"orgmetal.htm#met10"},
+    {n:"Oxidative Addition & Reductive Elimination",u:B+"orgmetal.htm#met10"},
+    {n:"Palladium Catalysis (Heck, Suzuki, Stille)",u:B+"orgmetal.htm#met10"},
+    {n:"Alkene Metathesis / Grubbs Catalyst",u:B+"orgmetal.htm#met10"},
+    {n:"Fischer & Schrock Alkylidene Carbene Complexes",u:B+"orgmetal.htm#met10"},
+    {n:"Dötz Reaction",u:B+"orgmetal.htm#met10"},
+    {n:"Ferrocene",u:B+"orgmetal.htm#met10"},
+    {n:"Pauson-Khand Reaction",u:B+"orgmetal.htm#met10"},
+    {n:"Vollhardt Trimerization",u:B+"orgmetal.htm#met10"},
+    {n:"Simmons-Smith Reagent",u:B+"carbene.htm#top1"},
+    {n:"Carbene & Carbenoid Reactions",u:B+"carbene.htm#top1"},
+    {n:"Wilkinson's Catalyst / Catalytic Hydrogenation",u:B+"orgmetal.htm#met10"},
+  ]},
+]},
+{t:"Heterocyclic Compounds",i:"⬟",c:"#b07ec9",ss:[
+  {t:"Nomenclature & Types",tp:[
+    {n:"Heterocyclic Compounds – overview",u:B+"heterocy.htm#top1"},
+    {n:"Hantzsch-Widman Nomenclature",u:B+"heterocy.htm#top1"},
+    {n:"Three-membered Rings (aziridine, oxirane, thiirane)",u:B+"heterocy.htm#top1"},
+    {n:"Four-membered Rings (azetidine, oxetane, thietane)",u:B+"heterocy.htm#top1"},
+    {n:"Five-membered Rings (furan, pyrrole, thiophene, imidazole)",u:B+"heterocy.htm#top1"},
+    {n:"Six-membered Rings (pyridine, pyrimidine, pyrazine, morpholine)",u:B+"heterocy.htm#top1"},
+    {n:"Aromatic 5-membered Heterocycles",u:B+"heterocy.htm#top1"},
+    {n:"Aromatic 6-membered Heterocycles",u:B+"heterocy.htm#top1"},
+  ]},
+  {t:"Reactions of Heterocycles",tp:[
+    {n:"Pyridine – Basicity & Nucleophilic Substitution",u:B+"heterocy.htm#top1"},
+    {n:"Electrophilic Substitution of 5-membered Heterocycles",u:B+"heterocy.htm#top1"},
+    {n:"Electrophilic Substitution of 6-membered Heterocycles",u:B+"heterocy.htm#top1"},
+    {n:"Indole Reactions",u:B+"heterocy.htm#top1"},
+    {n:"Fischer Indole Synthesis",u:B+"heterocy.htm#top1"},
+    {n:"2-Pyridone",u:B+"heterocy.htm#top1"},
+    {n:"Chichibabin Reaction (pyridine amination)",u:B+"heterocy.htm#top1"},
+    {n:"Purines & Pyrimidines (DNA/RNA bases)",u:B+"nucacids.htm#nacd1"},
+    {n:"Thiazolium Salts as Acyl Anion Equivalents / Thiamine",u:B+"rearang2.htm#top1"},
+    {n:"Biotin",u:B+"heterocy.htm#top1"},
+    {n:"Penicillin G",u:B+"heterocy.htm#top1"},
+  ]},
+]},
+{t:"Spectroscopy",i:"〜",c:"#7ec9c9",ss:[
+  {t:"NMR Spectroscopy",tp:[
+    {n:"NMR Spectroscopy – overview",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"Chemical Shift / TMS Reference",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"Proton (1H) Shift Range",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"Carbon-13 Shift Range",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"Shielding & Deshielding / Inductive Effects",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"Anisotropy Effects in NMR",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"Hydrogen Bonding Influence on Chemical Shift",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"Solvent Effects in NMR / Deuterated Solvents",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"Isochronous Nuclei",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"Nuclear Spin / Larmor Frequency / Relaxation",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"FT Spectroscopy / Free Induction Decay",u:SP+"nmr/nmr1.htm#nmr1"},
+    {n:"Spin-Spin Coupling / Coupling Constants J",u:SP+"nmr/nmr2.htm#nmr4"},
+    {n:"Karplus Equation",u:SP+"nmr/nmr2.htm#nmr4"},
+    {n:"Pascal's Triangle / First-Order Splitting Patterns",u:SP+"nmr/nmr2.htm#nmr4"},
+    {n:"Spin Decoupling",u:SP+"nmr/nmr2.htm#nmr4"},
+  ]},
+  {t:"Infrared Spectroscopy",tp:[
+    {n:"Infrared Spectroscopy – overview",u:SP+"InfraRed/infrared.htm#ir1"},
+    {n:"Group Frequency Region",u:SP+"InfraRed/infrared.htm#ir1"},
+    {n:"Fingerprint Region",u:SP+"InfraRed/infrared.htm#ir1"},
+    {n:"Carbonyl Absorptions (C=O)",u:SP+"InfraRed/infrared.htm#ir1"},
+    {n:"Alkene & Alkyne Absorptions",u:SP+"InfraRed/infrared.htm#ir1"},
+    {n:"Alcohol & Phenol O-H Absorptions",u:SP+"InfraRed/infrared.htm#ir1"},
+    {n:"Amine N-H Absorptions",u:SP+"InfraRed/infrared.htm#ir1"},
+    {n:"Carboxylic Acid & Derivative Absorptions",u:SP+"InfraRed/infrared.htm#ir1"},
+    {n:"Wavelength & Frequency Units",u:SP+"InfraRed/infrared.htm#ir1"},
+  ]},
+  {t:"Mass Spectrometry",tp:[
+    {n:"Mass Spectrometry – overview",u:SP+"MassSpec/masspec1.htm#ms1"},
+    {n:"Molecular Ion (M+•), Radical Cation & Base Peak",u:SP+"MassSpec/masspec1.htm#ms1"},
+    {n:"Fragmentation Patterns & Fragment Ion Tables",u:SP+"MassSpec/masspec1.htm#ms1"},
+    {n:"Rearrangement Mechanisms in MS",u:SP+"MassSpec/masspec1.htm#ms1"},
+    {n:"High Resolution MS & Isotopic Masses",u:SP+"MassSpec/masspec1.htm#ms1"},
+    {n:"Electron & Mass Parity Rules",u:SP+"MassSpec/masspec1.htm#ms1"},
+    {n:"EI Source / Mass Spectrometer Diagram",u:SP+"MassSpec/masspec1.htm#ms1"},
+  ]},
+  {t:"UV-Visible Spectroscopy",tp:[
+    {n:"UV-Visible Spectroscopy – overview",u:SP+"UV-Vis/spectrum.htm#uv1"},
+    {n:"Chromophore & Conjugated Chromophores",u:SP+"UV-Vis/spectrum.htm#uv1"},
+    {n:"Electronic Excitation & HOMO-LUMO in Spectroscopy",u:SP+"UV-Vis/spectrum.htm#uv1"},
+    {n:"Woodward-Fieser Rules for UV Absorption",u:SP+"UV-Vis/spectrum.htm#uv1"},
+    {n:"Bathochromic & Hypsochromic Shifts",u:SP+"UV-Vis/spectrum.htm#uv1"},
+    {n:"Molar Absorptivity (ε) / Absorbance & Transmittance",u:SP+"UV-Vis/spectrum.htm#uv1"},
+  ]},
+]},
+{t:"Photochemistry",i:"☀",c:"#c9c27e",ss:[
+  {t:"Photochemistry",tp:[
+    {n:"Photochemistry – Laws & Overview",u:B+"photchem.htm"},
+    {n:"Jablonski Diagram",u:B+"photchem.htm"},
+    {n:"Singlet & Triplet States",u:B+"photchem.htm"},
+    {n:"Fluorescence & Phosphorescence",u:B+"photchem.htm"},
+    {n:"Quantum Yield / Internal Conversion / Intersystem Crossing",u:B+"photchem.htm"},
+    {n:"Franck-Condon Principle",u:B+"photchem.htm"},
+    {n:"[2+2] Photocycloaddition",u:B+"photchem.htm"},
+    {n:"Paternò-Büchi Reaction",u:B+"photchem.htm"},
+    {n:"de Mayo Reaction",u:B+"photchem.htm"},
+    {n:"Type I & Type II Carbonyl Photocleavage",u:B+"photchem.htm"},
+    {n:"Cyclohexadienone Photochemistry",u:B+"photchem.htm"},
+    {n:"Stilbene Photoisomerization / Sensitized Isomerization",u:B+"photchem.htm"},
+    {n:"Bilirubin Photochemistry",u:B+"photchem.htm"},
+    {n:"Rhodopsin Photochemistry",u:B+"photchem.htm"},
+    {n:"Vitamin D Photochemistry",u:B+"photchem.htm"},
+    {n:"Santonin & Diene Photochemistry",u:B+"photchem.htm"},
+    {n:"Hula-Twist Isomerization",u:B+"photchem.htm"},
+    {n:"Yang Reaction",u:B+"photchem.htm"},
+  ]},
+]},
+{t:"Biochemistry",i:"🧬",c:"#c97ea8",ss:[
+  {t:"Carbohydrates",tp:[
+    {n:"Carbohydrates – overview",u:B+"carbhyd.htm#carb1"},
+    {n:"Glucose – Cyclic Forms, Anomers & Structure Proof",u:B+"carbhyd.htm#carb1"},
+    {n:"Furanose & Pyranose Forms / Haworth Formulas",u:B+"carbhyd.htm#carb1"},
+    {n:"D-Configuration / Aldoses & Ketoses",u:B+"carbhyd.htm#carb1"},
+    {n:"Anomeric Effect",u:B+"carbhyd.htm#carb1"},
+    {n:"Kiliani-Fischer Synthesis / Ruff Degradation",u:B+"carbhyd.htm#carb1"},
+    {n:"Osazone Formation",u:B+"carbhyd.htm#carb1"},
+    {n:"Glycosides (α & β anomers, glycon & aglycon)",u:B+"carbhyd.htm#carb1"},
+    {n:"Disaccharides (cellobiose, maltose, sucrose, lactose)",u:B+"carbhyd.htm#carb1"},
+    {n:"Polysaccharides – Cellulose, Starch, Amylose, Amylopectin",u:B+"carbhyd.htm#carb1"},
+    {n:"Cyclodextrins",u:B+"carbhyd.htm#carb1"},
+    {n:"Reducing Sugars / Aldaric & Aldonic Acids",u:B+"carbhyd.htm#carb1"},
+    {n:"Vitamin C (ascorbic acid)",u:B+"carbhyd.htm#carb1"},
+    {n:"Corn Syrup / Invert Sugar / Sweeteners",u:B+"carbhyd.htm#carb1"},
+  ]},
+  {t:"Lipids",tp:[
+    {n:"Lipids – overview & biosynthesis",u:B+"lipids.htm#lipid1"},
+    {n:"Fatty Acids (saturated & unsaturated)",u:B+"lipids.htm#lipid1"},
+    {n:"Triglycerides / Fats & Oils",u:B+"lipids.htm#lipid1"},
+    {n:"Soaps, Detergents, Micelles & Amphipathic Structures",u:B+"lipids.htm#lipid1"},
+    {n:"Phospholipids & Lipid Bilayers / Liposomes",u:B+"lipids.htm#lipid1"},
+    {n:"Steroids – Cholesterol, Cholic Acid, Cortisone, Testosterone",u:B+"lipids.htm#lipid1"},
+    {n:"Terpenes & Isoprene Rule",u:B+"lipids.htm#lipid1"},
+    {n:"Mevalonate & DXP Biosynthetic Pathways",u:B+"lipids.htm#lipid1"},
+    {n:"Prostaglandins & Other Eicosanoids",u:B+"lipids.htm#lipid1"},
+    {n:"Waxes",u:B+"lipids.htm#lipid1"},
+    {n:"Vitamins A, D, E & K",u:B+"lipids.htm#lipid1"},
+    {n:"Rubber & Gutta-Percha / Vulcanization",u:B+"lipids.htm#lipid1"},
+  ]},
+  {t:"Proteins & Amino Acids",tp:[
+    {n:"Amino Acids – Formulas, Abbreviations & pKas",u:B+"proteins.htm#aacd1"},
+    {n:"Zwitterion Form & Isoelectric Point (pI)",u:B+"proteins.htm#aacd1"},
+    {n:"L-Configuration & Essential Amino Acids",u:B+"proteins.htm#aacd1"},
+    {n:"Amino Acid Synthesis (Strecker, Gabriel, reductive amination)",u:B+"proteins.htm#aacd1"},
+    {n:"Resolution of Racemic Amino Acids",u:B+"proteins.htm#aacd1"},
+    {n:"Ninhydrin Reaction",u:B+"proteins.htm#aacd1"},
+    {n:"Peptide Bonds & Primary Structure",u:B+"proteins.htm#aacd1"},
+    {n:"Peptide Synthesis / Merrifield Solid-Phase",u:B+"proteins.htm#aacd1"},
+    {n:"Edman Degradation & N-terminal Analysis",u:B+"proteins.htm#aacd1"},
+    {n:"Cyanogen Bromide Cleavage",u:B+"proteins.htm#aacd1"},
+    {n:"Protein Secondary Structure – α-Helix & β-Sheet",u:B+"proteins.htm#aacd1"},
+    {n:"Protein Tertiary & Quaternary Structure",u:B+"proteins.htm#aacd1"},
+    {n:"Denaturation of Proteins",u:B+"proteins.htm#aacd1"},
+    {n:"Post-translational Modification",u:B+"proteins.htm#aacd1"},
+    {n:"Insulin, Hemoglobin, Lysozyme, Porphyrins",u:B+"proteins.htm#aacd1"},
+  ]},
+  {t:"Nucleic Acids",tp:[
+    {n:"Nucleic Acids – overview",u:B+"nucacids.htm#nacd1"},
+    {n:"Base Pairing (A-T/U, G-C)",u:B+"nucacids.htm#nacd1"},
+    {n:"DNA Double Helix & Secondary Structure",u:B+"nucacids.htm#nacd1"},
+    {n:"DNA Replication & Replication Fork",u:B+"nucacids.htm#nacd1"},
+    {n:"Central Dogma (DNA→RNA→Protein)",u:B+"nucacids.htm#nacd1"},
+    {n:"Transcription",u:B+"nucacids.htm#nacd1"},
+    {n:"Translation & Ribosomes",u:B+"nucacids.htm#nacd1"},
+    {n:"RNA Codons",u:B+"nucacids.htm#nacd1"},
+    {n:"Nucleoside & Nucleotide",u:B+"nucacids.htm#nacd1"},
+    {n:"Purine & Pyrimidine Bases",u:B+"nucacids.htm#nacd1"},
+  ]},
+]},
+{t:"Polymers",i:"∞",c:"#7ec9b8",ss:[
+  {t:"Macromolecule Chemistry",tp:[
+    {n:"Macromolecules / Polymers – overview",u:B+"polymers.htm#polmr1"},
+    {n:"Addition (Chain-Growth) Polymers",u:B+"polymers.htm#polmr1"},
+    {n:"Condensation (Step-Growth) Polymers",u:B+"polymers.htm#polmr1"},
+    {n:"Radical Chain-Growth Polymerization",u:B+"polymers.htm#polmr1"},
+    {n:"Cationic & Anionic Chain-Growth Polymerization",u:B+"polymers.htm#polmr1"},
+    {n:"Ziegler-Natta Catalytic Polymerization",u:B+"polymers.htm#polmr1"},
+    {n:"Copolymers – Block & Addition",u:B+"polymers.htm#polmr1"},
+    {n:"Polymer Molecular Weight – Mn & Mw",u:B+"polymers.htm#polmr1"},
+    {n:"Glass Transition (Tg) & Melt Transition (Tm)",u:B+"polymers.htm#polmr1"},
+    {n:"Crystallinity & Morphology of Polymers",u:B+"polymers.htm#polmr1"},
+    {n:"Stereoisomerism – Atactic, Isotactic, Syndiotactic",u:B+"polymers.htm#polmr1"},
+    {n:"Thermoplastic & Thermosetting Plastics",u:B+"polymers.htm#polmr1"},
+    {n:"Vulcanization of Rubber",u:B+"polymers.htm#polmr1"},
+    {n:"Biodegradable Polymers, Recycling & Environmental Impact",u:B+"polymers.htm#polmr1"},
+    {n:"The Age of Plastics",u:B+"polymers.htm#polmr1"},
+    {n:"Cold-Drawing / Fibers",u:B+"polymers.htm#polmr1"},
+  ]},
+]},
+{t:"Synthesis",i:"◎",c:"#c9a87e",ss:[
+  {t:"Synthesis Strategy",tp:[
+    {n:"Introduction to Synthesis",u:B+"synth1.htm"},
+    {n:"Principles of Modern Synthesis",u:B+"synth2.htm"},
+    {n:"Retrosynthetic Analysis",u:B+"synth2.htm"},
+    {n:"Synthetic Transform",u:B+"synth2.htm"},
+    {n:"Linear vs. Convergent Synthesis",u:B+"synth2.htm"},
+    {n:"Carbon-Carbon Bond Formation",u:B+"synth2.htm"},
+    {n:"Umpolung / Acyl Anion Equivalents",u:B+"synth2.htm"},
+    {n:"Cascade / Domino Reactions",u:B+"synth2.htm"},
+    {n:"Stereoselective Synthesis – overview",u:B+"sterslct.htm#top1"},
+    {n:"Baldwin's Rules for Cyclization",u:B+"synth2.htm"},
+    {n:"Thorpe-Ingold Effect / Cyclization vs. Dimerization",u:B+"synth2.htm"},
+    {n:"Stork Enamine Synthesis / Eschenmoser's Salt",u:B+"synth2.htm"},
+    {n:"Stork-Eschenmoser Hypothesis",u:B+"synth2.htm"},
+    {n:"Applications of Condensation Reactions",u:B+"synth2.htm"},
+    {n:"Historical Background of Synthesis",u:B+"synth1.htm"},
+    {n:"Woodward Reserpine Synthesis",u:B+"synth2.htm"},
+  ]},
+]},
+];
+
+// BUILD
+const sb=document.getElementById('sb'),sw=document.getElementById('sw'),sr=document.getElementById('sr'),qp=document.getElementById('qp'),si=document.getElementById('si'),emptyState=document.getElementById('emptyState'),categoryHome=document.getElementById('categoryHome'),categoryGrid=document.getElementById('categoryGrid'),workspaceBar=document.querySelector('.workspace-bar');
+const viewer=document.getElementById('viewer'),viewerFrame=document.getElementById('viewerFrame'),viewerTitle=document.getElementById('viewerTitle'),viewerClose=document.getElementById('viewerClose');
+const library=document.getElementById('library'),organicApp=document.getElementById('organicApp'),openOrganic=document.getElementById('openOrganic'),backLibrary=document.getElementById('backLibrary');
+const themeToggle=document.getElementById('themeToggle');
+let total=0,cur=null;
+cats.forEach(c=>c.ss.forEach(s=>total+=s.tp.length));
+document.getElementById('tc').textContent=total;
+
+function setTheme(mode){
+  document.documentElement.dataset.theme=mode;
+  try{localStorage.setItem('chemTheme',mode)}catch(e){}
+  themeToggle.textContent=mode==='dark'?'Light':'Dark';
+}
+setTheme(document.documentElement.dataset.theme||'light');
+themeToggle.addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+
+cats.forEach((cat,ci)=>{
+  const sec=document.createElement('div');sec.className='nav-section';
+  const h=document.createElement('div');h.className='nc';
+  h.innerHTML=`<span class="nnum">${String(ci+1).padStart(2,'0')}</span><span class="nd" style="background:${cat.c}"></span>${cat.t}<span class="ch">▶</span>`;
+  const ns=document.createElement('div');ns.className='ns';
+  cat.ss.forEach((ss,si2)=>{
+    const a=document.createElement('a');a.className='ni';a.href='#';a.textContent=ss.t;
+    a.addEventListener('click',e=>{e.preventDefault();showSec(ci);setTimeout(()=>openSubfolder(ci,si2,true),80);});
+    ns.appendChild(a);
+  });
+  h.addEventListener('click',()=>{const wa=h.classList.contains('active');document.querySelectorAll('.nc').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.ns').forEach(x=>x.classList.remove('open'));if(!wa){h.classList.add('active');ns.classList.add('open');showSec(ci);}});
+  sec.appendChild(h);sec.appendChild(ns);sb.appendChild(sec);
+
+  const pill=document.createElement('div');pill.className='pill';pill.textContent=cat.i+' '+cat.t;
+  pill.addEventListener('click',()=>{showSec(ci);document.querySelectorAll('.nc')[ci].click();});
+  qp.appendChild(pill);
+
+  const tile=document.createElement('button');tile.className='category-tile';tile.type='button';tile.style.setProperty('--cc',cat.c);
+  const cnt=cat.ss.reduce((a,s)=>a+s.tp.length,0);
+  tile.innerHTML=`<span class="category-icon">📁</span><div><h2>${cat.t}</h2><p>${cat.ss.length} folders · ${cnt} pages</p></div>`;
+  tile.addEventListener('click',()=>{showSec(ci);document.querySelectorAll('.nc')[ci].click();});
+  categoryGrid.appendChild(tile);
+
+  const s2=document.createElement('div');s2.className='sc';s2.id=`sec-${ci}`;
+  s2.innerHTML=`<div class="sh"><span class="sn">§${String(ci+1).padStart(2,'0')}</span><span class="si2">${cat.i}</span><h2 class="st" style="color:${cat.c}">${cat.t}</h2><span class="sct">${cnt} topics</span></div>`;
+  cat.ss.forEach((ss,si2)=>{
+    const sd=document.createElement('div');sd.className='ss';sd.id=`ss-${ci}-${si2}`;
+    const st=document.createElement('div');st.className='sst';st.style.color=cat.c;st.textContent=ss.t;sd.appendChild(st);
+    st.addEventListener('click',()=>openSubfolder(ci,si2,false));
+    const tg=document.createElement('div');tg.className='tg';
+    ss.tp.forEach(tp=>{
+      const a=document.createElement('a');a.className='tc';a.style.setProperty('--cc',cat.c);a.href='#';a.dataset.url=tp.u;
+      a.innerHTML=`<div class="tn"><span>${tp.n}</span><span class="ei">Preview</span></div>`;
+      a.addEventListener('click',e=>{e.preventDefault();openTopic(tp.n,tp.u,a);});
+      tg.appendChild(a);
+    });
+    sd.appendChild(tg);s2.appendChild(sd);
+  });
+  sw.appendChild(s2);
+});
+
+showAll();
+
+function showSec(ci){
+  closeViewer();
+  emptyState.classList.remove('visible');
+  categoryHome.classList.remove('visible');
+  sw.style.display='';
+  sw.classList.remove('all-v');
+  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('visible'));
+  document.querySelectorAll('.ss').forEach(s=>s.classList.remove('open'));
+  const t=document.getElementById(`sec-${ci}`);if(t){t.classList.add('visible');}
+  document.querySelectorAll('.nc').forEach((h,i)=>h.classList.toggle('active',i===ci));
+  document.querySelectorAll('.ns').forEach((s,i)=>s.classList.toggle('open',i===ci));
+  document.getElementById('hero').style.display='none';
+  sr.classList.remove('visible');sr.style.display='none';si.value='';
+  cur=ci;if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function showAll(){
+  closeViewer();
+  document.querySelectorAll('.ss').forEach(s=>s.classList.remove('open'));
+  sw.classList.remove('all-v');document.querySelectorAll('.sc').forEach(s=>s.classList.remove('visible'));
+  sw.style.display='none';
+  sr.classList.remove('visible');sr.style.display='none';
+  document.getElementById('hero').style.display='none';
+  emptyState.classList.remove('visible');
+  categoryHome.classList.add('visible');
+  cur=null;
+}
+
+function openSubfolder(ci,si2,scrollToFolder){
+  const section=document.getElementById(`sec-${ci}`);
+  if(section){
+    section.querySelectorAll('.ss').forEach(s=>s.classList.remove('open'));
+  }
+  const el=document.getElementById(`ss-${ci}-${si2}`);
+  if(el){
+    el.classList.add('open');
+    if(scrollToFolder)el.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+
+si.addEventListener('input',()=>{
+  if(viewer.classList.contains('visible'))closeViewer();
+  const q=si.value.trim().toLowerCase();
+  if(!q){sr.classList.remove('visible');sr.style.display='none';if(cur!==null){document.getElementById(`sec-${cur}`).classList.add('visible');}else showAll();return;}
+  emptyState.classList.remove('visible');
+  categoryHome.classList.remove('visible');
+  sw.style.display='';
+  sw.classList.remove('all-v');document.querySelectorAll('.sc').forEach(s=>s.classList.remove('visible'));
+  document.getElementById('hero').style.display='none';
+  const res=[];
+  cats.forEach((cat,ci)=>cat.ss.forEach(ss=>ss.tp.forEach(tp=>{if(tp.n.toLowerCase().includes(q))res.push({tp,cat,ci});})));
+  sr.style.display='block';sr.classList.add('visible');sr.innerHTML='';
+  if(!res.length){sr.innerHTML=`<div class="nr">No topics found for "<strong>${q}</strong>"</div>`;return;}
+  const h=document.createElement('div');h.className='srh';h.innerHTML=`Found <strong>${res.length}</strong> topic${res.length!==1?'s':''} for "<strong>${q}</strong>"`;sr.appendChild(h);
+  const tg=document.createElement('div');tg.className='tg';
+  res.forEach(({tp,cat,ci})=>{
+    const idx=tp.n.toLowerCase().indexOf(q);
+    const hl=tp.n.slice(0,idx)+`<mark>${tp.n.slice(idx,idx+q.length)}</mark>`+tp.n.slice(idx+q.length);
+    const a=document.createElement('a');a.className='tc';a.style.setProperty('--cc',cat.c);a.href='#';a.dataset.url=tp.u;
+    a.innerHTML=`<div class="tn"><span>${hl}</span><span class="ei">Preview</span></div><div class="rc">${cat.i} ${cat.t}</div>`;
+    a.addEventListener('click',e=>{e.preventDefault();openTopic(tp.n,tp.u,a);});
+    tg.appendChild(a);
+  });
+  sr.appendChild(tg);
+});
+
+function openTopic(title,url,card){
+  document.querySelectorAll('.tc').forEach(x=>x.classList.remove('active'));
+  if(card)card.classList.add('active');
+  viewerTitle.textContent=title;
+  viewerFrame.src=url;
+  emptyState.classList.remove('visible');
+  categoryHome.classList.remove('visible');
+  sw.style.display='none';
+  sr.style.display='none';
+  sr.classList.remove('visible');
+  viewer.classList.add('visible');
+  workspaceBar.classList.add('hidden');
+  document.getElementById('hero').style.display='none';
+  viewer.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function closeViewer(){
+  viewer.classList.remove('visible');
+  viewerFrame.removeAttribute('src');
+  workspaceBar.classList.remove('hidden');
+  sw.style.display='';
+  if(si.value.trim())sr.style.display='block';
+  document.querySelectorAll('.tc').forEach(x=>x.classList.remove('active'));
+}
+
+viewerClose.addEventListener('click',closeViewer);
+
+openOrganic.addEventListener('click',()=>{
+  library.classList.add('hidden');
+  organicApp.classList.remove('hidden');
+  document.body.classList.remove('library-mode');
+  showAll();
+});
+
+backLibrary.addEventListener('click',()=>{
+  window.location.href='../index.html';
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='/'&&document.activeElement!==si){e.preventDefault();si.focus();}
+  if(e.key==='Escape'){si.blur();si.value='';sr.classList.remove('visible');sr.style.display='none';showAll();}
+});
+</script>
+</body>
+</html>

@@ -1,72 +1,1801 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chemistry Library</title>
-<script>try{document.documentElement.dataset.theme=localStorage.getItem('chemTheme')||'light'}catch(e){document.documentElement.dataset.theme='light'}</script>
+﻿
 <style>
-:root{--bg:#f8f6f0;--paper:#fffdf7;--surface:#f3f0e8;--border:#ded8ca;--accent:#7c3aed;--pink:#db2777;--teal:#0f766e;--amber:#f59e0b;--text:#171717;--muted:#57534e;--shadow:0 18px 42px rgba(68,64,60,.12);--body-bg:#f8f6f0;--header-bg:#fffdf7}
-[data-theme="dark"]{--bg:#000;--paper:#101010;--surface:#171717;--border:#2c2c2c;--accent:#a78bfa;--pink:#f472b6;--teal:#5eead4;--amber:#fbbf24;--text:#f5f5f5;--muted:#c7c7c7;--shadow:0 24px 60px rgba(0,0,0,.5);--body-bg:#000;--header-bg:#0b0b0b}
-*{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;background:var(--body-bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-body *{color:var(--text)}
-header{height:68px;background:var(--header-bg);border-bottom:1px solid var(--border);box-shadow:var(--shadow);padding:0 1.1rem;display:flex;align-items:center;gap:.75rem}
-.logo{display:flex;align-items:center;font-weight:850;font-size:1.08rem;color:var(--text)}
-.logo::before{content:"▣";display:grid;place-items:center;width:2.1rem;height:2.1rem;margin-right:.65rem;border-radius:10px;background:var(--surface);color:var(--accent);box-shadow:inset 0 0 0 1px var(--border)}
-.logo span{color:var(--muted);font-weight:800;font-size:.62rem;margin-left:.55rem;letter-spacing:.08em;font-family:monospace;text-transform:uppercase}
-.theme-toggle{margin-left:auto;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:.48rem .76rem;font:800 .78rem Inter,system-ui,sans-serif;cursor:pointer}
-.theme-toggle:hover{background:var(--paper)}
-main{padding:1rem}
-.panel{border:1px solid var(--border);border-radius:18px;background:var(--paper);box-shadow:var(--shadow);overflow:hidden}
-.head{padding:1.35rem;border-bottom:1px solid var(--border);background:var(--paper)}
-.kicker{font-family:monospace;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--pink);margin-bottom:.2rem}
-h1{font-size:1.55rem;line-height:1.1;color:var(--text)}
-.head p{color:var(--text);font-size:.92rem;margin-top:.35rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:0}
-.folder{display:block;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--paper);text-decoration:none;color:inherit;padding:1rem;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;min-height:128px;position:relative;overflow:hidden}
-.folder::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 20%,rgba(219,39,119,.16),transparent 35%),radial-gradient(circle at 90% 15%,rgba(15,118,110,.14),transparent 34%);opacity:0;transition:.18s}
-.folder::after{content:"";position:absolute;inset:auto 0 0 0;height:4px;background:linear-gradient(90deg,var(--accent),var(--pink),var(--amber),var(--teal));opacity:.18;transition:.18s}
-.folder:hover{background:var(--surface);transform:translateY(-5px) scale(1.012);box-shadow:var(--shadow);z-index:2}
-.folder:hover::before{opacity:1}
-.folder:hover::after{height:7px;opacity:.95}
-.folder.empty{opacity:.78}
-.icon{display:grid;place-items:center;width:5rem;height:5rem;border-radius:22px;background:var(--surface);border:1px solid var(--border);color:var(--accent);font-size:3rem;margin-bottom:1rem;box-shadow:0 14px 30px rgba(124,58,237,.12);transition:transform .18s ease,box-shadow .18s ease}
-.folder:hover .icon{transform:translateY(-3px) scale(1.1) rotate(-3deg);box-shadow:0 20px 38px rgba(219,39,119,.18)}
-h2{font-size:1rem;color:var(--text);margin-bottom:.25rem}
-.folder p{font-size:.82rem;color:var(--text)}
-.status{display:inline-block;margin-top:.8rem;font-family:monospace;font-size:.62rem;font-weight:800;color:var(--pink);text-transform:uppercase;letter-spacing:.08em;transition:.18s}
-.folder:hover .status{color:var(--accent);letter-spacing:.13em}
-.icon,.theme-toggle{background:var(--surface)!important;border-color:var(--border)!important;color:var(--text)!important}
-[data-theme="dark"] .icon,[data-theme="dark"] .theme-toggle{background:#171717!important;border-color:#3a3a3a!important;color:#fff!important}
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap');
+@import url('assets/css/style.css');
+:root{
+--color-background-primary:#ffffff;
+--color-background-secondary:#edf7fb;
+--color-background-tertiary:#07111f;
+--color-border-secondary:#0f6b7f;
+--color-border-tertiary:#8fb6c2;
+--color-text-primary:#06111f;
+--color-text-secondary:#17324a;
+--color-text-tertiary:#496477;
+--color-text-danger:#b91c1c;
+--border-radius-md:8px;
+--border-radius-lg:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body,#app{font-family:'Source Sans 3','Inter','Segoe UI',Arial,sans-serif;color:var(--color-text-primary);background:var(--color-background-tertiary);}
+#app{display:flex;flex-direction:column;padding-top:54px;}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-secondary);padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.16);}
+.topbar-icon{width:32px;height:32px;border-radius:var(--border-radius-md);background:#1D9E75;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.topbar-icon i{color:#fff;font-size:16px;}
+.topbar-icon svg{width:23px;height:23px;display:block;}
+.topbar-icon line,.topbar-icon polygon,.topbar-icon circle{stroke:#fff;}
+.topbar-title{font-family:'Lora','Playfair Display',Georgia,serif;font-size:15px;font-weight:600;}
+.topbar-sub{font-size:11px;color:var(--color-text-tertiary);}
+.header-nav{display:flex;align-items:center;gap:6px;margin-left:auto;}
+.header-nav a{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border:1px solid transparent;border-radius:var(--border-radius-md);color:var(--color-text-secondary);font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background 0.15s,border-color 0.15s,color 0.15s,transform 0.15s;}
+.header-nav a:hover{background:#e6fbff;border-color:#005f73;color:#005f73;transform:translateY(-1px);}
+.header-nav a.active{background:#005f73;border-color:#005f73;color:#fff;}
+.nav-dropdown-wrap{position:relative;}
+.nav-dropdown-trigger{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border:1px solid transparent;border-radius:var(--border-radius-md);background:transparent;color:var(--color-text-secondary);font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background 0.15s,border-color 0.15s,color 0.15s,transform 0.15s;}
+.nav-dropdown-trigger:hover,.nav-dropdown-wrap:hover .nav-dropdown-trigger,.nav-dropdown-wrap:focus-within .nav-dropdown-trigger{background:#e6fbff;border-color:#005f73;color:#005f73;transform:translateY(-1px);}
+.nav-dropdown-trigger.active{background:#005f73;border-color:#005f73;color:#fff;}
+.nav-dropdown-menu{position:absolute;top:calc(100% + 8px);left:0;width:230px;padding:8px;border:1px solid #8fb6c2;border-radius:var(--border-radius-md);background:#ffffff;box-shadow:0 16px 36px rgba(0,0,0,0.18);opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity 0.15s,transform 0.15s;z-index:80;}
+.nav-dropdown-wrap:hover .nav-dropdown-menu,.nav-dropdown-wrap:focus-within .nav-dropdown-menu,.nav-dropdown-menu.open{opacity:1;pointer-events:auto;transform:translateY(0);}
+.nav-dropdown-menu a{display:block;width:100%;min-height:auto;padding:9px 10px;color:#17324a;border-radius:var(--border-radius-md);}
+.nav-dropdown-menu a:hover{background:#005f73;color:#fff;border-color:#005f73;transform:none;}
+.back-btn{margin-left:auto;padding:5px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;cursor:pointer;font-size:12px;color:var(--color-text-secondary);display:none;align-items:center;gap:5px;font-family:'Source Sans 3',sans-serif;transition:background 0.15s;}
+.header-nav + .back-btn{margin-left:4px;}
+.back-btn:hover{background:var(--color-background-secondary);}
+.back-btn.show{display:flex;}
+.page{padding:16px;max-width:960px;margin:0 auto;width:100%;}
+.page.with-index-sidebar{padding-left:268px;max-width:1220px;}
+.page.full-width{max-width:none;width:100%;padding-left:16px;padding-right:16px;}
+.page.medicinal-index-mode{max-width:none;width:100%;padding-left:16px;padding-right:16px;}
+.page.full-width.with-index-sidebar{max-width:none;padding-left:268px;}
+.index-sidebar{position:fixed;top:70px;left:16px;bottom:16px;width:228px;background:var(--color-background-primary);border:1px solid #8fb6c2;border-radius:var(--border-radius-lg);box-shadow:0 12px 30px rgba(0,0,0,0.16);overflow:hidden;z-index:20;transition:box-shadow 0.18s,border-color 0.18s,transform 0.18s;}
+.index-sidebar.hidden{display:none;}
+.index-sidebar:hover{border-color:#005f73;box-shadow:0 18px 42px rgba(0,0,0,0.22),0 0 0 3px rgba(0,95,115,0.12);}
+.index-sidebar.collapsed{transform:translateX(-188px);}
+.index-sidebar.collapsed:hover{transform:translateX(0);}
+.index-head{padding:13px;border-bottom:1px solid #8fb6c2;background:linear-gradient(135deg,#005f73,#0f6b7f);display:flex;align-items:center;gap:8px;}
+.index-title-btn{flex:1;text-align:left;background:transparent;border:none;color:#ffffff;font-family:'Lora',serif;font-size:18px;font-weight:600;cursor:pointer;}
+.index-title-btn:hover{color:#ffe66d;}
+.index-toggle{width:28px;height:28px;border:1px solid rgba(255,255,255,0.55);border-radius:50%;background:rgba(255,255,255,0.12);color:#fff;cursor:pointer;font-size:15px;line-height:1;transition:background 0.15s,transform 0.15s;}
+.index-toggle:hover{background:#ffe66d;color:#06111f;transform:scale(1.06);}
+.index-sidebar.collapsed .index-toggle{transform:rotate(180deg);}
+.index-sidebar.collapsed .index-toggle:hover{transform:rotate(180deg) scale(1.06);}
+.index-sub{font-size:11px;color:rgba(255,255,255,0.78);margin-top:2px;}
+.index-scroll{height:calc(100% - 64px);overflow:auto;padding:10px;}
+.index-part-name{font-size:9px;letter-spacing:0.09em;text-transform:uppercase;color:#005f73;font-weight:700;margin:10px 0 5px;}
+.index-ch-btn{position:relative;width:100%;display:block;text-align:left;border:1px solid transparent;border-radius:var(--border-radius-md);background:transparent;color:var(--color-text-secondary);font-family:'Source Sans 3',sans-serif;font-size:12px;line-height:1.25;padding:8px 9px 8px 13px;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s,transform 0.15s,box-shadow 0.15s;}
+.index-ch-btn::before{content:'';position:absolute;left:5px;top:9px;bottom:9px;width:3px;border-radius:4px;background:transparent;transition:background 0.15s;}
+.index-ch-btn:hover{background:#e6fbff;border-color:#005f73;color:#06111f;transform:translateX(3px);box-shadow:0 7px 18px rgba(0,95,115,0.12);}
+.index-ch-btn:hover::before{background:#ffe66d;}
+.index-ch-btn.active{background:#005f73;border-color:#005f73;color:#fff;box-shadow:0 8px 20px rgba(0,95,115,0.22);}
+.index-ch-btn.active::before{background:#ffe66d;}
+.index-ch-num{display:block;font-size:10px;font-weight:700;color:inherit;opacity:0.82;margin-bottom:2px;}
+.hero{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px 24px;margin-bottom:16px;}
+.hero-eyebrow{font-size:10px;letter-spacing:0.09em;text-transform:uppercase;color:#0F6E56;font-weight:600;margin-bottom:6px;}
+.hero-h{font-family:'Lora',serif;font-size:22px;font-weight:600;line-height:1.3;margin-bottom:6px;}
+.hero-p{font-size:13px;color:var(--color-text-secondary);line-height:1.6;max-width:520px;}
+.part-block{margin-bottom:14px;}
+.part-label{font-size:10px;letter-spacing:0.09em;text-transform:uppercase;color:var(--color-text-tertiary);font-weight:600;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:8px;}
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:7px;}
+.page.medicinal-index-mode .ch-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;}
+.page.medicinal-index-mode .hero{max-width:1220px;margin-left:auto;margin-right:auto;}
+.page.medicinal-index-mode .part-block{max-width:1480px;margin-left:auto;margin-right:auto;}
+.med-index-list{display:grid;gap:10px;max-width:1480px;margin:0 auto 16px;}
+.med-part{background:var(--color-background-primary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,0.12);}
+.med-part-head{width:100%;display:flex;align-items:center;gap:10px;padding:13px 15px;border:0;background:#005f73;color:#fff;text-align:left;cursor:pointer;font-family:'Source Sans 3','Segoe UI',Arial,sans-serif;}
+.med-part-no{font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#ffe66d;min-width:58px;}
+.med-part-title{font-size:15px;font-weight:700;flex:1;}
+.med-part-count{font-size:11px;opacity:0.86;}
+.med-chapters{display:none;padding:10px;background:rgba(237,247,251,0.65);}
+.med-part.open .med-chapters{display:grid;gap:8px;}
+.med-chapter{border:1px solid #8fb6c2;border-radius:var(--border-radius-md);background:#fff;overflow:hidden;}
+.med-chapter-head{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border:0;background:transparent;color:#06111f;text-align:left;cursor:pointer;font-family:'Source Sans 3','Segoe UI',Arial,sans-serif;}
+.med-ch-num{font-size:11px;font-weight:800;color:#005f73;min-width:46px;}
+.med-ch-title{font-size:13px;font-weight:700;flex:1;}
+.med-topic-count{font-size:11px;color:#496477;}
+.med-subtopics{display:none;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:7px;padding:0 12px 12px;}
+.med-chapter.open .med-subtopics{display:grid;}
+.med-subtopic{padding:8px 10px;border:1px solid #c8d9e0;border-radius:var(--border-radius-md);background:#f8fbff;color:#17324a;font-size:12px;line-height:1.3;}
+.med-subtopic span{display:block;font-size:10px;font-weight:800;color:#005f73;margin-bottom:2px;}
+.med-side-part{border-bottom:1px solid var(--color-border-tertiary);}
+.med-side-part-name{padding:9px 13px;background:var(--color-background-secondary);color:#005f73;font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;}
+.med-side-chapter{width:100%;display:block;text-align:left;border:0;border-bottom:1px solid var(--color-border-tertiary);background:transparent;color:var(--color-text-primary);font-family:'Source Sans 3','Segoe UI',Arial,sans-serif;font-size:12px;font-weight:700;line-height:1.25;padding:9px 13px;cursor:pointer;}
+.med-side-chapter:hover{background:#e6fbff;color:#005f73;}
+.med-side-chapter.active{background:#005f73;color:#fff;}
+.med-side-subtopics{display:none;background:#fff;}
+.med-side-subtopics.open{display:block;}
+.med-side-topic{width:100%;display:flex;gap:7px;text-align:left;border:0;border-bottom:1px solid #edf2f5;background:transparent;color:var(--color-text-secondary);font-family:'Source Sans 3','Segoe UI',Arial,sans-serif;font-size:12px;line-height:1.3;padding:8px 13px 8px 20px;cursor:pointer;}
+.med-side-topic:hover{background:#edf7fb;color:#005f73;}
+.med-side-topic.active{background:#e6fbff;color:#005f73;font-weight:700;}
+.med-side-topic-num{font-size:10px;font-weight:800;color:inherit;opacity:0.8;min-width:20px;}
+body:not(.light-mode) .med-part,
+body:not(.light-mode) .med-chapter{background:#07111f;border-color:#8fb6c2;}
+body:not(.light-mode) .med-chapters{background:rgba(7,17,31,0.72);}
+body:not(.light-mode) .med-chapter-head{color:#fff;}
+body:not(.light-mode) .med-ch-num{color:#ffe66d;}
+body:not(.light-mode) .med-topic-count{color:#d8edf5;}
+body:not(.light-mode) .med-subtopic{background:#0f2437;border-color:#8fb6c2;color:#fff;}
+body:not(.light-mode) .med-subtopic span{color:#ffe66d;}
+body:not(.light-mode) .med-side-part-name{background:#0f2437;color:#ffe66d;}
+body:not(.light-mode) .med-side-chapter{color:#fff;}
+body:not(.light-mode) .med-side-chapter:hover{background:#0f2437;color:#ffe66d;}
+body:not(.light-mode) .med-side-subtopics{background:#07111f;}
+body:not(.light-mode) .med-side-topic{color:#d8edf5;border-bottom-color:rgba(143,182,194,0.22);}
+body:not(.light-mode) .med-side-topic:hover,
+body:not(.light-mode) .med-side-topic.active{background:#0f2437;color:#ffe66d;}
+.ch-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 13px;cursor:pointer;transition:border-color 0.15s,background 0.15s;}
+.ch-card:hover{border-color:#5DCAA5;background:var(--color-background-secondary);}
+.ch-num{font-size:10px;color:#0F6E56;font-weight:600;margin-bottom:3px;}
+.ch-name{font-size:13px;font-weight:500;line-height:1.3;color:var(--color-text-primary);}
+.ch-count{font-size:11px;color:var(--color-text-tertiary);margin-top:3px;}
+#chapterView{display:none;}
+#chapterView.show{display:flex;gap:14px;align-items:flex-start;}
+#chapterView.website-mode.show{display:block;}
+#chapterView.website-mode .sidebar,
+#chapterView.website-mode .ch-header{display:none;}
+#chapterView.no-topic-sidebar .sidebar{display:none;}
+#chapterView.no-topic-sidebar .main-content{width:100%;}
+#chapterView.website-mode .main-content{width:100%;}
+#chapterView.website-mode .note-card{padding:0;border:0;background:transparent;box-shadow:none;}
+#chapterView.website-mode .note-topic-title{display:none;}
+#chapterView.website-mode .ai-body .section{margin:0;}
+#chapterView.website-mode .ai-body .sec-head,
+#chapterView.website-mode .ai-body > .section > p{display:none;}
+.sidebar{width:210px;flex-shrink:0;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;}
+.sidebar{position:sticky;top:72px;max-height:calc(100vh - 88px);overflow:auto;}
+.sidebar-header{padding:10px 13px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);}
+.sidebar-title{font-size:11px;font-weight:500;color:var(--color-text-secondary);}
+.topic-list{list-style:none;}
+.topic-item{border-bottom:0.5px solid var(--color-border-tertiary);}
+.topic-item:last-child{border-bottom:none;}
+.topic-btn{width:100%;text-align:left;padding:8px 13px;background:transparent;border:none;cursor:pointer;font-size:12px;color:var(--color-text-secondary);font-family:'Source Sans 3',sans-serif;line-height:1.4;transition:background 0.12s,color 0.12s;display:flex;align-items:flex-start;gap:8px;}
+.topic-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary);}
+.topic-btn.active{background:#E1F5EE;color:#085041;font-weight:500;}
+.topic-btn.active .tdot{background:#1D9E75;}
+.topic-btn.done .tdot{background:#9FE1CB;}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--color-border-secondary);flex-shrink:0;margin-top:4px;}
+.main-content{flex:1;min-width:0;}
+.ch-header{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 18px;margin-bottom:10px;}
+.ch-eyebrow{font-size:10px;letter-spacing:0.09em;text-transform:uppercase;color:#0F6E56;font-weight:600;margin-bottom:4px;}
+.ch-title{font-family:'Lora',serif;font-size:18px;font-weight:600;line-height:1.3;margin-bottom:3px;}
+.ch-meta{font-size:11px;color:var(--color-text-tertiary);}
+.note-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px 22px;}
+.note-topic-title{font-family:'Lora',serif;font-size:17px;font-weight:600;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #E1F5EE;color:var(--color-text-primary);}
+
+.ai-body{font-size:14px;line-height:1.85;color:var(--color-text-primary);}
+.ai-body .section{margin-bottom:22px;}
+.ai-body .sec-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.ai-body .sec-icon{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ai-body .sec-icon i{font-size:14px;}
+.ai-body .sec-label{font-size:13px;font-weight:500;color:var(--color-text-primary);}
+.ai-body p{margin-bottom:9px;font-size:14px;}
+.ai-body ul,.ai-body ol{margin:6px 0 10px 20px;}
+.ai-body li{margin-bottom:6px;font-size:14px;line-height:1.7;}
+.ai-body strong{font-weight:500;}
+.ai-body .rxn{background:#E1F5EE;border-left:3px solid #1D9E75;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:12px 16px;margin:10px 0;font-size:13px;font-family:'Lora',serif;font-style:italic;color:#085041;line-height:1.7;}
+.ai-body .rxn strong{font-style:normal;font-weight:500;color:#04342C;}
+.ai-body table{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:13px;}
+.ai-body th{background:#E1F5EE;padding:8px 11px;text-align:left;font-weight:500;border:0.5px solid #9FE1CB;font-size:12px;color:#085041;}
+.ai-body td{padding:8px 11px;border:0.5px solid var(--color-border-tertiary);vertical-align:top;}
+.ai-body .tip{background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-left:3px solid #EF9F27;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:10px 13px;margin:8px 0;font-size:13px;line-height:1.65;}
+.ai-body .tip strong{color:#854F0B;}
+.ai-body .warn{background:#FAEEDA;border:0.5px solid #FAC775;border-left:3px solid #EF9F27;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:10px 13px;margin:8px 0;font-size:13px;color:#633806;line-height:1.65;}
+.ai-body .warn strong{font-weight:500;}
+.ai-body .example-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:13px 15px;margin:8px 0;font-size:13px;line-height:1.7;}
+.ai-body .example-box .ex-label{font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:#0F6E56;font-weight:600;margin-bottom:6px;}
+.ai-body .mech-step{display:flex;gap:10px;margin:7px 0;align-items:flex-start;}
+.ai-body .step-num{width:22px;height:22px;border-radius:50%;background:#E1F5EE;color:#085041;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.ai-body .step-text{font-size:13px;line-height:1.65;flex:1;}
+.ai-body h4{font-size:13px;font-weight:500;margin:12px 0 5px;color:var(--color-text-primary);}
+
+.spin{width:24px;height:24px;border:2px solid var(--color-border-tertiary);border-top-color:#1D9E75;border-radius:50%;animation:sp 0.8s linear infinite;margin:0 auto;}
+@keyframes sp{to{transform:rotate(360deg);}}
+.loading-wrap{padding:40px 0;text-align:center;}
+.loading-wrap p{font-size:13px;color:var(--color-text-tertiary);margin-top:10px;}
+.cur::after{content:'|';animation:bl 1s step-end infinite;color:#1D9E75;font-size:14px;}
+@keyframes bl{50%{opacity:0;}}
+
+/* High contrast study theme */
+body,#app{
+background:linear-gradient(135deg,#07111f 0%,#0f2437 55%,#102a2f 100%);
+}
+body.light-mode,
+body.light-mode #app{
+background:linear-gradient(135deg,#f8fbff 0%,#eef6fb 55%,#ffffff 100%);
+}
+body.light-mode{
+--color-background-primary:#ffffff;
+--color-background-secondary:#eef7fb;
+--color-background-tertiary:#f8fbff;
+--color-border-secondary:#8fb6c2;
+--color-border-tertiary:#c8d9e0;
+--color-text-primary:#06111f;
+--color-text-secondary:#17324a;
+--color-text-tertiary:#496477;
+}
+.topbar,.hero,.ch-card,.sidebar,.ch-header,.note-card{
+background:#ffffff;
+border-color:#8fb6c2;
+box-shadow:0 12px 30px rgba(0,0,0,0.16);
+}
+body.light-mode .topbar,
+body.light-mode .hero,
+body.light-mode .ch-card,
+body.light-mode .sidebar,
+body.light-mode .ch-header,
+body.light-mode .note-card,
+body.light-mode .index-sidebar{
+background:#ffffff;
+color:#06111f;
+box-shadow:0 12px 28px rgba(15,23,42,0.10);
+}
+.topbar-title,.hero-h,.ch-name,.ch-title,.note-topic-title,.ai-body,.ai-body .sec-label{
+color:#06111f;
+}
+.topbar-sub,.hero-p,.ch-count,.ch-meta,.topic-btn,.ai-body p,.ai-body li,.ai-body td{
+color:#17324a;
+}
+.hero-eyebrow,.ch-num,.ch-eyebrow,.ai-body .example-box .ex-label{
+color:#005f73;
+}
+.part-label{
+color:#eafcff;
+border-bottom-color:rgba(234,252,255,0.45);
+}
+.ch-card:hover,.topic-btn:hover{
+background:#edf7fb;
+border-color:#005f73;
+}
+.topic-btn.active{
+background:#005f73;
+color:#ffffff;
+}
+.topic-btn.active .tdot{
+background:#ffe66d;
+}
+.ai-body .rxn{
+background:#e6fbff;
+border-left-color:#005f73;
+color:#06111f;
+}
+.ai-body th{
+background:#005f73;
+border-color:#005f73;
+color:#ffffff;
+}
+.ai-body .tip{
+background:#fff7d6;
+border-color:#d99a00;
+border-left-color:#d99a00;
+color:#3b2a00;
+}
+.ai-body .warn{
+background:#fff0e6;
+border-color:#d65a00;
+border-left-color:#d65a00;
+color:#3f1600;
+}
+.ai-body .step-num,.ai-body .sec-icon{
+background:#005f73!important;
+color:#ffffff;
+}
+.ai-body .sec-icon i{
+color:#ffffff;
+}
+.ai-body .resource-list{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+gap:8px;
+margin:10px 0;
+}
+.ai-body .resource-list a{
+display:block;
+padding:10px 12px;
+border:0.5px solid #8fb6c2;
+border-radius:var(--border-radius-md);
+background:#f7fbfd;
+color:#005f73;
+text-decoration:none;
+font-size:13px;
+font-weight:600;
+line-height:1.35;
+}
+.ai-body .resource-list a:hover{
+background:#e6fbff;
+border-color:#005f73;
+}
+.website-frame-wrap{overflow:hidden;border:1px solid #8fb6c2;border-radius:var(--border-radius-lg);background:#07111f;box-shadow:0 16px 38px rgba(0,0,0,0.18);}
+.website-frame{display:block;width:100%;height:calc(100vh - 74px);min-height:760px;border:0;background:#fff;}
+.home-website-frame{height:calc(100vh - 88px);min-height:760px;border-radius:var(--border-radius-lg);}
+.website-page-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:0 0 14px;}
+.website-page-btn{border:1px solid #8fb6c2;border-radius:var(--border-radius-md);background:#fff;color:#17324a;text-align:left;padding:11px 12px;font-family:'Source Sans 3',sans-serif;cursor:pointer;transition:background 0.15s,border-color 0.15s,transform 0.15s;}
+.website-page-btn:hover{background:#e6fbff;border-color:#005f73;transform:translateY(-1px);}
+.website-page-btn.active{background:#005f73;border-color:#005f73;color:#fff;}
+.website-page-btn strong{display:block;font-size:13px;line-height:1.25;}
+.website-page-btn span{display:block;margin-top:3px;font-size:11px;opacity:0.82;}
+.software-wrap{display:grid;grid-template-columns:minmax(260px,360px) minmax(0,1fr);gap:14px;align-items:start;min-height:620px;}
+.software-list{display:grid;gap:7px;}
+.software-btn{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:center;width:100%;border:1px solid #8fb6c2;border-radius:var(--border-radius-md);background:#fff;color:#17324a;text-align:left;padding:10px 11px;font-family:'Source Sans 3',sans-serif;cursor:pointer;transition:background .15s,border-color .15s,transform .15s,color .15s;}
+.software-btn:hover{background:#e6fbff;border-color:#005f73;transform:translateX(2px);}
+.software-btn.active{background:#005f73;border-color:#005f73;color:#fff;}
+.software-num{display:grid;place-items:center;width:34px;height:30px;border-radius:var(--border-radius-md);background:#edf7fb;border:1px solid #8fb6c2;color:#005f73;font-weight:900;font-size:12px;}
+.software-btn.active .software-num{background:#ffe66d;border-color:#ffe66d;color:#06111f;}
+.software-name{display:block;font-size:14px;font-weight:800;line-height:1.2;}
+.software-role{display:block;margin-top:2px;font-size:11px;opacity:.8;}
+.software-detail{border:1px solid #8fb6c2;border-radius:var(--border-radius-lg);background:#fff;padding:18px 20px;box-shadow:0 16px 38px rgba(0,0,0,.14);min-height:620px;}
+.software-detail h3{font-family:'Lora',Georgia,serif;font-size:28px;line-height:1.2;margin-bottom:5px;color:#06111f;}
+.software-detail .software-detail-kicker{font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#005f73;margin-bottom:14px;}
+.software-detail p{font-size:16px;line-height:1.75;margin-bottom:12px;color:#17324a;}
+.software-detail ul{margin:8px 0 0 20px;}
+.software-detail li{font-size:15px;line-height:1.65;margin-bottom:7px;color:#17324a;}
+body:not(.light-mode) .software-btn,
+body:not(.light-mode) .software-detail{background:#07111f;color:#fff;border-color:#8fb6c2;}
+body:not(.light-mode) .software-btn:hover{background:#0f2437;color:#ffe66d;}
+body:not(.light-mode) .software-btn.active{background:#005f73;color:#fff;}
+body:not(.light-mode) .software-detail h3,
+body:not(.light-mode) .software-detail p,
+body:not(.light-mode) .software-detail li{color:#fff;}
+body:not(.light-mode) .software-detail .software-detail-kicker{color:#ffe66d;}
+.library-shell{display:block;}
+.library-frame-area{min-width:0;}
+.library-frame-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;color:#eafcff;font-size:12px;font-weight:700;}
+.library-frame-title span:last-child{font-size:11px;opacity:0.78;font-weight:600;}
+body.light-mode .library-frame-title{color:#17324a;}
+.theme-switch{
+position:relative;
+display:inline-flex;
+align-items:center;
+justify-content:space-between;
+width:90px;
+height:26px;
+padding:0 7px;
+border:1px solid #8fb6c2;
+border-radius:999px;
+background:#07111f;
+color:#fff;
+box-shadow:0 8px 22px rgba(0,0,0,0.18);
+cursor:pointer;
+font-family:'Source Sans 3','Segoe UI',Arial,sans-serif;
+font-size:8px;
+font-weight:800;
+letter-spacing:0.06em;
+overflow:hidden;
+transition:background 0.2s,border-color 0.2s,color 0.2s;
+}
+.theme-switch::before{
+content:'';
+position:absolute;
+top:4px;
+left:4px;
+width:18px;
+height:18px;
+border-radius:50%;
+background:#ffe66d;
+box-shadow:0 2px 8px rgba(0,0,0,0.28);
+transition:left 0.22s,background 0.22s;
+z-index:1;
+}
+.theme-switch span{position:relative;z-index:2;opacity:0.72;}
+.theme-switch .switch-dark{opacity:1;}
+body.light-mode .theme-switch{background:#ffffff;color:#06111f;border-color:#8fb6c2;}
+body.light-mode .theme-switch::before{left:68px;background:#005f73;}
+body.light-mode .theme-switch .switch-light{opacity:1;}
+body.light-mode .theme-switch .switch-dark{opacity:0.72;}
+
+/* Strong shell theme overrides */
+body:not(.light-mode),
+body:not(.light-mode) #app{
+background:
+radial-gradient(circle at 10% 8%,rgba(0,229,255,0.18),transparent 26rem),
+radial-gradient(circle at 86% 16%,rgba(255,61,129,0.14),transparent 28rem),
+linear-gradient(145deg,#07111f 0%,#0f2437 55%,#102a2f 100%)!important;
+color:#ffffff;
+}
+body.light-mode,
+body.light-mode #app{
+background:linear-gradient(135deg,#f8fbff 0%,#eef6fb 55%,#ffffff 100%)!important;
+color:#06111f;
+}
+body.light-mode .page,
+body.light-mode #homeView,
+body.light-mode .embedded-home-content,
+body.light-mode .embedded-home-content main,
+body.light-mode .embedded-home-content section,
+body.light-mode .study-console,
+body.light-mode .quick-map{
+background:transparent!important;
+}
+body:not(.light-mode) .embedded-home-content,
+body:not(.light-mode) .embedded-home-content main,
+body:not(.light-mode) .embedded-home-content section{
+background:transparent!important;
+}
+.embedded-home-content .study-console,
+.embedded-home-content .quick-map{
+display:none!important;
+}
+.home-profile-hero{
+min-height:calc(100vh - 94px);
+display:flex;
+align-items:center;
+position:relative;
+overflow:hidden;
+padding:clamp(42px,7vw,86px);
+}
+.home-profile-copy{
+position:relative;
+z-index:2;
+max-width:980px;
+}
+.home-profile-kicker{
+font-size:13px;
+letter-spacing:0.16em;
+text-transform:uppercase;
+font-weight:800;
+color:#56c7bd;
+margin-bottom:18px;
+}
+.home-profile-title{
+font-family:'Lora',Georgia,serif;
+font-size:clamp(36px,6vw,74px);
+line-height:1.03;
+font-weight:600;
+color:#ffffff;
+margin-bottom:26px;
+letter-spacing:0;
+}
+.home-profile-type{
+min-height:560px;
+white-space:normal;
+font-size:clamp(20px,2vw,28px);
+line-height:1.55;
+font-weight:600;
+color:#eafcff;
+text-shadow:0 16px 42px rgba(0,0,0,0.22);
+max-width:1060px;
+}
+.home-profile-type p{margin:0 0 22px;}
+.home-profile-type .tool-list{display:grid;gap:7px;margin:0 0 22px 0;}
+.home-profile-type .tool-row{display:grid;grid-template-columns:0.45em minmax(0,1fr);column-gap:0.32em;align-items:start;}
+.home-profile-type .tool-dot{color:#ffe66d;font-weight:900;line-height:1.55;}
+.home-profile-type .tool-text{min-width:0;}
+.home-profile-type::after{
+content:'';
+display:inline-block;
+width:2px;
+height:1.05em;
+margin-left:5px;
+vertical-align:-0.14em;
+background:#ffe66d;
+animation:bl 1s step-end infinite;
+}
+.home-profile-type.done::after{display:none;}
+.home-profile-type .core-line{color:#ffe66d;}
+body.light-mode .home-profile-title{color:#06111f;}
+body.light-mode .home-profile-type{color:#17324a;text-shadow:none;}
+body.light-mode .home-profile-kicker{color:#005f73;}
+body.light-mode .topbar{
+background:#ffffff!important;
+}
+body:not(.light-mode) .topbar{
+background:#07111f!important;
+}
+body:not(.light-mode) .topbar,
+body:not(.light-mode) .topbar-title,
+body:not(.light-mode) .topbar-sub,
+body:not(.light-mode) .header-nav a,
+body:not(.light-mode) .nav-dropdown-trigger,
+body:not(.light-mode) .back-btn{
+color:#ffffff!important;
+}
+body:not(.light-mode) .header-nav a:hover,
+body:not(.light-mode) .nav-dropdown-trigger:hover,
+body:not(.light-mode) .nav-dropdown-wrap:hover .nav-dropdown-trigger{
+color:#ffe66d!important;
+}
+body:not(.light-mode) .nav-dropdown-menu{
+background:#07111f!important;
+border-color:#8fb6c2!important;
+box-shadow:0 18px 40px rgba(0,0,0,0.34)!important;
+}
+body:not(.light-mode) .nav-dropdown-menu a{
+color:#ffffff!important;
+background:transparent!important;
+}
+body:not(.light-mode) .nav-dropdown-menu a:hover{
+color:#06111f!important;
+background:#ffe66d!important;
+border-color:#ffe66d!important;
+}
+@media(max-width:760px){
+.topbar{align-items:flex-start;flex-wrap:wrap;}
+.header-nav{order:3;width:100%;margin-left:0;overflow:auto;padding-top:4px;}
+.header-nav a,.nav-dropdown-trigger{font-size:11px;padding:0 8px;}
+.nav-dropdown-menu{position:fixed;top:94px;left:12px;width:calc(100vw - 24px);}
+.website-frame{height:70vh;min-height:520px;}
+.home-website-frame{height:70vh;min-height:560px;}
+.library-frame-title{color:#17324a;}
+.home-profile-hero{padding:28px 18px;min-height:calc(100vh - 116px);}
+.home-profile-title{font-size:34px;}
+.home-profile-type{font-size:18px;min-height:720px;}
+.software-wrap{grid-template-columns:1fr;min-height:auto;}
+.software-detail{min-height:auto;}
+.back-btn{margin-left:0;}
+.page{padding:12px;}
+.index-sidebar{position:relative;top:auto;left:auto;bottom:auto;width:100%;max-height:260px;margin-bottom:12px;}
+.index-scroll{height:190px;}
+#chapterView.show{display:block;}
+.sidebar{width:100%;margin-bottom:12px;}
+}
 </style>
-</head>
-<body>
-<header><div class="logo">Chemistry Library <span>By Subrat Biswas</span></div><button class="theme-toggle" id="themeToggle" type="button">Dark</button></header>
-<main>
-  <section class="panel">
-    <div class="head">
-      <div class="kicker">File Manager</div>
-      <h1>Chemistry Subjects</h1>
-      <p>Open a subject folder to view chapters and topic previews.</p>
+
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-icon" aria-hidden="true">
+      <svg viewBox="0 0 64 64" role="img">
+        <polygon points="32 8 52 20 52 44 32 56 12 44 12 20" fill="none" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="32" cy="32" r="11" fill="none" stroke-width="3"/>
+        <line x1="32" y1="8" x2="32" y2="18" stroke-width="3" stroke-linecap="round"/>
+        <line x1="52" y1="44" x2="43" y2="39" stroke-width="3" stroke-linecap="round"/>
+        <line x1="12" y1="44" x2="21" y2="39" stroke-width="3" stroke-linecap="round"/>
+      </svg>
     </div>
-    <div class="grid">
-      <a class="folder" href="Organic%20Chemistry/index.html"><span class="icon">📁</span><h2>Organic Chemistry</h2><p>Virtual textbook index with internal preview reader.</p><span class="status">Open</span></a>
-      <a class="folder empty" href="Analytical%20Chemistry/index.html"><span class="icon">📁</span><h2>Analytical Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></a>
-      <a class="folder empty" href="Medicinal%20Chemistry/index.html"><span class="icon">📁</span><h2>Medicinal Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></a>
-      <a class="folder empty" href="Spectroscopy/index.html"><span class="icon">📁</span><h2>Spectroscopy</h2><p>Folder prepared for future spectra and references.</p><span class="status">Coming Soon</span></a>
-      <a class="folder empty" href="Physical%20Chemistry/index.html"><span class="icon">📁</span><h2>Physical Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></a>
-      <a class="folder empty" href="Inorganic%20Chemistry/index.html"><span class="icon">📁</span><h2>Inorganic Chemistry</h2><p>Folder prepared for future notes and resources.</p><span class="status">Coming Soon</span></a>
+    <div>
+      <div class="topbar-title">Shubh.Online</div>
+      <div class="topbar-sub">crafting cures using molcules...</div>
     </div>
-  </section>
-</main>
+    <div class="header-nav" aria-label="Main navigation">
+      <a class="active" href="#" onclick="showHome();return false;">Home</a>
+      <div class="nav-dropdown-wrap">
+        <button class="nav-dropdown-trigger" type="button" onclick="toggleOrganicMenu()">Organic Chemistry</button>
+        <div class="nav-dropdown-menu" id="organicMenu">
+          <a href="#" onclick="showFunctionalGroupIndex();return false;">FGC - Functional Group Conversion</a>
+          <a href="#" onclick="openWebsiteDirect('part01');return false;">01 - General Organic Chemistry</a>
+          <a href="#" onclick="openWebsiteDirect('part02');return false;">02 - Stereochemistry</a>
+          <a href="#" onclick="openWebsiteDirect('part03');return false;">03 - Functional Group Chemistry</a>
+          <a href="#" onclick="openWebsiteDirect('part04');return false;">04 - Oxidation & Reduction</a>
+          <a href="#" onclick="openWebsiteDirect('part05');return false;">05 - Rearrangements</a>
+          <a href="#" onclick="openWebsiteDirect('part06');return false;">06 - Couplings</a>
+          <a href="#" onclick="openWebsiteDirect('part07');return false;">07 - Named Reactions</a>
+          <a href="#" onclick="openWebsiteDirect('part08');return false;">08 - Analytical Organic</a>
+          <a href="#" onclick="openWebsiteDirect('part09');return false;">09 - Pharma Industrial</a>
+          <a href="#" onclick="openWebsiteDirect('part10');return false;">10 - Advanced Concepts</a>
+          <a href="#" onclick="openWebsiteDirect('common');return false;">CR - Common Reactions</a>
+        </div>
+      </div>
+      <a href="#" onclick="openMyLibrary();return false;">My Library</a>
+      <a href="#" onclick="openWebsiteDirect('interview');return false;">Interview</a>
+      <a href="#" onclick="openWebsiteDirect('pdf');return false;">PDF Notes</a>
+      <a href="#" onclick="openWebsiteDirect('structure');return false;">Structure Editor</a>
+      <a href="#" onclick="openWebsiteDirect('portfolio');return false;">Bio</a>
+      <a href="#" onclick="openSoftwarePage();return false;">Software</a>
+      <a href="#" onclick="openInfoPage('contact');return false;">Contact</a>
+      <button class="theme-switch" id="themeSwitch" type="button" onclick="toggleThemeMode()" aria-label="Toggle light and dark mode" title="Toggle light / dark mode"><span class="switch-dark">DARK</span><span class="switch-light">LIGHT</span></button>
+    </div>
+    <button class="back-btn" id="backBtn" onclick="showHome()">
+      <i class="ti ti-arrow-left" aria-hidden="true"></i> Index
+    </button>
+  </div>
+
+  <div class="page">
+    <aside class="index-sidebar hidden" aria-label="Handbook index">
+      <div class="index-head">
+        <div>
+          <button class="index-title-btn" id="indexTitleBtn" type="button" onclick="showHome()">Index</button>
+          <div class="index-sub">All chapters</div>
+        </div>
+        <button class="index-toggle" type="button" onclick="toggleIndexSidebar()" aria-label="Collapse index" title="Collapse index">&lt;</button>
+      </div>
+      <div class="index-scroll" id="indexSidebarList"></div>
+    </aside>
+
+    <div id="homeView">
+      <div class="embedded-home-content" id="embeddedHomeContent">
+<section class="hero home-profile-hero" id="home">
+  <svg class="molecule-bg" viewBox="0 0 600 600">
+    <g class="mol-spin">
+      <g stroke="rgba(0,229,255,0.7)" stroke-width="1.2" fill="none">
+        <circle cx="300" cy="300" r="220"/>
+        <circle cx="300" cy="300" r="160"/>
+        <circle cx="300" cy="300" r="100"/>
+      </g>
+      <g stroke="rgba(191,90,242,0.5)" stroke-width="0.8" fill="none">
+        <circle cx="300" cy="300" r="190"/>
+        <circle cx="300" cy="300" r="130"/>
+      </g>
+      <g stroke="rgba(0,229,255,0.8)" stroke-width="1.4" fill="none">
+        <line x1="300" y1="80" x2="300" y2="520"/>
+        <line x1="80" y1="300" x2="520" y2="300"/>
+        <line x1="144" y1="144" x2="456" y2="456"/>
+        <line x1="456" y1="144" x2="144" y2="456"/>
+      </g>
+      <g stroke="rgba(255,214,10,0.35)" stroke-width="0.7" fill="none">
+        <line x1="300" y1="110" x2="456" y2="456"/>
+        <line x1="490" y1="300" x2="144" y2="456"/>
+        <line x1="300" y1="490" x2="144" y2="144"/>
+        <line x1="110" y1="300" x2="456" y2="144"/>
+      </g>
+      <circle cx="300" cy="80" r="16" fill="rgba(0,229,255,0.25)" stroke="rgba(0,229,255,0.8)" stroke-width="1.5"/>
+      <circle cx="300" cy="520" r="16" fill="rgba(0,229,255,0.25)" stroke="rgba(0,229,255,0.8)" stroke-width="1.5"/>
+      <circle cx="80" cy="300" r="16" fill="rgba(0,229,255,0.25)" stroke="rgba(0,229,255,0.8)" stroke-width="1.5"/>
+      <circle cx="520" cy="300" r="16" fill="rgba(0,229,255,0.25)" stroke="rgba(0,229,255,0.8)" stroke-width="1.5"/>
+      <circle cx="144" cy="144" r="11" fill="rgba(191,90,242,0.4)" stroke="rgba(191,90,242,0.9)" stroke-width="1.2"/>
+      <circle cx="456" cy="456" r="11" fill="rgba(191,90,242,0.4)" stroke="rgba(191,90,242,0.9)" stroke-width="1.2"/>
+      <circle cx="456" cy="144" r="11" fill="rgba(191,90,242,0.4)" stroke="rgba(191,90,242,0.9)" stroke-width="1.2"/>
+      <circle cx="144" cy="456" r="11" fill="rgba(191,90,242,0.4)" stroke="rgba(191,90,242,0.9)" stroke-width="1.2"/>
+      <circle cx="300" cy="300" r="22" fill="rgba(255,214,10,0.18)" stroke="rgba(255,214,10,0.7)" stroke-width="1.5"/>
+      <circle cx="300" cy="300" r="10" fill="rgba(255,214,10,0.5)"/>
+    </g>
+    <g class="mol-spin-reverse" stroke="rgba(255,55,95,0.25)" stroke-width="0.8" fill="none">
+      <circle cx="300" cy="300" r="280"/>
+      <line x1="300" y1="20" x2="300" y2="580"/>
+      <line x1="20" y1="300" x2="580" y2="300"/>
+    </g>
+  </svg>
+  <div class="home-profile-copy">
+    <div class="home-profile-kicker">Research • API Development • Computational Drug Design</div>
+    <h1 class="home-profile-title">Bridging computational insights with experimental chemistry.</h1>
+    <div class="home-profile-type" id="homeTypewriter" aria-live="polite"></div>
+  </div>
+</section>
+<section class="study-console" aria-label="Interactive study tools">
+  <div class="study-console-head">
+    <div>
+      <div class="console-kicker">Interactive Lab Console</div>
+      <h2>Study faster with reaction tools, quiz cards and reagent maps</h2>
+    </div>
+    <button class="console-close" id="closeStudyTools" type="button" aria-label="Close study tools"></button>
+    <div class="console-progress">
+      <div class="console-progress-top"><span id="studyProgressText">0/10 Parts Done</span><span id="studyProgressPercent">0%</span></div>
+      <div class="console-progress-track"><div id="studyProgressFill"></div></div>
+    </div>
+  </div>
+
+  <div class="console-grid">
+    <div class="console-panel search-panel">
+      <div class="panel-top">
+        <div><span class="panel-code">01</span><h3>Global Search</h3></div>
+        <span class="panel-chip">Topic Finder</span>
+      </div>
+      <input class="study-input" id="globalStudySearch" type="search" placeholder="Search Grignard, SN1, NMR, PCC, Suzuki..." autocomplete="off">
+      <div class="search-results" id="globalSearchResults"></div>
+    </div>
+
+    <div class="console-panel reaction-panel">
+      <div class="panel-top">
+        <div><span class="panel-code">02</span><h3>Reaction Explorer</h3></div>
+        <span class="panel-chip">Predict Product</span>
+      </div>
+      <div class="control-row">
+        <select class="study-select" id="reactantSelect" aria-label="Reactant"></select>
+        <select class="study-select" id="reagentSelect" aria-label="Reagent"></select>
+      </div>
+      <div class="reaction-output" id="reactionOutput"></div>
+    </div>
+
+    <div class="console-panel quiz-panel">
+      <div class="panel-top">
+        <div><span class="panel-code">03</span><h3>Quiz Mode</h3></div>
+        <span class="panel-chip" id="quizScore">Score 0/0</span>
+      </div>
+      <div class="quiz-question" id="quizQuestion"></div>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-answer" id="quizAnswer"></div>
+      <button class="console-button" type="button" id="nextQuizBtn">Next Question</button>
+    </div>
+
+    <div class="console-panel flashcard-panel">
+      <div class="panel-top">
+        <div><span class="panel-code">04</span><h3>Flashcards</h3></div>
+        <span class="panel-chip" id="flashcardCount">1/1</span>
+      </div>
+      <button class="flashcard" id="flashcard" type="button">
+        <span id="flashcardFront"></span>
+        <small>Click to flip</small>
+      </button>
+      <div class="button-row">
+        <button class="console-button ghost" type="button" id="prevFlashcard">Previous</button>
+        <button class="console-button" type="button" id="nextFlashcard">Next</button>
+      </div>
+    </div>
+
+    <div class="console-panel molecule-panel">
+      <div class="panel-top">
+        <div><span class="panel-code">05</span><h3>Molecule Cards</h3></div>
+        <span class="panel-chip">Structures</span>
+      </div>
+      <div class="molecule-grid" id="moleculeGrid"></div>
+    </div>
+
+    <div class="console-panel mechanism-panel">
+      <div class="panel-top">
+        <div><span class="panel-code">06</span><h3>Mechanism Steps</h3></div>
+        <span class="panel-chip">Stepwise</span>
+      </div>
+      <select class="study-select" id="mechanismSelect" aria-label="Mechanism"></select>
+      <div class="mechanism-flow" id="mechanismFlow"></div>
+    </div>
+
+    <div class="console-panel reagent-panel">
+      <div class="panel-top">
+        <div><span class="panel-code">07</span><h3>Reagent Cheat Sheet</h3></div>
+        <span class="panel-chip">Searchable</span>
+      </div>
+      <input class="study-input" id="reagentSearch" type="search" placeholder="Search reagent, use, condition..." autocomplete="off">
+      <div class="reagent-table-wrap">
+        <table class="reagent-table">
+          <thead><tr><th>Reagent</th><th>Use</th><th>Notes</th></tr></thead>
+          <tbody id="reagentTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="console-panel interview-panel">
+      <div class="panel-top">
+        <div><span class="panel-code">08</span><h3>Interview Practice</h3></div>
+        <span class="panel-chip">API R&D</span>
+      </div>
+      <div class="interview-question" id="interviewQuestion"></div>
+      <button class="console-button" type="button" id="showInterviewAnswer">Show Answer</button>
+      <div class="interview-answer" id="interviewAnswer"></div>
+      <button class="console-button ghost" type="button" id="nextInterview">Next Question</button>
+    </div>
+
+    <div class="console-panel progress-panel">
+      <div class="panel-top">
+        <div><span class="panel-code">09</span><h3>Study Progress</h3></div>
+        <span class="panel-chip">Saved Here</span>
+      </div>
+      <div class="part-check-grid" id="partCheckGrid"></div>
+    </div>
+
+    <div class="console-panel print-panel">
+      <div class="panel-top">
+        <div><span class="panel-code">10</span><h3>Print / Notes Mode</h3></div>
+        <span class="panel-chip">PDF Ready</span>
+      </div>
+      <p>Clean print mode removes dark UI effects and makes notes easier to export as PDF from the browser print dialog.</p>
+      <div class="button-row">
+        <button class="console-button" type="button" id="printNotesBtn">Print Notes</button>
+        <button class="console-button ghost" type="button" id="togglePrintMode">Toggle Clean View</button>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="quick-map" aria-label="Master index">
+  <div class="quick-map-inner">
+    <div class="quick-map-top">
+      <div>
+        <div class="quick-map-title">Master Index - Complete Organic Chemistry</div>
+        <div class="quick-map-sub">Each part opens like a separate page. Content is preserved, and extra missing topics are added as structured study pages.</div>
+      </div>
+      <div class="quick-map-hint">10-Part Atlas</div>
+    </div>
+    <div class="index-part-grid">
+      <a class="index-part" href="#" onclick="openWebsiteDirect('part01');return false;"><div class="index-part-num">Part 01</div><div class="index-part-title">General Organic Chemistry</div><ul class="index-part-list"><li>Basic concepts</li><li>Electronic effects</li><li>Acid-base chemistry</li><li>Intermediates & mechanisms</li><li>Aromaticity & solvents</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('part02');return false;"><div class="index-part-num">Part 02</div><div class="index-part-title">Stereochemistry</div><ul class="index-part-list"><li>Isomerism</li><li>Conformations</li><li>E/Z configuration</li><li>Optical activity</li><li>Chirality & CIP rules</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('part03');return false;"><div class="index-part-num">Part 03</div><div class="index-part-title">Functional Group Chemistry</div><ul class="index-part-list"><li>Hydrocarbons</li><li>Alkyl halides</li><li>Alcohols & phenols</li><li>Carbonyls & acids</li><li>Amines, amides, heterocycles</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('part04');return false;"><div class="index-part-num">Part 04</div><div class="index-part-title">Oxidation & Reduction</div><ul class="index-part-list"><li>Oxidation reactions</li><li>Oxidising agents</li><li>Reduction reactions</li><li>Reducing agents</li><li>Products, conditions, pharma notes</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('part05');return false;"><div class="index-part-num">Part 05</div><div class="index-part-title">Rearrangement Reactions</div><ul class="index-part-list"><li>Carbocation rearrangements</li><li>Nitrogen rearrangements</li><li>Oxygen rearrangements</li><li>Pericyclic rearrangements</li><li>Wagner-Meerwein, Hofmann, Curtius</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('part06');return false;"><div class="index-part-num">Part 06</div><div class="index-part-title">Coupling Reactions</div><ul class="index-part-list"><li>Cross-couplings</li><li>Homo couplings</li><li>C-N / C-O couplings</li><li>Suzuki, Heck, Sonogashira</li><li>Buchwald-Hartwig, Ullmann</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('part07');return false;"><div class="index-part-num">Part 07</div><div class="index-part-title">Named Reactions</div><ul class="index-part-list"><li>C-C bond formation</li><li>Substitution reactions</li><li>Oxidation / reduction</li><li>Cyclization</li><li>Pericyclic reactions</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('part08');return false;"><div class="index-part-num">Part 08</div><div class="index-part-title">Analytical & Practical Organic</div><ul class="index-part-list"><li>TLC</li><li>Column chromatography</li><li>Distillation techniques</li><li>IR spectroscopy</li><li>NMR & mass spectroscopy</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('part09');return false;"><div class="index-part-num">Part 09</div><div class="index-part-title">Industrial & Pharma Organic</div><ul class="index-part-list"><li>Impurity profiling</li><li>GTI & nitrosamine risk</li><li>Reaction optimization</li><li>Scale-up chemistry</li><li>Green chemistry</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('part10');return false;"><div class="index-part-num">Part 10</div><div class="index-part-title">Advanced Concepts</div><ul class="index-part-list"><li>Pericyclic reactions</li><li>Organometallic chemistry</li><li>Retrosynthesis</li><li>Protecting groups</li><li>Asymmetric synthesis</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('common');return false;"><div class="index-part-num">Common Reactions</div><div class="index-part-title">Functional Group Transformations</div><ul class="index-part-list"><li>Alcohol, carbonyl, acid and ester maps</li><li>Amine, amide, nitrile and nitro chemistry</li><li>Alkene, alkyne and substitution reactions</li><li>Protecting groups and SNAr logic</li><li>Palladium coupling and named reaction guide</li></ul></a>
+      <a class="index-part" href="#" data-open-synthesis-map><div class="index-part-num">Synthesis Map</div><div class="index-part-title">Bond Formation Explorer</div><ul class="index-part-list"><li>C-C, C-N, C-O and C-S bonds</li><li>Couplings, additions, substitutions</li><li>Reagents and reaction conditions</li><li>Limitations and pharma notes</li><li>Retrosynthesis-oriented browsing</li></ul></a>
+      <a class="index-part" href="#" data-open-protecting-groups><div class="index-part-num">Protecting Groups</div><div class="index-part-title">Stability Matrix</div><ul class="index-part-list"><li>Amino, carbonyl, carboxyl, hydroxyl groups</li><li>Stable / moderate / labile conditions</li><li>Acid, base, nucleophile, redox compatibility</li><li>Deprotection strategy</li><li>Route planning reference</li></ul></a>
+      <a class="index-part" href="#" onclick="openWebsiteDirect('interview');return false;"><div class="index-part-num">Interview</div><div class="index-part-title">Interview Preparation</div><ul class="index-part-list"><li>Basic organic & reaction concepts</li><li>Reagents & functional group transformations</li><li>Process chemistry & scale-up</li><li>Analytical & characterization</li><li>Advanced & tricky pharma questions</li></ul></a>
+    </div>
+  </div>
+</section>
+</div>
+      <div class="hero" id="fgiIntro" style="display:none;">
+        <div class="hero-eyebrow">Organic Chemistry</div>
+        <div class="hero-h">Functional Group Conversion</div>
+        <div class="hero-p">Select any chapter to open its topic list. Each topic includes full notes, mechanism, reagents table, reaction equations, stereochemistry, worked examples, and exam tips.</div>
+      </div>
+      <div id="indexContainer" style="display:none;"></div>
+    </div>
+
+    <div id="chapterView">
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-title">Topics</div>
+        </div>
+        <ul class="topic-list" id="topicList"></ul>
+      </div>
+      <div class="main-content">
+        <div class="ch-header">
+          <div class="ch-eyebrow" id="chEyebrow"></div>
+          <div class="ch-title" id="chTitle"></div>
+          <div class="ch-meta" id="chMeta"></div>
+        </div>
+        <div class="note-card">
+          <div class="note-topic-title" id="noteTopic"></div>
+          <div class="ai-body" id="aiBody">
+            <div class="loading-wrap"><div class="spin"></div><p>Loading notes...</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-const root=document.documentElement;
-const toggle=document.getElementById('themeToggle');
-function saveTheme(mode){try{localStorage.setItem('chemTheme',mode)}catch(e){}}
-function setTheme(mode){root.dataset.theme=mode;saveTheme(mode);toggle.textContent=mode==='dark'?'Light':'Dark';}
-setTheme(root.dataset.theme||'light');
-toggle.addEventListener('click',()=>setTheme(root.dataset.theme==='dark'?'light':'dark'));
+const handbook=[
+  {part:"Part I - Fundamentals",chapters:[
+    {num:"Ch 1",name:"Introduction to Functional Group Conversion",topics:["What is FGI","Strategic Importance in Synthesis","Retrosynthetic Analysis & FGI","Oxidation State Relationships","Chemoselectivity, Regioselectivity & Stereoselectivity","Protecting Group Strategy","Functional Group Compatibility","Green Chemistry in FGI","Industrial Applications","Pharmaceutical Relevance"]}
+  ]},
+  {part:"Part II - Hydrocarbon Transformations",chapters:[
+    {num:"Ch 2",name:"Alkane Chemistry",topics:["Radical Halogenation","Oxidation of Alkanes","Alkane to Alkene Conversion","Alkane Cracking Reactions","Combustion and Controlled Oxidation"]},
+    {num:"Ch 3",name:"Alkene Transformations",topics:["Hydrogenation (Alkene to Alkane)","Alkene to Alcohol","Alkene to Vicinal Diol","Alkene to Epoxide","Alkene to Alkyl Halide","Markovnikov vs Anti-Markovnikov","Ozonolysis","Hydroboration-Oxidation","Oxymercuration-Demercuration","Halogenation of Alkenes","Cyclopropanation","Syn vs Anti Additions"]},
+    {num:"Ch 4",name:"Alkyne Transformations",topics:["Alkyne to Alkene","Alkyne to Alkane","Alkyne to Ketone","Alkyne to Aldehyde","Alkyne Hydration","Hydroboration of Alkynes","Alkyne Halogenation","Acetylide Chemistry","Oxidative Cleavage of Alkynes"]},
+    {num:"Ch 5",name:"Aromatic Chemistry",topics:["Electrophilic Aromatic Substitution","Aromatic Halogenation","Aromatic Nitration","Aromatic Sulfonation","Friedel-Crafts Alkylation","Friedel-Crafts Acylation","Diazotization of Amines","Sandmeyer Reactions","Benzylic Oxidation","Birch Reduction","Aromatic Hydrogenation"]}
+  ]},
+  {part:"Part III - Alcohols & Ethers",chapters:[
+    {num:"Ch 6",name:"Alcohol Transformations",topics:["Alcohol to Alkyl Halide","Alcohol to Alkene (Dehydration)","Alcohol to Aldehyde","Alcohol to Ketone","Alcohol to Carboxylic Acid","Alcohol to Ester","Alcohol to Ether","Tosylate / Mesylate Formation","Mitsunobu Reaction","Oxidation Reagents for Alcohols","Reduction to Alcohols"]},
+    {num:"Ch 7",name:"Ether Chemistry",topics:["Williamson Ether Synthesis","Ether Cleavage","Cyclic Ether Formation","Epoxide Synthesis","Epoxide Ring Opening","Epoxide to Diol","THP, TMS, TBDMS Protection"]}
+  ]},
+  {part:"Part IV - Halogen Compounds",chapters:[
+    {num:"Ch 8",name:"Alkyl Halide Transformations",topics:["Alkyl Halide to Alcohol","Alkyl Halide to Alkene","Alkyl Halide to Nitrile","Alkyl Halide to Amine","Alkyl Halide to Azide","Alkyl Halide to Organometallics","SN1 Reactions","SN2 Reactions","E1 Elimination","E2 Elimination","Finkelstein Reaction"]}
+  ]},
+  {part:"Part V - Carbonyl Chemistry",chapters:[
+    {num:"Ch 9",name:"Aldehyde Transformations",topics:["Aldehyde to Alcohol","Aldehyde to Carboxylic Acid","Aldehyde to Alkane","Aldehyde to Alkene (Wittig)","Aldehyde to Imine","Cyanohydrin Formation","Acetal Formation","Aldol Reactions","Reductive Amination"]},
+    {num:"Ch 10",name:"Ketone Transformations",topics:["Ketone to Alcohol","Ketone to Alkane","Ketone to Alkene","Ketone to Imine","Ketone to Enamine","Oxime Formation","Hydrazone Formation","Baeyer-Villiger Oxidation","Wolff-Kishner Reduction","Clemmensen Reduction"]}
+  ]},
+  {part:"Part VI - Carboxylic Acid Derivatives",chapters:[
+    {num:"Ch 11",name:"Carboxylic Acid Transformations",topics:["Acid to Acid Chloride","Acid to Ester","Acid to Amide","Acid to Alcohol","Acid to Aldehyde","Decarboxylation","HVZ Reaction","Acid Activation Methods"]},
+    {num:"Ch 12",name:"Ester Transformations",topics:["Ester to Acid","Ester to Alcohol","Ester to Aldehyde","Ester to Ketone","Ester Hydrolysis","Transesterification","Claisen Condensation","Dieckmann Condensation","Lactone Chemistry"]},
+    {num:"Ch 13",name:"Acid Chloride Transformations",topics:["Acid Chloride to Ester","Acid Chloride to Amide","Acid Chloride to Acid","Acid Chloride to Ketone","Acid Chloride Reduction","Friedel-Crafts Acylation"]},
+    {num:"Ch 14",name:"Amide Transformations",topics:["Amide to Amine","Amide to Nitrile","Amide Hydrolysis","Hofmann Rearrangement","Beckmann Rearrangement","Lactam Chemistry"]},
+    {num:"Ch 15",name:"Anhydrides & Related Derivatives",topics:["Anhydride Formation","Anhydride to Ester","Anhydride to Amide","Mixed Anhydrides","Reactive Acyl Transfer"]}
+  ]},
+  {part:"Part VII - Nitrogen Functional Groups",chapters:[
+    {num:"Ch 16",name:"Amine Transformations",topics:["Amine to Amide","Amine to Imine","Amine Alkylation","Amine Acylation","Diazotization","Reductive Amination","Gabriel Synthesis","Hofmann Elimination","Mannich Reaction","Boc, Cbz, Fmoc Protection"]},
+    {num:"Ch 17",name:"Nitrile Transformations",topics:["Nitrile to Amide","Nitrile to Acid","Nitrile to Amine","Nitrile to Aldehyde","Nitrile Reduction","Nitrile Hydrolysis"]},
+    {num:"Ch 18",name:"Nitro, Azide & Diazonium Chemistry",topics:["Nitro to Amine","Azide to Amine","Diazonium Salt Transformations","Sandmeyer & Gattermann Reactions","Curtius Rearrangement","Schmidt Rearrangement"]}
+  ]},
+  {part:"Part VIII - Organometallic & Coupling",chapters:[
+    {num:"Ch 19",name:"Organometallic Reactions",topics:["Grignard Reactions","Organolithium Reactions","Gilman Reagents (Organocuprates)","Carbon-Carbon Bond Formation"]},
+    {num:"Ch 20",name:"Palladium-Catalyzed Coupling",topics:["Suzuki Coupling","Heck Reaction","Sonogashira Coupling","Negishi Coupling","Stille Coupling","Buchwald-Hartwig Amination","Kumada Coupling","Carbonylative Coupling"]}
+  ]},
+  {part:"Part IX - Oxidation & Reduction",chapters:[
+    {num:"Ch 21",name:"Oxidation Reactions",topics:["PCC Oxidation","Jones Oxidation","Swern Oxidation","Dess-Martin Oxidation","KMnO4 Oxidation","Ozonolysis","Baeyer-Villiger Oxidation","Sharpless Epoxidation"]},
+    {num:"Ch 22",name:"Reduction Reactions",topics:["Catalytic Hydrogenation","NaBH4 Reductions","LiAlH4 Reductions","DIBAL-H Reductions","Clemmensen Reduction","Wolff-Kishner Reduction","Birch Reduction","Metal Hydride Selectivity"]}
+  ]},
+  {part:"Part X - Protecting Groups",chapters:[
+    {num:"Ch 23",name:"Protecting Groups",topics:["Alcohol Protecting Groups","Amine Protecting Groups","Carbonyl Protecting Groups","Thiol Protection","Orthogonal Protection Strategy","Deprotection Methods"]}
+  ]},
+  {part:"Part XI - Rearrangements",chapters:[
+    {num:"Ch 24",name:"Rearrangement Reactions",topics:["Pinacol Rearrangement","Beckmann Rearrangement","Claisen Rearrangement","Cope Rearrangement","Curtius Rearrangement","Hofmann Rearrangement","Wagner-Meerwein Rearrangement","Baeyer-Villiger Rearrangement"]}
+  ]},
+  {part:"Part XII - Heterocyclic & Modern Methods",chapters:[
+    {num:"Ch 25",name:"Heterocyclic Transformations",topics:["Pyridine Chemistry","Indole Functionalization","Thiophene Chemistry","Furan Transformations","Imidazole & Pyrazole Chemistry"]},
+    {num:"Ch 26",name:"Modern Synthetic Methodologies",topics:["C-H Activation","Photoredox Catalysis","Flow Chemistry","Green Oxidation Methods","Biocatalysis","Electrochemical Organic Synthesis"]}
+  ]},
+  {part:"Part XIII - Named Reactions",chapters:[
+    {num:"Ch 27",name:"Named Reactions for FGI",topics:["Mitsunobu Reaction","Wittig Reaction","Claisen Condensation","Aldol Condensation","Cannizzaro Reaction","Michael Addition","Mannich Reaction","Knoevenagel Condensation","Perkin Reaction","Reformatsky Reaction","Robinson Annulation","Stork Enamine Reaction"]}
+  ]},
+  {part:"Part XIV - Industrial & Pharmaceutical",chapters:[
+    {num:"Ch 28",name:"Functional Group Conversion in Drug Synthesis",topics:["API Process Development","Process Optimization","Impurity Formation during FGI","Regulatory Concerns","Scale-Up Challenges","Green API Synthesis"]},
+    {num:"Ch 29",name:"Functional Group Compatibility Charts",topics:["Reagent Compatibility Matrix","Functional Group Tolerance Tables","Protecting Group Stability Tables","Oxidation/Reduction Selectivity Charts"]}
+  ]}
+];
+
+let curChapter=null,curPart=null,cache={};
+
+function safeGetLocal(key){
+  try{return localStorage.getItem(key)}catch(e){return null}
+}
+function safeSetLocal(key,value){
+  try{localStorage.setItem(key,value)}catch(e){}
+}
+const savedShellTheme=safeGetLocal('biswas-theme');
+if(savedShellTheme==='light')document.body.classList.add('light-mode');
+function applyThemeToFrames(){
+  const light=document.body.classList.contains('light-mode');
+  safeSetLocal('organo-theme',light?'light':'dark');
+  safeSetLocal('chemTheme',light?'light':'dark');
+  document.querySelectorAll('iframe.website-frame').forEach(frame=>{
+    try{
+      const doc=frame.contentDocument||frame.contentWindow?.document;
+      if(doc?.body)doc.body.classList.toggle('light-mode',light);
+    }catch(e){}
+  });
+}
+function syncCornerTheme(){
+  const btn=document.getElementById('themeSwitch');
+  if(!btn)return;
+  const light=document.body.classList.contains('light-mode');
+  btn.title=light?'Switch to dark mode':'Switch to light mode';
+  applyThemeToFrames();
+}
+function toggleThemeMode(){
+  document.body.classList.toggle('light-mode');
+  safeSetLocal('biswas-theme',document.body.classList.contains('light-mode')?'light':'dark');
+  syncCornerTheme();
+}
+
+function setHeaderActive(label){
+  document.querySelectorAll('.header-nav a').forEach(a=>{
+    a.classList.toggle('active',a.textContent.trim()===label);
+  });
+  document.querySelectorAll('.nav-dropdown-trigger').forEach(btn=>{
+    const text=btn.textContent.trim();
+    btn.classList.toggle('active',text===label||(label==='Website Data'&&text==='Website Data'));
+  });
+}
+
+function toggleOrganicMenu(){
+  document.getElementById('organicMenu')?.classList.toggle('open');
+}
+
+function closeOrganicMenu(){
+  document.getElementById('organicMenu')?.classList.remove('open');
+}
+
+function setIndexSidebarVisible(show){
+  document.querySelector('.index-sidebar')?.classList.toggle('hidden',!show);
+  document.querySelector('.page')?.classList.toggle('with-index-sidebar',show);
+}
+
+function setFullWidth(show){
+  document.querySelector('.page')?.classList.toggle('full-width',show);
+}
+
+function buildIndex(){
+  const c=document.getElementById('indexContainer');
+  handbook.forEach(p=>{
+    const s=document.createElement('div');s.className='part-block';
+    s.innerHTML=`<div class="part-label">${p.part}</div>`;
+    const g=document.createElement('div');g.className='ch-grid';
+    p.chapters.forEach((ch,ci)=>{
+      const card=document.createElement('div');card.className='ch-card';
+      card.innerHTML=`<div class="ch-num">${ch.num}</div><div class="ch-name">${ch.name}</div><div class="ch-count">${ch.topics.length} topics</div>`;
+      card.onclick=()=>openChapter(p,ch,handbook.indexOf(p)+'-'+ci);
+      g.appendChild(card);
+    });
+    s.appendChild(g);c.appendChild(s);
+  });
+}
+
+function buildSidebarIndex(){
+  const c=document.getElementById('indexSidebarList');
+  if(!c)return;
+  const title=document.getElementById('indexTitleBtn');
+  if(title){
+    title.textContent='Index';
+    title.onclick=showFunctionalGroupIndex;
+  }
+  const sub=document.querySelector('.index-sub');
+  if(sub)sub.textContent='Functional Group chapters';
+  c.innerHTML='';
+  handbook.forEach((p,pi)=>{
+    const part=document.createElement('div');
+    part.className='index-part-name';
+    part.textContent=p.part;
+    c.appendChild(part);
+    p.chapters.forEach((ch,ci)=>{
+      const btn=document.createElement('button');
+      btn.type='button';
+      btn.className='index-ch-btn';
+      btn.dataset.chapterKey=pi+'-'+ci;
+      btn.innerHTML=`<span class="index-ch-num">${ch.num}</span>${ch.name}`;
+      btn.onclick=()=>openChapter(p,ch,pi+'-'+ci);
+      c.appendChild(btn);
+    });
+  });
+}
+
+function buildMedicinalGlobalSidebarIndex(){
+  const c=document.getElementById('indexSidebarList');
+  if(!c)return;
+  const title=document.getElementById('indexTitleBtn');
+  if(title){
+    title.textContent='Medicinal Index';
+    title.onclick=showMedicinalIndex;
+  }
+  const sub=document.querySelector('.index-sub');
+  if(sub)sub.textContent='Parts and chapters';
+  c.innerHTML='';
+  medicinalData.forEach((part,pi)=>{
+    const partName=document.createElement('div');
+    partName.className='index-part-name';
+    partName.textContent=`${part.part} - ${part.title}`;
+    c.appendChild(partName);
+    part.chapters.forEach((ch,ci)=>{
+      const btn=document.createElement('button');
+      btn.type='button';
+      btn.className='index-ch-btn';
+      btn.dataset.chapterKey=`med-${pi}-${ci}`;
+      btn.innerHTML=`<span class="index-ch-num">Ch ${ch.num}</span>${ch.title}`;
+      btn.onclick=()=>openMedicinalChapter(part,ch,`med-${pi}-${ci}`);
+      c.appendChild(btn);
+    });
+  });
+}
+
+function syncSidebarIndex(key){
+  document.querySelectorAll('.index-ch-btn').forEach(btn=>{
+    btn.classList.toggle('active',key&&btn.dataset.chapterKey===key);
+  });
+}
+
+function toggleIndexSidebar(){
+  const side=document.querySelector('.index-sidebar');
+  if(!side)return;
+  side.classList.toggle('collapsed');
+  const btn=side.querySelector('.index-toggle');
+  const collapsed=side.classList.contains('collapsed');
+  if(btn){
+    btn.setAttribute('aria-label',collapsed?'Expand index':'Collapse index');
+    btn.setAttribute('title',collapsed?'Expand index':'Collapse index');
+  }
+}
+
+function openChapter(part,ch,key){
+  curChapter=ch;curPart=part;cache={};
+  setFullWidth(false);
+  document.getElementById('chapterView').classList.remove('website-mode');
+  document.getElementById('chapterView').classList.remove('no-topic-sidebar');
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('chapterView').classList.add('show');
+  document.getElementById('backBtn').classList.add('show');
+  setIndexSidebarVisible(true);
+  syncSidebarIndex(key);
+  closeOrganicMenu();
+  setHeaderActive('Organic Chemistry');
+  document.getElementById('chEyebrow').textContent=part.part;
+  document.getElementById('chTitle').textContent=ch.name;
+  document.getElementById('chMeta').textContent=ch.num+' Â· '+ch.topics.length+' topics';
+  buildTopicList(ch);
+  selectTopic(ch.topics[0],0);
+}
+
+function buildTopicList(ch){
+  const ul=document.getElementById('topicList');ul.innerHTML='';
+  ch.topics.forEach((t,i)=>{
+    const li=document.createElement('li');li.className='topic-item';
+    const btn=document.createElement('button');btn.className='topic-btn';btn.id='tb'+i;
+    btn.innerHTML=`<span class="tdot"></span><span>${t}</span>`;
+    btn.onclick=()=>selectTopic(t,i);
+    li.appendChild(btn);ul.appendChild(li);
+  });
+}
+
+function selectTopic(topic,idx){
+  document.querySelectorAll('.topic-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('tb'+idx);
+  if(btn)btn.classList.add('active');
+  document.getElementById('noteTopic').textContent=topic;
+  if(cache[idx]){
+    document.getElementById('aiBody').innerHTML=cache[idx];
+  } else {
+    fetchNotes(topic,idx);
+  }
+}
+
+async function fetchNotes(topic,idx){
+  const body=document.getElementById('aiBody');
+  body.innerHTML='<div class="loading-wrap"><div class="spin"></div><p>Generating detailed notes for "'+topic+'"...</p></div>';
+
+  const prompt=`You are an expert organic chemistry professor writing a comprehensive university-level textbook chapter section.
+
+Write VERY DETAILED study notes for: "${topic}" (from chapter: "${curChapter.name}").
+
+Use ONLY the following HTML structure - no markdown, no extra tags:
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon" style="background:#E1F5EE"><i class="ti ti-book" aria-hidden="true"></i></div><div class="sec-label">Overview</div></div>
+<p>2-3 sentence introduction explaining what this reaction/concept is, its importance in synthesis, and when chemists use it.</p>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon" style="background:#E6F1FB"><i class="ti ti-atom" aria-hidden="true"></i></div><div class="sec-label">Reaction equation</div></div>
+<div class="rxn"><strong>General:</strong> [Substrate] + [Reagent] -> [Product] + [Byproduct if any]</div>
+<div class="rxn"><strong>Example:</strong> CH3CH2OH + PCC / CH2Cl2 -> CH3CHO (write a real specific example)</div>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon" style="background:#EEEDFE"><i class="ti ti-route" aria-hidden="true"></i></div><div class="sec-label">Mechanism</div></div>
+<p>Brief description of the mechanism type (SN2, E2, nucleophilic addition, etc.)</p>
+<div class="mech-step"><div class="step-num">1</div><div class="step-text">First mechanistic step - describe electron movement and bond changes clearly</div></div>
+<div class="mech-step"><div class="step-num">2</div><div class="step-text">Second step</div></div>
+<div class="mech-step"><div class="step-num">3</div><div class="step-text">Third step (add more steps as needed for the mechanism)</div></div>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon" style="background:#FAEEDA"><i class="ti ti-flask" aria-hidden="true"></i></div><div class="sec-label">Reagents & conditions</div></div>
+<table><tr><th>Reagent / Catalyst</th><th>Role</th><th>Conditions</th><th>Notes</th></tr>
+<tr><td>reagent name</td><td>role</td><td>temp, solvent</td><td>important note</td></tr>
+</table>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon" style="background:#FBEAF0"><i class="ti ti-arrows-exchange" aria-hidden="true"></i></div><div class="sec-label">Stereochemistry</div></div>
+<p>Describe stereochemical outcome - retention, inversion, syn addition, anti addition, racemization, diastereoselectivity, etc. If not applicable, state why.</p>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon" style="background:#EAF3DE"><i class="ti ti-microscope" aria-hidden="true"></i></div><div class="sec-label">Worked examples</div></div>
+<div class="example-box"><div class="ex-label">Example 1</div><p>Describe a complete worked example with substrate, reagent, conditions, product, and explanation of why this works.</p></div>
+<div class="example-box"><div class="ex-label">Example 2</div><p>Another worked example - ideally contrasting with Example 1 (different substrate class or conditions).</p></div>
+<div class="example-box"><div class="ex-label">Example 3</div><p>A third example showing a more complex or industrial application.</p></div>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon" style="background:#FAEEDA"><i class="ti ti-bulb" aria-hidden="true"></i></div><div class="sec-label">Key points & tips</div></div>
+<ul>
+<li>Important concept or rule #1</li>
+<li>Important concept or rule #2</li>
+<li>Important concept or rule #3</li>
+<li>Important concept or rule #4</li>
+</ul>
+<div class="tip"><strong>Exam tip:</strong> Write the most commonly tested aspect of this reaction and how to answer exam questions about it.</div>
+<div class="warn"><strong>Common mistake:</strong> Describe the most frequent error students make with this reaction and how to avoid it.</div>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon" style="background:#E1F5EE"><i class="ti ti-building-factory" aria-hidden="true"></i></div><div class="sec-label">Synthetic & industrial applications</div></div>
+<p>Explain 2-3 real synthetic or industrial uses of this reaction - pharmaceutical synthesis, polymer chemistry, natural product synthesis, etc. Be specific with named examples where possible.</p>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon" style="background:#F1EFE8"><i class="ti ti-git-branch" aria-hidden="true"></i></div><div class="sec-label">Related reactions & comparisons</div></div>
+<p>Compare this reaction with 2-3 closely related reactions - when would a chemist choose this over the alternatives? What are the selectivity differences?</p>
+</div>
+
+Fill every section with real, accurate, detailed chemistry content. Be thorough - this is a reference handbook, not a summary. Do not include any preamble or closing remarks. Output only the HTML divs above.`;
+
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-20250514",
+        max_tokens:2000,
+        stream:true,
+        messages:[{role:"user",content:prompt}]
+      })
+    });
+    if(!r.ok)throw new Error();
+    body.innerHTML='<span class="cur"></span>';
+    const reader=r.body.getReader(),dec=new TextDecoder();
+    let acc='';
+    while(true){
+      const{done,value}=await reader.read();if(done)break;
+      const lines=dec.decode(value,{stream:true}).split('\n');
+      for(const line of lines){
+        if(!line.startsWith('data: '))continue;
+        const d=line.slice(6).trim();if(d==='[DONE]')continue;
+        try{
+          const p=JSON.parse(d);
+          if(p.type==='content_block_delta'&&p.delta?.text){
+            acc+=p.delta.text;
+            body.innerHTML=acc+'<span class="cur"></span>';
+          }
+        }catch(e){}
+      }
+    }
+    body.innerHTML=acc;
+    cache[idx]=acc;
+    const btn=document.getElementById('tb'+idx);
+    if(btn)btn.classList.add('done');
+  }catch(e){
+    body.innerHTML='<div class="loading-wrap"><p style="color:var(--color-text-danger)">Failed to load. Please try again.</p></div>';
+  }
+}
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function topicProfile(topic){
+  const t=topic.toLowerCase();
+  const conversion=topic.match(/^(.+?)\s+to\s+(.+)$/i);
+  const p={
+    substrate:conversion?conversion[1].trim():'starting material',
+    product:conversion?conversion[2].trim():'target product',
+    family:'functional group interconversion',
+    mechanism:'polar bond-making and bond-breaking',
+    reagent:'choose a reagent that changes oxidation level or replaces the leaving group selectively',
+    conditions:'dry solvent when moisture-sensitive; controlled temperature; aqueous workup when required',
+    stereo:'Track stereocentres, pi-bond geometry, and whether the reaction is concerted, stepwise, radical, or ionic.',
+    examples:[
+      ['Simple substrate',`${conversion?conversion[1].trim():'Substrate'} + suitable reagent -> ${conversion?conversion[2].trim():'product'}`],
+      ['Selective conversion','Use chemoselective conditions when another alcohol, alkene, amine, carbonyl, or acid derivative is present.'],
+      ['Synthesis use','Place this step where it gives the desired handle for the next carbon-carbon or carbon-heteroatom bond formation.']
+    ]
+  };
+  const rules=[
+    [/hydrogenation|alkene to alkane|alkyne to alkane|aromatic hydrogenation/,{family:'reduction by catalytic hydrogenation',mechanism:'surface-catalysed syn addition of hydrogen',reagent:'H2 with Pd/C, PtO2, Raney Ni, or Lindlar catalyst for partial alkyne reduction',conditions:'H2 atmosphere, ethanol/ethyl acetate/acetic acid, room temperature to pressure vessel',stereo:'Addition on a metal surface is usually syn; alkynes with Lindlar catalyst give cis alkenes.'}],
+    [/ozonolysis|oxidative cleavage/,{family:'oxidative cleavage of multiple bonds',mechanism:'concerted cycloaddition to a molozonide followed by ozonide fragmentation',reagent:'O3 then Me2S, Zn/AcOH, PPh3, or H2O2',conditions:'low temperature, usually -78 C in CH2Cl2 or MeOH, then reductive or oxidative workup',stereo:'Alkene geometry is lost because the double bond is cleaved into carbonyl fragments.'}],
+    [/hydroboration/,{family:'anti-Markovnikov hydration / organoborane oxidation',mechanism:'concerted syn addition through a four-centre transition state',reagent:'BH3.THF or 9-BBN, then H2O2/NaOH',conditions:'anhydrous ether or THF, then basic peroxide oxidation',stereo:'Syn addition; regioselectivity places OH on the less substituted carbon.'}],
+    [/oxymercuration/,{family:'Markovnikov hydration without rearrangement',mechanism:'mercurinium ion formation followed by water attack and demercuration',reagent:'Hg(OAc)2/H2O then NaBH4',conditions:'aqueous THF followed by reducing workup',stereo:'Anti attack during mercurinium opening; final C-H formation is not stereospecific.'}],
+    [/epoxide|vicinal diol|dihydroxylation/,{family:'oxygenation of pi bonds',mechanism:'concerted oxygen transfer or cyclic osmate ester formation',reagent:'mCPBA for epoxide; OsO4/NMO or cold dilute KMnO4 for syn diol; acid water for anti diol from epoxide',conditions:'neutral peracid, or catalytic OsO4 with co-oxidant, or acidic/basic hydrolysis',stereo:'Epoxidation preserves alkene geometry; osmylation gives syn diols; epoxide opening is anti.'}],
+    [/alcohol to alkyl halide|alkyl halide to alcohol|sn1|sn2|finkelstein|tosylate|mesylate|mitsunobu/,{family:'substitution chemistry at saturated carbon',mechanism:'SN2 backside displacement for primary systems; SN1 ionisation for stabilized tertiary/benzylic/allylic systems',reagent:'HX, SOCl2, PBr3, tosyl chloride/pyridine, NaI/acetone, or nucleophile in polar aprotic solvent',conditions:'match substrate class to mechanism; exclude water for acid chlorides and sulfonyl chlorides',stereo:'SN2 inverts configuration; SN1 often racemizes with rearrangement risk.'}],
+    [/dehydration|alkyl halide to alkene|elimination|e1|e2|hofmann elimination/,{family:'elimination to form pi bonds',mechanism:'E2 concerted beta-proton removal or E1 carbocation formation followed by deprotonation',reagent:'strong base such as KOtBu, NaOEt, DBU, or acid/heat for alcohol dehydration',conditions:'heat usually favours elimination; bulky base favours less substituted Hofmann alkene',stereo:'E2 requires anti-periplanar beta-H and leaving group; cyclohexanes need trans-diaxial geometry.'}],
+    [/aldehyde|ketone|carbonyl|imine|enamine|cyanohydrin|acetal|aldol|wittig|reductive amination/,{family:'carbonyl addition and condensation chemistry',mechanism:'nucleophilic addition to polarized C=O followed by proton transfer, elimination, or reduction',reagent:'NaBH4, LiAlH4, RMgX, organolithium, amines, acid catalyst, cyanide, Wittig ylide, or base for enolates',conditions:'control pH carefully; anhydrous conditions for organometallics; mild acid for imines/acetals',stereo:'Planar carbonyls can give racemic alcohols unless a chiral reagent, catalyst, or substrate bias controls attack.'}],
+    [/carboxylic acid|ester|acid chloride|amide|anhydride|lactone|lactam|decarboxylation|hvz|claisen|dieckmann/,{family:'acyl substitution and carboxylic acid derivative chemistry',mechanism:'addition to acyl carbon followed by collapse of the tetrahedral intermediate and leaving-group expulsion',reagent:'SOCl2, oxalyl chloride, DCC/EDC, alcohols, amines, LiAlH4, DIBAL-H, hydrolysis acid/base, or enolate base',conditions:'reactivity order acid chloride > anhydride > ester ~ acid > amide; use dry conditions for activated derivatives',stereo:'Usually no stereochemical issue at the acyl carbon, but neighbouring stereocentres can epimerize under strong acid/base.'}],
+    [/grignard|organolithium|gilman|organocuprate|organometallic/,{family:'organometallic carbon-carbon bond formation',mechanism:'polarized C-M bond behaves as carbanion equivalent and attacks electrophiles',reagent:'RMgX, RLi, R2CuLi, dry ether/THF, then acidic workup',conditions:'strictly anhydrous glassware; avoid acidic protons, water, alcohols, and many electrophilic functional groups',stereo:'Attack on planar carbonyls may create racemic or diastereomeric alcohols; cuprates are softer and more selective.'}],
+    [/suzuki|heck|sonogashira|negishi|stille|buchwald|kumada|palladium|coupling/,{family:'transition-metal-catalysed cross-coupling',mechanism:'oxidative addition, transmetalation or migratory insertion, then reductive elimination',reagent:'Pd(0)/ligand with boron, tin, zinc, magnesium, alkyne, or amine coupling partner',conditions:'base, degassed solvent, ligand choice, controlled water/oxygen depending on system',stereo:'Reductive elimination is stereospecific at the metal; Heck reactions often give E-alkenes.'}],
+    [/friedel|electrophilic aromatic|nitration|sulfonation|aromatic halogenation|sandmeyer|diazotization|benzylic oxidation|birch/,{family:'aromatic substitution and arene functionalisation',mechanism:'formation of a strong electrophile, attack by arene, sigma complex, then rearomatisation',reagent:'Lewis acids, nitrating mixture, SO3/H2SO4, diazonium salts, KMnO4, or Na/NH3 for Birch reduction',conditions:'substituent effects control rate and orientation; avoid overreaction with activated arenes',stereo:'Arene substitution is regiochemical rather than stereochemical; Birch reduction gives unconjugated cyclohexadienes.'}],
+    [/oxidation|pcc|jones|swern|dess|kmno|baeyer|sharpless|wacker/,{family:'oxidation chemistry',mechanism:'oxygen transfer, hydride abstraction, chromate ester fragmentation, or metal-mediated redox pathway',reagent:'PCC, DMP, Swern, Jones, KMnO4, mCPBA, TBHP, OsO4, or catalytic metal oxidants',conditions:'choose mild anhydrous oxidants for aldehydes; aqueous strong oxidants often continue to acids',stereo:'Oxidation may be stereospecific for additions to alkenes; alcohol oxidations usually remove stereochemistry at carbinol carbon.'}],
+    [/reduction|nabh|lialh|dibal|clemmensen|wolff|birch|metal hydride/,{family:'reduction chemistry',mechanism:'hydride transfer, single-electron transfer, catalytic hydrogenation, or carbonyl deoxygenation',reagent:'NaBH4, LiAlH4, DIBAL-H, H2/Pd, Zn(Hg)/HCl, NH2NH2/KOH, Na/NH3',conditions:'match reducing strength to functional group; quench hydrides slowly and safely',stereo:'Hydride can attack either face of planar carbonyls; catalytic reductions often occur syn on a surface.'}],
+    [/protect|boc|cbz|fmoc|thp|tms|tbdms|orthogonal/,{family:'protecting group strategy',mechanism:'temporary conversion of reactive functional group into a masked, condition-stable derivative',reagent:'Boc2O, Cbz-Cl, Fmoc-Cl, TBSCl/imidazole, DHP/acid, acetals, ketals, or deprotection reagents',conditions:'select protecting groups by stability to acid, base, nucleophile, oxidation, reduction, and hydrogenolysis',stereo:'Protection usually preserves configuration; neighbouring participation or harsh deprotection may cause migration or epimerization.'}],
+    [/rearrangement|pinacol|beckmann|claisen|cope|curtius|hofmann|wagner|schmidt/,{family:'molecular rearrangement',mechanism:'migration of sigma bonds, pericyclic reorganisation, or nitrene/cation rearrangement',reagent:'acid, heat, base, peracid, azide, hydroxylamine, or activated carboxylic acid derivative depending on rearrangement',conditions:'substrate geometry and migratory aptitude dominate; temperature controls competing pathways',stereo:'Many rearrangements are stereospecific because migration occurs with defined orbital alignment.'}]
+  ];
+  for(const [re,obj] of rules){if(re.test(t))Object.assign(p,obj);}
+  if(conversion){
+    p.examples=[
+      ['Direct conversion',`${p.substrate} is treated with ${p.reagent.split(',')[0]} under ${p.conditions.split(';')[0].toLowerCase()} to give ${p.product}.`],
+      ['Chemoselective case',`When ${p.substrate} contains another reactive group, protect or choose milder conditions so only the intended site becomes ${p.product}.`],
+      ['Route-planning case',`Use the ${p.substrate} -> ${p.product} step to install a handle for the next disconnection, purification, or salt/crystal-form operation.`]
+    ];
+  }
+  return p;
+}
+
+const websitePages=[
+  {id:'index',title:'Home / Master Index',group:'Website',inline:true},
+  {id:'common',title:'Common Reactions',group:'Organic Chemistry',src:'common-reactions.html'},
+  {id:'interview',title:'Interview Preparation',group:'Organic Chemistry',src:'interview.html'},
+  {id:'pdf',title:'PDF Notes',group:'Resources',src:'pdf-notes.html'},
+  {id:'structure',title:'Online Structure Editor',group:'Tools',src:'structure-editor.html'},
+  {id:'medicinal',title:'Medicinal Chemistry',group:'Medicinal Chemistry',src:'medicinal_chemistry_book.html'},
+  {id:'portfolio',title:'Portfolio / Bio',group:'Bio',src:'portfolio.html'},
+  {id:'part01',title:'Part 01 - General Organic Chemistry',group:'Organic Chemistry Atlas',src:'parts/part-01-goc.html'},
+  {id:'part02',title:'Part 02 - Stereochemistry',group:'Organic Chemistry Atlas',src:'parts/part-02-stereochemistry.html'},
+  {id:'part03',title:'Part 03 - Functional Group Chemistry',group:'Organic Chemistry Atlas',src:'parts/part-03-functional-groups.html'},
+  {id:'part04',title:'Part 04 - Oxidation and Reduction',group:'Organic Chemistry Atlas',src:'parts/part-04-redox.html'},
+  {id:'part05',title:'Part 05 - Rearrangement Reactions',group:'Organic Chemistry Atlas',src:'parts/part-05-rearrangements.html'},
+  {id:'part06',title:'Part 06 - Coupling Reactions',group:'Organic Chemistry Atlas',src:'parts/part-06-couplings.html'},
+  {id:'part07',title:'Part 07 - Named Reactions',group:'Organic Chemistry Atlas',src:'parts/part-07-named-reactions.html'},
+  {id:'part08',title:'Part 08 - Analytical and Practical Organic',group:'Organic Chemistry Atlas',src:'parts/part-08-analytical.html'},
+  {id:'part09',title:'Part 09 - Industrial and Pharma Organic Chemistry',group:'Organic Chemistry Atlas',src:'parts/part-09-pharma-industrial.html'},
+  {id:'part10',title:'Part 10 - Advanced Concepts',group:'Organic Chemistry Atlas',src:'parts/part-10-advanced.html'}
+];
+
+const myLibrarySubjects=[
+  {id:'home',title:'Chemistry Library Home',group:'Master folder',icon:'CL',src:'Chemistry%20Library/index.html'},
+  {id:'organic',title:'Organic Chemistry',group:'Virtual textbook index with internal preview reader',icon:'OC',src:'Chemistry%20Library/Organic%20Chemistry/index.html'},
+  {id:'analytical',title:'Analytical Chemistry',group:'Prepared folder for future notes and resources',icon:'AC',src:'Chemistry%20Library/Analytical%20Chemistry/index.html'},
+  {id:'medicinal',title:'Medicinal Chemistry',group:'Prepared folder for future notes and resources',icon:'MC',src:'Chemistry%20Library/Medicinal%20Chemistry/index.html'},
+  {id:'spectroscopy',title:'Spectroscopy',group:'Prepared folder for spectra and references',icon:'SP',src:'Chemistry%20Library/Spectroscopy/index.html'},
+  {id:'physical',title:'Physical Chemistry',group:'Prepared folder for future notes and resources',icon:'PC',src:'Chemistry%20Library/Physical%20Chemistry/index.html'},
+  {id:'inorganic',title:'Inorganic Chemistry',group:'Prepared folder for future notes and resources',icon:'IC',src:'Chemistry%20Library/Inorganic%20Chemistry/index.html'}
+];
+
+function myLibraryHtml(activeId='home'){
+  const active=myLibrarySubjects.find(s=>s.id===activeId)||myLibrarySubjects[0];
+  return `<div class="section">
+    <div class="sec-head"><div class="sec-icon"><i class="ti ti-books" aria-hidden="true"></i></div><div class="sec-label">My Library</div></div>
+    <div class="library-shell">
+      <div class="library-frame-area">
+        <div class="library-frame-title"><span>${esc(active.title)}</span><span>${esc(active.group)}</span></div>
+        <div class="website-frame-wrap"><iframe class="website-frame" src="${active.src}" title="${esc(active.title)}" onload="applyThemeToFrames()"></iframe></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openMyLibrary(id='home'){
+  const active=myLibrarySubjects.find(s=>s.id===id)||myLibrarySubjects[0];
+  showGeneratedPage(active.title,'Desktop Chemistry Library',myLibraryHtml(active.id),'My Library');
+  closeOrganicMenu();
+}
+
+function websiteLibraryHtml(activeId){
+  const cards=websitePages.map(p=>`
+    <button class="website-page-btn ${p.id===activeId?'active':''}" type="button" onclick="openWebsitePage('${p.id}')">
+      <strong>${esc(p.title)}</strong><span>${esc(p.group)}</span>
+    </button>`).join('');
+  const active=websitePages.find(p=>p.id===activeId)||websitePages[0];
+  return `<div class="section">
+    <div class="sec-head"><div class="sec-icon"><i class="ti ti-world" aria-hidden="true"></i></div><div class="sec-label">Imported Website Library</div></div>
+    <p>This section brings the existing Desktop Website pages into Shubh.Online. Select any page below and it will open here without leaving this file.</p>
+    <div class="website-page-grid">${cards}</div>
+    <div class="website-frame-wrap"><iframe class="website-frame" src="${active.src}" title="${esc(active.title)}"></iframe></div>
+  </div>`;
+}
+
+function openWebsitePage(id='index'){
+  const active=websitePages.find(p=>p.id===id)||websitePages[0];
+  showGeneratedPage(active.title,'Imported from Desktop Website',websiteLibraryHtml(active.id),'Website Data');
+  closeOrganicMenu();
+}
+
+function openWebsiteDirect(id='index'){
+  const active=websitePages.find(p=>p.id===id)||websitePages[0];
+  if(active.inline){
+    showHome();
+    return;
+  }
+  showGeneratedPage(active.title,active.group,`
+    <div class="section">
+      <div class="sec-head"><div class="sec-icon"><i class="ti ti-world" aria-hidden="true"></i></div><div class="sec-label">${esc(active.group)}</div></div>
+      <div class="website-frame-wrap"><iframe class="website-frame" src="${active.src}" title="${esc(active.title)}" onload="applyThemeToFrames()"></iframe></div>
+    </div>`, active.group==='Organic Chemistry Atlas'||active.group==='Organic Chemistry'?'Organic Chemistry':active.title.replace('Online ',''));
+  closeOrganicMenu();
+}
+
+const medicinalData=[
+  {part:"Part I",title:"Introduction to Medicinal Chemistry",chapters:[{num:"1",title:"Fundamentals of Medicinal Chemistry",subs:["Definition and Scope","History and Development of Drugs","Drug Discovery Process","Lead Identification and Optimization","Pharmacodynamics and Pharmacokinetics","Structure-Activity Relationship (SAR)","Pharmacophore Concept","Drug Metabolism and Biotransformation","Prodrugs and Soft Drugs","Drug Design Approaches"]}]},
+  {part:"Part II",title:"Autonomic Nervous System Drugs",chapters:[{num:"2",title:"Cholinergic Drugs",subs:["Cholinergic Agonists","Anticholinesterase Agents","Cholinergic Blocking Agents","Neuromuscular Blocking Agents"]},{num:"3",title:"Adrenergic Drugs",subs:["Adrenergic Agonists","Alpha Blockers","Beta Blockers","Adrenergic Neuron Blocking Agents"]}]},
+  {part:"Part III",title:"Central Nervous System Drugs",chapters:[{num:"4",title:"Sedatives and Hypnotics",subs:["Barbiturates","Benzodiazepines","Non-Benzodiazepine Hypnotics"]},{num:"5",title:"Antipsychotic Drugs",subs:["Typical Antipsychotics","Atypical Antipsychotics"]},{num:"6",title:"Antidepressants",subs:["Tricyclic Antidepressants","SSRIs","SNRIs","MAO Inhibitors","Atypical Antidepressants"]},{num:"7",title:"Antiepileptic Drugs",subs:["Sodium Channel Blockers","GABA Enhancers","Calcium Channel Modulators"]},{num:"8",title:"Opioid Analgesics",subs:["Natural Opioids","Semisynthetic Opioids","Synthetic Opioids","Opioid Antagonists"]},{num:"9",title:"Non-Opioid Analgesics",subs:["NSAIDs","COX-2 Inhibitors","Antipyretics"]},{num:"10",title:"General and Local Anesthetics",subs:["Inhalational Anesthetics","Intravenous Anesthetics","Ester Local Anesthetics","Amide Local Anesthetics"]},{num:"11",title:"Anti-Parkinsonian Drugs",subs:["Dopamine Precursors","Dopamine Agonists","MAO-B Inhibitors","COMT Inhibitors"]},{num:"12",title:"Anti-Alzheimer Drugs",subs:["Cholinesterase Inhibitors","NMDA Receptor Antagonists"]}]},
+  {part:"Part IV",title:"Cardiovascular Drugs",chapters:[{num:"13",title:"Antihypertensive Drugs",subs:["ACE Inhibitors","ARBs","Calcium Channel Blockers","Diuretics","Beta Blockers","Vasodilators"]},{num:"14",title:"Antianginal Drugs",subs:["Organic Nitrates","Calcium Channel Blockers","Potassium Channel Activators"]},{num:"15",title:"Antiarrhythmic Drugs",subs:["Sodium Channel Blockers","Beta Blockers","Potassium Channel Blockers","Calcium Channel Blockers"]},{num:"16",title:"Antihyperlipidemic Drugs",subs:["Statins","Fibrates","Bile Acid Sequestrants","Cholesterol Absorption Inhibitors"]},{num:"17",title:"Anticoagulants and Antiplatelet Drugs",subs:["Heparins","Vitamin K Antagonists","Direct Oral Anticoagulants","Antiplatelet Agents","Thrombolytics"]},{num:"18",title:"Congestive Heart Failure Drugs",subs:["Cardiac Glycosides","Inotropes","ARNI Drugs"]}]},
+  {part:"Part V",title:"Endocrine System Drugs",chapters:[{num:"19",title:"Antidiabetic Drugs",subs:["Insulin Preparations","Sulfonylureas","Biguanides","DPP-4 Inhibitors","GLP-1 Agonists","SGLT2 Inhibitors"]},{num:"20",title:"Thyroid and Antithyroid Drugs",subs:["Thyroid Hormones","Thioamides","Iodine Preparations"]},{num:"21",title:"Steroidal Drugs",subs:["Corticosteroids","Androgens","Estrogens","Progestins","Anabolic Steroids"]},{num:"22",title:"Oral Contraceptives",subs:["Combined Pills","Progesterone-Only Pills","Emergency Contraceptives"]}]},
+  {part:"Part VI",title:"Respiratory System Drugs",chapters:[{num:"23",title:"Antiasthmatic Drugs",subs:["Beta-2 Agonists","Corticosteroids","Leukotriene Antagonists","Methylxanthines"]},{num:"24",title:"Antitussives and Expectorants",subs:["Opioid Antitussives","Non-Opioid Antitussives","Mucolytics","Expectorants"]},{num:"25",title:"Antihistamines",subs:["First Generation Antihistamines","Second Generation Antihistamines"]}]},
+  {part:"Part VII",title:"Gastrointestinal Drugs",chapters:[{num:"26",title:"Antiulcer Drugs",subs:["Proton Pump Inhibitors","H2 Receptor Blockers","Antacids","Cytoprotective Agents"]},{num:"27",title:"Antiemetic Drugs",subs:["Dopamine Antagonists","5-HT3 Antagonists","NK1 Antagonists"]},{num:"28",title:"Laxatives and Antidiarrheal Drugs",subs:["Bulk Forming Agents","Osmotic Laxatives","Stimulant Laxatives","Antimotility Agents"]}]},
+  {part:"Part VIII",title:"Anti-Infective Agents",chapters:[{num:"29",title:"Antibacterial Drugs",subs:["Beta-Lactam Antibiotics","Aminoglycosides","Tetracyclines","Macrolides","Fluoroquinolones","Sulfonamides","Glycopeptides"]},{num:"30",title:"Antitubercular Drugs",subs:["First-Line Drugs","Second-Line Drugs"]},{num:"31",title:"Antileprotic Drugs",subs:[]},{num:"32",title:"Antifungal Drugs",subs:["Polyenes","Azoles","Echinocandins"]},{num:"33",title:"Antiviral Drugs",subs:["Anti-HIV Drugs","Anti-Herpes Drugs","Anti-Influenza Drugs","Anti-Hepatitis Drugs"]},{num:"34",title:"Antimalarial Drugs",subs:["Quinoline Derivatives","Artemisinin Derivatives"]},{num:"35",title:"Antiamoebic and Antiprotozoal Drugs",subs:[]},{num:"36",title:"Anthelmintic Drugs",subs:[]}]},
+  {part:"Part IX",title:"Anticancer and Immunological Drugs",chapters:[{num:"37",title:"Anticancer Drugs",subs:["Alkylating Agents","Antimetabolites","Natural Product Anticancer Drugs","Hormonal Anticancer Drugs","Targeted Anticancer Therapy","Monoclonal Antibodies","Immunotherapy"]},{num:"38",title:"Immunosuppressants",subs:["Calcineurin Inhibitors","mTOR Inhibitors","Cytotoxic Immunosuppressants"]},{num:"39",title:"Immunostimulants and Vaccines",subs:[]}]},
+  {part:"Part X",title:"Chemotherapeutic Agents",chapters:[{num:"40",title:"Antiseptics and Disinfectants",subs:[]},{num:"41",title:"Chelating Agents",subs:[]},{num:"42",title:"Diagnostic Agents and Contrast Media",subs:[]}]},
+  {part:"Part XI",title:"Vitamins and Nutritional Agents",chapters:[{num:"43",title:"Vitamins",subs:["Fat Soluble Vitamins","Water Soluble Vitamins"]},{num:"44",title:"Hematinics",subs:["Iron Preparations","Folic Acid","Vitamin B12"]},{num:"45",title:"Electrolyte and Fluid Replacement Therapy",subs:[]}]},
+  {part:"Part XII",title:"Advanced and Modern Therapeutics",chapters:[{num:"46",title:"Biotechnology Derived Drugs",subs:["Recombinant Proteins","Monoclonal Antibodies","Gene Therapy"]},{num:"47",title:"Peptide and Protein Drugs",subs:[]},{num:"48",title:"Nanomedicine and Targeted Drug Delivery",subs:[]},{num:"49",title:"Personalized Medicine and Pharmacogenomics",subs:[]},{num:"50",title:"Recent Advances in Medicinal Chemistry",subs:["AI in Drug Design","PROTACs","CRISPR Therapeutics","RNA-Based Drugs","Antibody Drug Conjugates (ADCs)"]}]}
+];
+let curMedicinalPart=null,curMedicinalChapter=null,medicinalCache={};
+
+function buildMedicinalTopicList(topics){
+  const ul=document.getElementById('topicList');
+  ul.innerHTML='';
+  const backLi=document.createElement('li');
+  backLi.className='topic-item';
+  const backBtn=document.createElement('button');
+  backBtn.className='topic-btn';
+  backBtn.type='button';
+  backBtn.innerHTML='<span class="tdot"></span><span>All Medicinal Chapters</span>';
+  backBtn.onclick=()=>showMedicinalIndex();
+  backLi.appendChild(backBtn);
+  ul.appendChild(backLi);
+  topics.forEach((t,i)=>{
+    const li=document.createElement('li');
+    li.className='topic-item';
+    const btn=document.createElement('button');
+    btn.className='topic-btn';
+    btn.id='medtb'+i;
+    btn.innerHTML=`<span class="tdot"></span><span>${esc(t)}</span>`;
+    btn.onclick=()=>selectMedicinalTopic(t,i);
+    li.appendChild(btn);
+    ul.appendChild(li);
+  });
+}
+
+function selectMedicinalTopic(topic,idx){
+  document.querySelectorAll('.topic-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('medtb'+idx);
+  if(btn)btn.classList.add('active');
+  document.getElementById('noteTopic').textContent=topic;
+  if(medicinalCache[idx]){
+    document.getElementById('aiBody').innerHTML=medicinalCache[idx];
+  }else{
+    const html=buildMedicinalNotes(topic,curMedicinalChapter,curMedicinalPart);
+    document.getElementById('aiBody').innerHTML=html;
+    medicinalCache[idx]=html;
+    if(btn)btn.classList.add('done');
+  }
+}
+
+function buildMedicinalNotes(topic,ch,part){
+  const title=esc(topic);
+  const chapter=esc(ch?.title||'Medicinal Chemistry');
+  const partTitle=esc(part?.title||'Therapeutic Class');
+  return `
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-pill" aria-hidden="true"></i></div><div class="sec-label">Overview</div></div>
+<p><strong>${title}</strong> is studied under <strong>${chapter}</strong> in ${partTitle}. In medicinal chemistry, this topic should be understood through three connected lenses: the biological target, the chemical structure responsible for activity, and the clinical behaviour of the drug class.</p>
+<p>Start by identifying the receptor, enzyme, transporter, ion channel, or pathogen process involved. Then connect the pharmacophore to potency, selectivity, absorption, metabolism, toxicity, and therapeutic use.</p>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-target-arrow" aria-hidden="true"></i></div><div class="sec-label">Target and mechanism of action</div></div>
+<ul>
+<li><strong>Primary target:</strong> define the receptor/enzyme/system affected by this class.</li>
+<li><strong>Functional outcome:</strong> agonism, antagonism, enzyme inhibition, channel blockade, transporter modulation, antimicrobial killing, or immune modulation.</li>
+<li><strong>Dose-response logic:</strong> relate potency, efficacy, therapeutic window, and receptor selectivity.</li>
+<li><strong>Clinical effect:</strong> explain how molecular action produces the desired therapeutic response.</li>
+</ul>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-flask" aria-hidden="true"></i></div><div class="sec-label">SAR and pharmacophore</div></div>
+<table><tr><th>Structural feature</th><th>Why it matters</th><th>Study question</th></tr>
+<tr><td>Ionisable group</td><td>Controls receptor binding, pKa, salt formation, solubility, and tissue distribution.</td><td>Is the drug mostly ionised at physiological pH?</td></tr>
+<tr><td>Aromatic / heteroaromatic ring</td><td>Often contributes hydrophobic binding, pi interactions, potency, and metabolic liability.</td><td>Which ring substitutions improve selectivity?</td></tr>
+<tr><td>Hydrogen bond donor / acceptor</td><td>Controls target recognition, permeability, and solubility.</td><td>Which H-bond is essential and which can be replaced?</td></tr>
+<tr><td>Stereochemistry</td><td>May strongly alter potency, toxicity, and metabolism.</td><td>Is one enantiomer preferred or safer?</td></tr>
+</table>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-activity" aria-hidden="true"></i></div><div class="sec-label">ADME and metabolism</div></div>
+<p>For ${title}, revise absorption, distribution, metabolism, and excretion as part of the chemistry, not as a separate memorised list. Functional groups determine pKa, lipophilicity, plasma protein binding, first-pass metabolism, active metabolites, half-life, and route of administration.</p>
+<div class="tip"><strong>Exam tip:</strong> Always connect a structural feature to a pharmacokinetic consequence: for example, higher polarity may improve solubility but reduce passive membrane permeability.</div>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-microscope" aria-hidden="true"></i></div><div class="sec-label">Important examples</div></div>
+<div class="example-box"><div class="ex-label">Prototype drug</div><p>Learn one prototype drug for this subtopic, its mechanism, therapeutic use, and major adverse effect.</p></div>
+<div class="example-box"><div class="ex-label">Improved analogue</div><p>Compare a newer drug with the prototype. Ask what changed chemically and how that improved potency, duration, selectivity, safety, or dosing.</p></div>
+<div class="example-box"><div class="ex-label">Clinical limitation</div><p>Note one limitation such as resistance, tolerance, dependence, toxicity, drug interaction, poor oral bioavailability, or narrow therapeutic index.</p></div>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-alert-triangle" aria-hidden="true"></i></div><div class="sec-label">Adverse effects and cautions</div></div>
+<ul>
+<li>Separate on-target toxicity from off-target toxicity.</li>
+<li>Identify contraindications based on mechanism and patient condition.</li>
+<li>Watch for CYP interactions, QT prolongation risk, renal/hepatic dose adjustment, and pregnancy-related cautions where relevant.</li>
+<li>For anti-infective and anticancer topics, include resistance mechanisms and toxicity-limiting groups.</li>
+</ul>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-bulb" aria-hidden="true"></i></div><div class="sec-label">High-yield revision checklist</div></div>
+<ul>
+<li>Mechanism of action in one precise sentence.</li>
+<li>One prototype and two important analogues.</li>
+<li>Key SAR features and pharmacophore groups.</li>
+<li>Main therapeutic uses and major adverse effects.</li>
+<li>One metabolism point and one drug interaction.</li>
+</ul>
+</div>`;
+}
+
+function showMedicinalIndex(){
+  setFullWidth(false);
+  document.querySelector('.page')?.classList.remove('medicinal-index-mode');
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('chapterView').classList.add('show');
+  document.getElementById('chapterView').classList.remove('website-mode');
+  document.getElementById('chapterView').classList.remove('no-topic-sidebar');
+  document.getElementById('backBtn').classList.add('show');
+  setIndexSidebarVisible(false);
+  syncSidebarIndex(null);
+  setHeaderActive('Medicinal Chemistry');
+  closeOrganicMenu();
+  document.getElementById('chEyebrow').textContent='Medicinal Chemistry';
+  document.getElementById('chTitle').textContent='Medicinal Chemistry Index';
+  document.getElementById('chMeta').textContent='12 parts · 50 chapters · nested subtopics';
+  document.querySelector('.sidebar-title').textContent='Medicinal Index';
+  buildMedicinalSideIndex();
+  document.getElementById('noteTopic').textContent='Select a chapter';
+  document.getElementById('aiBody').innerHTML=`
+    <div class="section">
+      <div class="sec-head"><div class="sec-icon"><i class="ti ti-book" aria-hidden="true"></i></div><div class="sec-label">Medicinal Chemistry Index</div></div>
+      <p>Left side me sirf parts aur chapter names diye gaye hain. Kisi chapter par click karo; uske baad isi side panel me us chapter ka chota topic index open hoga.</p>
+      <p>Phir kisi topic par click karne se us topic ke detailed medicinal chemistry notes right side me dikhenge.</p>
+    </div>`;
+}
+
+function buildMedicinalSideIndex(){
+  const ul=document.getElementById('topicList');
+  ul.innerHTML='';
+  medicinalData.forEach((part,pi)=>{
+    const partLi=document.createElement('li');
+    partLi.className='med-side-part';
+    partLi.innerHTML=`<div class="med-side-part-name">${part.part} - ${esc(part.title)}</div>`;
+    part.chapters.forEach(ch=>{
+      const chBtn=document.createElement('button');
+      chBtn.type='button';
+      chBtn.className='med-side-chapter';
+      chBtn.textContent=`Ch ${ch.num}. ${ch.title}`;
+      chBtn.onclick=()=>openMedicinalChapter(part,ch);
+      partLi.appendChild(chBtn);
+    });
+    ul.appendChild(partLi);
+  });
+}
+
+function openMedicinalChapter(part,ch){
+  document.querySelector('.page')?.classList.remove('medicinal-index-mode');
+  const topics=ch.subs.length?ch.subs:['Overview','Drug classification','Structure-activity relationship','Therapeutic uses','Adverse effects and contraindications'];
+  curMedicinalPart=part;
+  curMedicinalChapter=ch;
+  medicinalCache={};
+  setFullWidth(false);
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('chapterView').classList.add('show');
+  document.getElementById('chapterView').classList.remove('website-mode');
+  document.getElementById('chapterView').classList.remove('no-topic-sidebar');
+  document.getElementById('backBtn').classList.add('show');
+  setIndexSidebarVisible(false);
+  document.getElementById('chEyebrow').textContent=`${part.part} - ${part.title}`;
+  document.getElementById('chTitle').textContent=ch.title;
+  document.getElementById('chMeta').textContent=`Ch ${ch.num} · ${topics.length} topics`;
+  buildMedicinalTopicList(topics);
+  setHeaderActive('Medicinal Chemistry');
+  selectMedicinalTopic(topics[0],0);
+}
+
+function buildDetailedNotes(topic){
+  const p=topicProfile(topic);
+  const chapter=curChapter?curChapter.name:'Functional Group Conversion';
+  const general=esc(topic);
+  const map=esc(`${p.substrate} -> ${p.product}`);
+  return `
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-book" aria-hidden="true"></i></div><div class="sec-label">Textbook overview</div></div>
+<p><strong>${general}</strong> belongs to ${esc(p.family)}. In synthesis, this topic is studied because it changes the reactivity, polarity, oxidation level, or connectivity of a molecule in a predictable way. A good chemist does not memorize it as an isolated arrow; they ask what bond is being made, what bond is being broken, what functional group is activated, and what other groups in the molecule must survive.</p>
+<p>For the chapter <strong>${esc(chapter)}</strong>, the central idea is: <strong>${map}</strong>. The practical value of this transformation is that it lets you move from one synthetic platform to another. For example, alcohols can become leaving groups, carbonyls can become alcohols or alkenes, alkenes can become alcohols, halides, diols, or carbonyl fragments, and carboxylic acid derivatives can be interconverted by acyl substitution.</p>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-route" aria-hidden="true"></i></div><div class="sec-label">Reaction map and planning logic</div></div>
+<div class="rxn"><strong>General transformation:</strong> ${map}</div>
+<p>Before choosing reagents, classify the starting functional group as nucleophilic, electrophilic, acidic, basic, oxidizable, reducible, or a leaving-group precursor. Then classify the target functional group in the same way. The gap between these two classifications tells you whether the step needs oxidation, reduction, substitution, elimination, addition, rearrangement, or protection/deprotection.</p>
+<ul>
+<li><strong>Bond change:</strong> identify the exact sigma bond or pi bond that changes during ${general}.</li>
+<li><strong>Oxidation level:</strong> check whether carbon gains bonds to heteroatoms, loses bonds to hydrogen, or does the reverse.</li>
+<li><strong>Chemoselectivity:</strong> compare the desired site with any competing alkene, alcohol, amine, carbonyl, acid derivative, arene, or acidic proton.</li>
+<li><strong>Workup:</strong> many reactions are only complete after protonation, hydrolysis, oxidation, or reductive quench.</li>
+</ul>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-atom" aria-hidden="true"></i></div><div class="sec-label">Mechanism in detail</div></div>
+<p>The usual mechanistic class is <strong>${esc(p.mechanism)}</strong>. Mechanism is the best way to remember the reaction because it explains both the product and the side products.</p>
+<div class="mech-step"><div class="step-num">1</div><div class="step-text"><strong>Activation:</strong> the less reactive functional group is activated by protonation, Lewis-acid coordination, conversion into a leaving group, metal insertion, or formation of a more electrophilic intermediate.</div></div>
+<div class="mech-step"><div class="step-num">2</div><div class="step-text"><strong>Bond formation:</strong> the nucleophilic centre attacks the electrophilic centre, or a concerted process transfers atoms across a pi bond. Draw arrows from electron-rich bonds or lone pairs toward electron-poor atoms.</div></div>
+<div class="mech-step"><div class="step-num">3</div><div class="step-text"><strong>Intermediate control:</strong> tetrahedral intermediates collapse, carbocations rearrange or lose protons, organometallic adducts become alkoxides, and metal complexes undergo transmetalation or reductive elimination.</div></div>
+<div class="mech-step"><div class="step-num">4</div><div class="step-text"><strong>Product-forming step:</strong> proton transfer, leaving-group departure, hydride delivery, oxidation, reduction, or hydrolysis reveals the observed product.</div></div>
+<div class="mech-step"><div class="step-num">5</div><div class="step-text"><strong>Check the mechanism:</strong> verify charge balance, atom conservation, stereochemical outcome, and whether the proposed path explains regioselectivity and major side reactions.</div></div>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-flask" aria-hidden="true"></i></div><div class="sec-label">Reagents and conditions</div></div>
+<table><tr><th>Choice</th><th>What it does</th><th>Typical conditions</th><th>When to choose it</th></tr>
+<tr><td>${esc(p.reagent)}</td><td>Main reagent set for ${general}</td><td>${esc(p.conditions)}</td><td>Use when the substrate has compatible functional groups and the desired product is the normal major product.</td></tr>
+<tr><td>Milder selective variant</td><td>Reduces overreaction and protects sensitive groups</td><td>Lower temperature, dilute solution, buffered or neutral medium</td><td>Use for aldehydes, allylic systems, benzylic systems, polyfunctional molecules, and late-stage synthesis.</td></tr>
+<tr><td>Stronger forcing variant</td><td>Drives unreactive substrates to completion</td><td>Heat, stronger acid/base, higher catalyst loading, pressure, or longer time</td><td>Use only after checking rearrangement, decomposition, polymerisation, and overoxidation risks.</td></tr>
+<tr><td>Workup reagent</td><td>Converts intermediate into isolable product</td><td>Aqueous acid/base, oxidant, reductant, quench, extraction, crystallisation</td><td>Often determines yield and purity as much as the reaction itself.</td></tr>
+</table>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-arrows-exchange" aria-hidden="true"></i></div><div class="sec-label">Regioselectivity, stereochemistry and selectivity</div></div>
+<p>${esc(p.stereo)}</p>
+<p>For exam and route-design purposes, always mark the most substituted carbon, least hindered carbon, benzylic or allylic position, acidic alpha position, and any stereocentre near the reacting site. These features usually decide the major product. If a planar intermediate is formed, expect racemisation or facial selectivity; if the mechanism is concerted, expect a predictable syn, anti, inversion, retention, or stereospecific outcome.</p>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-microscope" aria-hidden="true"></i></div><div class="sec-label">Worked examples</div></div>
+${p.examples.map((ex,i)=>`<div class="example-box"><div class="ex-label">Example ${i+1}: ${esc(ex[0])}</div><p>${esc(ex[1])}</p><p><strong>Reasoning:</strong> identify the reactive site, choose conditions that activate only that site, then predict the product by following the mechanism rather than by memorising the arrow.</p></div>`).join('')}
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-alert-triangle" aria-hidden="true"></i></div><div class="sec-label">Side reactions and troubleshooting</div></div>
+<ul>
+<li><strong>Overreaction:</strong> strong oxidants, hydrides, acids, or bases can push beyond the desired oxidation level or cleave sensitive bonds.</li>
+<li><strong>Competing pathway:</strong> substitution can compete with elimination; reduction can compete with hydrogenolysis; carbonyl addition can compete with enolisation.</li>
+<li><strong>Moisture and acid/base sensitivity:</strong> organometallics, acid chlorides, silyl ethers, acetals, and some catalysts fail when water or wrong pH is present.</li>
+<li><strong>Purification issue:</strong> inorganic salts, tin residues, boron residues, emulsions, polymeric byproducts, or coloured metal impurities may require filtration through celite, charcoal, silica, crystallisation, or scavenger resin.</li>
+</ul>
+<div class="warn"><strong>Common mistake:</strong> Students often write the right reagent but ignore compatibility. Always ask what else in the molecule reacts faster than the intended functional group.</div>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-bulb" aria-hidden="true"></i></div><div class="sec-label">Exam notes and memory hooks</div></div>
+<ul>
+<li>Write the substrate class first, then write the mechanism class, then write the product. This prevents reagent-only memorisation.</li>
+<li>For multi-step synthesis, choose this conversion only if it improves the next disconnection or solves a selectivity problem.</li>
+<li>When two products are possible, justify the major one using stability, sterics, electronics, orbital alignment, or reaction conditions.</li>
+<li>In named reactions, remember the three-part story: active reagent, key intermediate, product-forming step.</li>
+</ul>
+<div class="tip"><strong>Exam tip:</strong> If you cannot remember the exact reagent, state the required chemical operation: oxidise, reduce, substitute, eliminate, protect, hydrolyse, couple, or rearrange. Then select a reagent family that performs only that operation.</div>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-building-factory" aria-hidden="true"></i></div><div class="sec-label">Synthetic and industrial relevance</div></div>
+<p>${general} is important in medicinal chemistry, API route development, natural product synthesis, agrochemical chemistry, and materials chemistry because functional groups control solubility, potency, stability, crystallinity, salt formation, and downstream reactivity. On scale, chemists evaluate not only yield but also safety, heat release, impurity purge, reagent cost, metal residues, solvent recovery, and regulatory acceptability.</p>
+<p>For process chemistry, the best version of a reaction is often not the most elegant academic version. It is the one that gives robust conversion, simple workup, low impurity burden, available raw materials, and safe thermal behaviour at kilogram scale.</p>
+</div>
+
+<div class="section">
+<div class="sec-head"><div class="sec-icon"><i class="ti ti-books" aria-hidden="true"></i></div><div class="sec-label">Open reference library</div></div>
+<p>Use these open resources for diagrams, additional textbook examples, and chapter-level reading. The handbook keeps its own notes here, and these links act like a deeper reading shelf.</p>
+<div class="resource-list">
+<a href="https://openstax.org/books/organic-chemistry/pages/3-1-functional-groups" target="_blank" rel="noopener">OpenStax: Functional Groups</a>
+<a href="https://openstax.org/books/organic-chemistry/pages/6-3-polar-reactions" target="_blank" rel="noopener">OpenStax: Polar Reactions</a>
+<a href="https://chem.libretexts.org/Bookshelves/Organic_Chemistry" target="_blank" rel="noopener">LibreTexts Organic Chemistry</a>
+<a href="https://open.umn.edu/opentextbooks/textbooks/organic-chemistry-i" target="_blank" rel="noopener">Open Textbook Library PDF</a>
+</div>
+</div>`;
+}
+
+async function fetchNotes(topic,idx){
+  const body=document.getElementById('aiBody');
+  body.innerHTML='<div class="loading-wrap"><div class="spin"></div><p>Opening detailed textbook notes for "'+esc(topic)+'"...</p></div>';
+  await new Promise(r=>setTimeout(r,120));
+  const html=buildDetailedNotes(topic);
+  body.innerHTML=html;
+  cache[idx]=html;
+  const btn=document.getElementById('tb'+idx);
+  if(btn)btn.classList.add('done');
+}
+
+function showHome(){
+  setFullWidth(true);
+  document.querySelector('.page')?.classList.remove('medicinal-index-mode');
+  document.getElementById('chapterView').classList.remove('website-mode');
+  document.getElementById('chapterView').classList.remove('no-topic-sidebar');
+  document.getElementById('homeView').style.display='block';
+  document.getElementById('embeddedHomeContent').style.display='block';
+  document.getElementById('fgiIntro').style.display='none';
+  document.getElementById('indexContainer').style.display='none';
+  document.getElementById('chapterView').classList.remove('show');
+  document.getElementById('backBtn').classList.remove('show');
+  setIndexSidebarVisible(false);
+  syncSidebarIndex(null);
+  setHeaderActive('Home');
+  closeOrganicMenu();
+  startHomeTypewriter(true);
+}
+
+const homeIntroText=`Young research professional with a passion for innovation and expertise in the development of new organic molecules. In my current role, I collaborate with multi-disciplinary teams to design and optimize processes for API development, ensuring high-quality standards and regulatory compliance. Core experienced in route design and development of APIs, process optimization and scale-up, impurity profiling and control, technology transfer to manufacturing, and regulatory documentation and compliance.
+
+Alongside experimental research, I actively work in computational drug design and chemioinformatics, applying AI and machine learning techniques to support data-driven decision-making in drug discovery and development with hands-on experience in:
+
+• AutoDock Vina - molecular docking
+• Open Babel - ligand preparation and molecular file conversion
+• RDKit - molecular descriptors, similarity analysis, and data preprocessing
+• PyMOL - molecular visualization and interaction analysis
+• QSAR modeling - structure-property relationship analysis
+• Python - data analysis, automation, and AI/ML workflows
+
+Bridging computational insights with experimental chemistry.`;
+const homeIntroHtml=`<p>Young research professional with a passion for innovation and expertise in the development of new organic molecules. In my current role, I collaborate with multi-disciplinary teams to design and optimize processes for API development, ensuring high-quality standards and regulatory compliance. Core experienced in route design and development of APIs, process optimization and scale-up, impurity profiling and control, technology transfer to manufacturing, and regulatory documentation and compliance.</p>
+<p>Alongside experimental research, I actively work in computational drug design and chemioinformatics, applying AI and machine learning techniques to support data-driven decision-making in drug discovery and development with hands-on experience in:</p>
+<div class="tool-list">
+<div class="tool-row"><span class="tool-dot">•</span><span class="tool-text">AutoDock Vina - molecular docking</span></div>
+<div class="tool-row"><span class="tool-dot">•</span><span class="tool-text">Open Babel - ligand preparation and molecular file conversion</span></div>
+<div class="tool-row"><span class="tool-dot">•</span><span class="tool-text">RDKit - molecular descriptors, similarity analysis, and data preprocessing</span></div>
+<div class="tool-row"><span class="tool-dot">•</span><span class="tool-text">PyMOL - molecular visualization and interaction analysis</span></div>
+<div class="tool-row"><span class="tool-dot">•</span><span class="tool-text">QSAR modeling - structure-property relationship analysis</span></div>
+<div class="tool-row"><span class="tool-dot">•</span><span class="tool-text">Python - data analysis, automation, and AI/ML workflows</span></div>
+</div>
+<p>Bridging computational insights with experimental chemistry.</p>`;
+let homeTypeTimer=null;
+let homeTypeStarted=false;
+function startHomeTypewriter(force=false){
+  const target=document.getElementById('homeTypewriter');
+  if(!target)return;
+  if(homeTypeStarted&&!force)return;
+  homeTypeStarted=true;
+  target.classList.remove('done');
+  target.textContent='';
+  if(homeTypeTimer)clearInterval(homeTypeTimer);
+  let i=0;
+  homeTypeTimer=setInterval(()=>{
+    target.textContent=homeIntroText.slice(0,i);
+    i+=2;
+    if(i>homeIntroText.length){
+      target.innerHTML=homeIntroHtml;
+      target.classList.add('done');
+      clearInterval(homeTypeTimer);
+      homeTypeTimer=null;
+    }
+  },14);
+}
+
+function showFunctionalGroupIndex(){
+  setFullWidth(false);
+  document.querySelector('.page')?.classList.remove('medicinal-index-mode');
+  document.getElementById('chapterView').classList.remove('website-mode');
+  document.getElementById('chapterView').classList.remove('no-topic-sidebar');
+  document.getElementById('homeView').style.display='block';
+  document.getElementById('embeddedHomeContent').style.display='none';
+  document.getElementById('fgiIntro').style.display='block';
+  document.getElementById('indexContainer').style.display='block';
+  document.getElementById('chapterView').classList.remove('show');
+  document.getElementById('backBtn').classList.add('show');
+  setIndexSidebarVisible(true);
+  syncSidebarIndex(null);
+  setHeaderActive('Organic Chemistry');
+  closeOrganicMenu();
+}
+
+function showGeneratedPage(title,subtitle,html,activeLabel){
+  document.querySelector('.page')?.classList.remove('medicinal-index-mode');
+  const isWebsiteFrame=html.includes('website-frame');
+  const hideTopicSidebar=html.includes('software-wrap');
+  setFullWidth(isWebsiteFrame);
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('chapterView').classList.add('show');
+  document.getElementById('chapterView').classList.toggle('website-mode',isWebsiteFrame);
+  document.getElementById('chapterView').classList.toggle('no-topic-sidebar',hideTopicSidebar);
+  document.getElementById('backBtn').classList.add('show');
+  setIndexSidebarVisible(false);
+  document.getElementById('chEyebrow').textContent=subtitle;
+  document.getElementById('chTitle').textContent=title;
+  document.getElementById('chMeta').textContent='Reference page';
+  document.getElementById('noteTopic').textContent=title;
+  document.getElementById('aiBody').innerHTML=html;
+  document.getElementById('topicList').innerHTML='<li class="topic-item"><button class="topic-btn active" type="button"><span class="tdot"></span><span>'+title+'</span></button></li>';
+  syncSidebarIndex(null);
+  setHeaderActive(activeLabel);
+}
+
+function openCategory(type){
+  if(type==='organic'){
+    showFunctionalGroupIndex();
+    return;
+  }
+  showGeneratedPage('Medicinal Chemistry','Drug discovery and pharma chemistry',`
+<div class="section"><div class="sec-head"><div class="sec-icon"><i class="ti ti-pill" aria-hidden="true"></i></div><div class="sec-label">Overview</div></div>
+<p>Medicinal chemistry connects organic synthesis with biology. It studies how molecular structure controls potency, selectivity, solubility, permeability, metabolism, toxicity, and formulation behaviour.</p>
+<p>In drug discovery, functional groups are not only reaction handles; they tune pKa, hydrogen bonding, lipophilicity, metabolic stability, and salt formation. A small change such as alcohol to ether, amide to bioisostere, or aryl chloride to heteroaryl group can change the whole pharmacological profile.</p></div>
+<div class="section"><div class="sec-head"><div class="sec-icon"><i class="ti ti-flask" aria-hidden="true"></i></div><div class="sec-label">High-yield study topics</div></div>
+<ul><li>Structure-activity relationship (SAR) and lead optimisation</li><li>pKa, logP, logD, polar surface area, and permeability</li><li>Bioisosteres and functional group replacement</li><li>Metabolic soft spots, oxidation, hydrolysis, and dealkylation</li><li>Impurity control, genotoxic impurity risk, nitrosamine risk, and ICH thinking</li></ul></div>
+<div class="section"><div class="sec-head"><div class="sec-icon"><i class="ti ti-building-factory" aria-hidden="true"></i></div><div class="sec-label">Process relevance</div></div>
+<p>For API synthesis, a route must be chemically sound and manufacturable. Chemists compare yield, raw material cost, safety, impurity purge, residual metals, solvent class, crystallisation behaviour, and scalability.</p></div>`, 'Medicinal Chemistry');
+}
+
+function openInfoPage(type){
+  if(type==='bio'){
+    showGeneratedPage('Bio','About this handbook',`
+<div class="section"><div class="sec-head"><div class="sec-icon"><i class="ti ti-user" aria-hidden="true"></i></div><div class="sec-label">About</div></div>
+<p>This handbook is designed as a practical organic chemistry companion for functional group conversions, mechanisms, reagents, exam revision, and pharmaceutical route thinking.</p>
+<p>It is structured like a compact textbook: select a chapter, open a topic, and study the overview, mechanism, conditions, examples, mistakes, and industrial relevance in one place.</p></div>`, 'Bio');
+    return;
+  }
+  showGeneratedPage('Contact','Get in touch',`
+<div class="section"><div class="sec-head"><div class="sec-icon"><i class="ti ti-mail" aria-hidden="true"></i></div><div class="sec-label">Contact</div></div>
+<p>Open to collaborations, research opportunities, and discussions on API development, process chemistry, computational drug design, and pharmaceutical sciences.</p>
+<div class="example-box"><div class="ex-label">Bio Contact</div><p><strong>Name:</strong> Subrat Biswas<br><strong>Email:</strong> <a href="mailto:Subratbiswas99@gmail.com">Subratbiswas99@gmail.com</a><br><strong>Location:</strong> Sector 17, Gurugram, Haryana 122001<br><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/subratbiswas99/" target="_blank" rel="noopener">linkedin.com/in/subratbiswas99</a></p></div></div>`, 'Contact');
+}
+
+const softwareTools=[
+  {name:'GROMACS',role:'Molecular Dynamics',desc:'Biomolecular molecular dynamics package for protein, ligand, membrane, solvent, and trajectory workflows.',uses:['Protein-ligand simulation and stability checks','Trajectory analysis such as RMSD, RMSF, radius of gyration, and hydrogen bonding','Production MD workflows for biomolecular systems']},
+  {name:'LAMMPS',role:'Atomistic Simulation',desc:'Large-scale classical molecular dynamics engine for materials, polymers, surfaces, interfaces, and particle systems.',uses:['Materials and polymer simulation','Custom force-field driven atomistic workflows','Large-scale molecular or coarse-grained simulations']},
+  {name:'Psi4',role:'Quantum Chemistry',desc:'Open-source quantum chemistry platform for electronic structure calculations and molecular property prediction.',uses:['Geometry optimization and energy calculations','DFT and post-Hartree-Fock workflows','Reaction energetics and molecular property studies']},
+  {name:'PySCF',role:'Python Quantum Chemistry',desc:'Python-native quantum chemistry toolkit for flexible SCF, DFT, and advanced electronic-structure pipelines.',uses:['Scriptable quantum chemistry workflows','Custom DFT/HF calculations','Research-grade method prototyping in Python']},
+  {name:'xtb',role:'Semiempirical QM',desc:'Fast semiempirical quantum chemistry tool for geometry optimization, screening, and approximate molecular properties.',uses:['Rapid geometry optimization','Fast energy ranking of molecules','Pre-optimization before higher-level QM calculations']},
+  {name:'CREST',role:'Conformer Search',desc:'Conformer and rotamer ensemble search tool commonly used with xtb for flexible organic molecules.',uses:['Conformer generation and ranking','Protonation and tautomer exploration','Flexible ligand ensemble preparation']},
+  {name:'Multiwfn',role:'Wavefunction Analysis',desc:'Analysis program for electron density, orbitals, charges, topology, and wavefunction-derived descriptors.',uses:['Electron density and orbital analysis','Charge and electrostatic potential studies','QTAIM, NCI, and topology-style analysis']},
+  {name:'Cantera',role:'Reaction Engineering',desc:'Tool for chemical kinetics, thermodynamics, combustion, and reactor-network simulation.',uses:['Kinetic model simulation','Reactor and reaction engineering calculations','Thermodynamic and transport property workflows']},
+  {name:'CoolProp',role:'Thermophysical Properties',desc:'Library for fluid properties, equations of state, phase behavior, and engineering thermodynamic calculations.',uses:['Fluid property calculation','Phase and thermodynamic data lookup','Engineering models requiring reliable physical properties']},
+  {name:'NWChem',role:'Scalable Quantum Chemistry',desc:'Computational chemistry suite for quantum chemistry and molecular simulation on larger workloads.',uses:['DFT and ab initio calculations','Large molecular systems and scalable jobs','Electronic structure and molecular property prediction']},
+  {name:'PyBaMM',role:'Battery Modeling',desc:'Python battery mathematical modeling package for physics-based simulation, parameter studies, and degradation analysis.',uses:['Lithium-ion battery model simulation','Parameter sweeps and degradation studies','Physics-based battery research workflows']},
+  {name:'RDKit',role:'Chemioinformatics',desc:'Core cheminformatics library for molecular descriptors, fingerprints, similarity, standardization, and data preprocessing.',uses:['Descriptor and fingerprint generation','Similarity and substructure searching','Dataset cleanup for QSAR or ML modeling']},
+  {name:'Open Babel',role:'Molecular Conversion',desc:'Molecular file conversion and preparation toolkit for chemistry formats, ligand cleanup, and batch processing.',uses:['SDF, MOL2, PDB, XYZ and other format conversion','Ligand preparation and structure cleanup','Batch molecular processing before docking or modeling']}
+];
+
+function softwareDetailHtml(idx=0){
+  const tool=softwareTools[idx]||softwareTools[0];
+  return `<div class="software-detail-kicker">${esc(tool.role)}</div>
+    <h3>${esc(tool.name)}</h3>
+    <p>${esc(tool.desc)}</p>
+    <ul>${tool.uses.map(use=>`<li>${esc(use)}</li>`).join('')}</ul>`;
+}
+
+function selectSoftwareTool(idx){
+  const detail=document.getElementById('softwareDetail');
+  if(detail)detail.innerHTML=softwareDetailHtml(idx);
+  document.querySelectorAll('.software-btn').forEach((btn,i)=>btn.classList.toggle('active',i===idx));
+}
+
+function softwarePageHtml(activeIdx=0){
+  const list=softwareTools.map((tool,i)=>`
+    <button class="software-btn ${i===activeIdx?'active':''}" type="button" onclick="selectSoftwareTool(${i})">
+      <span class="software-num">${String(i+1).padStart(2,'0')}</span>
+      <span><span class="software-name">${esc(tool.name)}</span><span class="software-role">${esc(tool.role)}</span></span>
+    </button>`).join('');
+  return `<div class="section"><div class="sec-head"><div class="sec-icon"><i class="ti ti-code" aria-hidden="true"></i></div><div class="sec-label">Software Toolkit</div></div>
+    <p>A numbered scientific software stack for molecular simulation, quantum chemistry, conformer exploration, chemical analysis, thermodynamics, battery modeling, and chemioinformatics workflows. Click any software to view details.</p>
+    <div class="software-wrap">
+      <div class="software-list">${list}</div>
+      <div class="software-detail" id="softwareDetail">${softwareDetailHtml(activeIdx)}</div>
+    </div>
+  </div>`;
+}
+
+function openSoftwarePage(){
+  showGeneratedPage('Software','Computational chemistry and AI/ML toolkit',softwarePageHtml(0),'Software');
+}
+
+buildIndex();
+buildSidebarIndex();
+setFullWidth(true);
+syncCornerTheme();
+startHomeTypewriter();
 </script>
-</body>
-</html>
+

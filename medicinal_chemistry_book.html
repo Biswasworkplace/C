@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f5f0e8;
+    --cream-dark: #ede5d0;
+    --ink: #1a1208;
+    --ink-mid: #3d2e10;
+    --ink-light: #6b5535;
+    --gold: #9a7a2e;
+    --gold-light: #c4a23a;
+    --gold-pale: #e8d8a0;
+    --red: #7a1c1c;
+    --red-mid: #a03030;
+    --border: #c4a23a;
+    --spine-w: 56px;
+    --page-w: 620px;
+  }
+
+  body {
+    background: #2a1f0e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 4rem;
+    font-family: 'EB Garamond', Georgia, serif;
+  }
+
+  .book-cover {
+    width: 100%;
+    max-width: 680px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    box-shadow: -4px 0 0 #c4a23a, -8px 0 0 #8a6e20, inset 4px 0 12px rgba(0,0,0,0.15), 4px 4px 24px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .book-cover::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: var(--spine-w);
+    background: linear-gradient(to right, #7a5c18 0%, #c4a23a 40%, #e8d490 55%, #c4a23a 70%, #8a6e20 100%);
+    border-right: 1px solid var(--gold);
+  }
+
+  .spine-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--spine-w);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--ink);
+    z-index: 2;
+    text-transform: uppercase;
+    padding: 1rem 0;
+  }
+
+  .page {
+    margin-left: var(--spine-w);
+    padding: 0;
+    min-height: 600px;
+  }
+
+  .header-section {
+    background: var(--ink);
+    padding: 2rem 2.5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-section::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid var(--gold);
+    pointer-events: none;
+  }
+
+  .header-section::after {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(196,162,58,0.3);
+    pointer-events: none;
+  }
+
+  .book-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .book-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(16px, 3vw, 24px);
+    color: var(--gold-pale);
+    text-align: center;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .book-subtitle {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--gold-light);
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold-light);
+    font-size: 18px;
+    margin: 0.5rem 0;
+    letter-spacing: 8px;
+  }
+
+  .toc-area {
+    padding: 1.5rem 2.5rem 2rem;
+    background: var(--cream);
+  }
+
+  .toc-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gold-pale);
+  }
+
+  .part-block {
+    margin-bottom: 0.75rem;
+  }
+
+  .part-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 2px;
+    transition: background 0.15s;
+    user-select: none;
+  }
+
+  .part-row:hover {
+    background: rgba(154,122,46,0.08);
+  }
+
+  .part-number {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    min-width: 56px;
+    text-transform: uppercase;
+  }
+
+  .part-title {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-mid);
+    flex: 1;
+    letter-spacing: 0.3px;
+  }
+
+  .dots {
+    flex: 1;
+    border-bottom: 1px dotted var(--gold-pale);
+    margin: 0 6px;
+    position: relative;
+    top: -3px;
+  }
+
+  .page-num {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 12px;
+    color: var(--ink-light);
+    min-width: 20px;
+    text-align: right;
+  }
+
+  .chapters {
+    display: none;
+    padding-left: 56px;
+    margin-top: 2px;
+  }
+
+  .chapters.open {
+    display: block;
+    animation: slideDown 0.2s ease;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .chapter-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 2px 6px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.15s;
+  }
+
+  .chapter-row:hover {
+    background: rgba(154,122,46,0.06);
+  }
+
+  .chapter-num {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    color: var(--red-mid);
+    min-width: 28px;
+  }
+
+  .chapter-title {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 12px;
+    color: var(--ink-light);
+    flex: 1;
+  }
+
+  .chapter-title em {
+    font-style: italic;
+    color: var(--ink-mid);
+  }
+
+  .sub-chapters {
+    display: none;
+    padding-left: 28px;
+    margin-top: 1px;
+  }
+
+  .sub-chapters.open {
+    display: block;
+  }
+
+  .sub-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 1px 6px;
+  }
+
+  .sub-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold-pale);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .sub-title {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 11px;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--gold-pale);
+    margin: 0.75rem 0;
+  }
+
+  .footer-band {
+    background: var(--cream-dark);
+    border-top: 1px solid var(--gold-pale);
+    padding: 0.75rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-text {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 11px;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  .toggle-icon {
+    font-size: 10px;
+    color: var(--gold);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .part-row.active .toggle-icon {
+    transform: rotate(90deg);
+  }
+
+  .chapter-row.active .toggle-icon {
+    transform: rotate(90deg);
+  }
+
+  .part-row .toggle-icon::before { content: '▶'; }
+  .chapter-row .toggle-icon::before { content: '›'; font-size: 14px; }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+    padding: 6px 10px;
+    background: white;
+    border: 1px solid var(--gold-pale);
+    border-radius: 2px;
+  }
+
+  .search-bar input {
+    border: none;
+    outline: none;
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 13px;
+    color: var(--ink);
+    background: transparent;
+    flex: 1;
+  }
+
+  .search-bar input::placeholder { color: var(--ink-light); font-style: italic; }
+
+  .search-icon {
+    font-size: 13px;
+    color: var(--gold);
+  }
+
+  .highlight {
+    background: var(--gold-pale);
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+
+  .chapter-count {
+    font-family: 'Cinzel', serif;
+    font-size: 8px;
+    letter-spacing: 1px;
+    color: var(--gold);
+    background: var(--gold-pale);
+    padding: 1px 5px;
+    border-radius: 8px;
+    margin-left: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="book-cover">
+  <div class="spine-title">Index of Drug Classification · Medicinal Chemistry</div>
+
+  <div class="page">
+    <div class="header-section">
+      <div class="book-label">Index of Drug Classification</div>
+      <div class="ornament">⸻ ✦ ⸻</div>
+      <div class="book-title">According to Therapeutic Category</div>
+      <div class="ornament" style="margin-top:0.5rem; font-size:13px;">✦</div>
+      <div class="book-subtitle">For Medicinal Chemistry</div>
+    </div>
+
+    <div class="toc-area">
+      <div class="toc-heading">Table of Contents</div>
+
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search chapters or topics…" oninput="filterContent(this.value)">
+      </div>
+
+      <div id="toc"></div>
+    </div>
+
+    <div class="footer-band">
+      <div class="footer-text">XII Parts · 50 Chapters</div>
+      <div class="footer-text">Medicinal Chemistry Reference</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const data = [
+  { part: "Part I", title: "Introduction to Medicinal Chemistry", chapters: [
+    { num: "1", title: "Fundamentals of Medicinal Chemistry", subs: ["Definition and Scope","History and Development of Drugs","Drug Discovery Process","Lead Identification and Optimization","Pharmacodynamics and Pharmacokinetics","Structure–Activity Relationship (SAR)","Pharmacophore Concept","Drug Metabolism and Biotransformation","Prodrugs and Soft Drugs","Drug Design Approaches"] }
+  ]},
+  { part: "Part II", title: "Autonomic Nervous System Drugs", chapters: [
+    { num: "2", title: "Cholinergic Drugs", subs: ["Cholinergic Agonists","Anticholinesterase Agents","Cholinergic Blocking Agents","Neuromuscular Blocking Agents"] },
+    { num: "3", title: "Adrenergic Drugs", subs: ["Adrenergic Agonists","Alpha Blockers","Beta Blockers","Adrenergic Neuron Blocking Agents"] }
+  ]},
+  { part: "Part III", title: "Central Nervous System Drugs", chapters: [
+    { num: "4", title: "Sedatives and Hypnotics", subs: ["Barbiturates","Benzodiazepines","Non-Benzodiazepine Hypnotics"] },
+    { num: "5", title: "Antipsychotic Drugs", subs: ["Typical Antipsychotics","Atypical Antipsychotics"] },
+    { num: "6", title: "Antidepressants", subs: ["Tricyclic Antidepressants","SSRIs","SNRIs","MAO Inhibitors","Atypical Antidepressants"] },
+    { num: "7", title: "Antiepileptic Drugs", subs: ["Sodium Channel Blockers","GABA Enhancers","Calcium Channel Modulators"] },
+    { num: "8", title: "Opioid Analgesics", subs: ["Natural Opioids","Semisynthetic Opioids","Synthetic Opioids","Opioid Antagonists"] },
+    { num: "9", title: "Non-Opioid Analgesics", subs: ["NSAIDs","COX-2 Inhibitors","Antipyretics"] },
+    { num: "10", title: "General and Local Anesthetics", subs: ["Inhalational Anesthetics","Intravenous Anesthetics","Ester Local Anesthetics","Amide Local Anesthetics"] },
+    { num: "11", title: "Anti-Parkinsonian Drugs", subs: ["Dopamine Precursors","Dopamine Agonists","MAO-B Inhibitors","COMT Inhibitors"] },
+    { num: "12", title: "Anti-Alzheimer Drugs", subs: ["Cholinesterase Inhibitors","NMDA Receptor Antagonists"] }
+  ]},
+  { part: "Part IV", title: "Cardiovascular Drugs", chapters: [
+    { num: "13", title: "Antihypertensive Drugs", subs: ["ACE Inhibitors","ARBs","Calcium Channel Blockers","Diuretics","Beta Blockers","Vasodilators"] },
+    { num: "14", title: "Antianginal Drugs", subs: ["Organic Nitrates","Calcium Channel Blockers","Potassium Channel Activators"] },
+    { num: "15", title: "Antiarrhythmic Drugs", subs: ["Sodium Channel Blockers","Beta Blockers","Potassium Channel Blockers","Calcium Channel Blockers"] },
+    { num: "16", title: "Antihyperlipidemic Drugs", subs: ["Statins","Fibrates","Bile Acid Sequestrants","Cholesterol Absorption Inhibitors"] },
+    { num: "17", title: "Anticoagulants and Antiplatelet Drugs", subs: ["Heparins","Vitamin K Antagonists","Direct Oral Anticoagulants","Antiplatelet Agents","Thrombolytics"] },
+    { num: "18", title: "Congestive Heart Failure Drugs", subs: ["Cardiac Glycosides","Inotropes","ARNI Drugs"] }
+  ]},
+  { part: "Part V", title: "Endocrine System Drugs", chapters: [
+    { num: "19", title: "Antidiabetic Drugs", subs: ["Insulin Preparations","Sulfonylureas","Biguanides","DPP-4 Inhibitors","GLP-1 Agonists","SGLT2 Inhibitors"] },
+    { num: "20", title: "Thyroid and Antithyroid Drugs", subs: ["Thyroid Hormones","Thioamides","Iodine Preparations"] },
+    { num: "21", title: "Steroidal Drugs", subs: ["Corticosteroids","Androgens","Estrogens","Progestins","Anabolic Steroids"] },
+    { num: "22", title: "Oral Contraceptives", subs: ["Combined Pills","Progesterone-Only Pills","Emergency Contraceptives"] }
+  ]},
+  { part: "Part VI", title: "Respiratory System Drugs", chapters: [
+    { num: "23", title: "Antiasthmatic Drugs", subs: ["Beta-2 Agonists","Corticosteroids","Leukotriene Antagonists","Methylxanthines"] },
+    { num: "24", title: "Antitussives and Expectorants", subs: ["Opioid Antitussives","Non-Opioid Antitussives","Mucolytics","Expectorants"] },
+    { num: "25", title: "Antihistamines", subs: ["First Generation Antihistamines","Second Generation Antihistamines"] }
+  ]},
+  { part: "Part VII", title: "Gastrointestinal Drugs", chapters: [
+    { num: "26", title: "Antiulcer Drugs", subs: ["Proton Pump Inhibitors","H2 Receptor Blockers","Antacids","Cytoprotective Agents"] },
+    { num: "27", title: "Antiemetic Drugs", subs: ["Dopamine Antagonists","5-HT3 Antagonists","NK1 Antagonists"] },
+    { num: "28", title: "Laxatives and Antidiarrheal Drugs", subs: ["Bulk Forming Agents","Osmotic Laxatives","Stimulant Laxatives","Antimotility Agents"] }
+  ]},
+  { part: "Part VIII", title: "Anti-Infective Agents", chapters: [
+    { num: "29", title: "Antibacterial Drugs", subs: ["Beta-Lactam Antibiotics","Aminoglycosides","Tetracyclines","Macrolides","Fluoroquinolones","Sulfonamides","Glycopeptides"] },
+    { num: "30", title: "Antitubercular Drugs", subs: ["First-Line Drugs","Second-Line Drugs"] },
+    { num: "31", title: "Antileprotic Drugs", subs: [] },
+    { num: "32", title: "Antifungal Drugs", subs: ["Polyenes","Azoles","Echinocandins"] },
+    { num: "33", title: "Antiviral Drugs", subs: ["Anti-HIV Drugs","Anti-Herpes Drugs","Anti-Influenza Drugs","Anti-Hepatitis Drugs"] },
+    { num: "34", title: "Antimalarial Drugs", subs: ["Quinoline Derivatives","Artemisinin Derivatives"] },
+    { num: "35", title: "Antiamoebic and Antiprotozoal Drugs", subs: [] },
+    { num: "36", title: "Anthelmintic Drugs", subs: [] }
+  ]},
+  { part: "Part IX", title: "Anticancer and Immunological Drugs", chapters: [
+    { num: "37", title: "Anticancer Drugs", subs: ["Alkylating Agents","Antimetabolites","Natural Product Anticancer Drugs","Hormonal Anticancer Drugs","Targeted Anticancer Therapy","Monoclonal Antibodies","Immunotherapy"] },
+    { num: "38", title: "Immunosuppressants", subs: ["Calcineurin Inhibitors","mTOR Inhibitors","Cytotoxic Immunosuppressants"] },
+    { num: "39", title: "Immunostimulants and Vaccines", subs: [] }
+  ]},
+  { part: "Part X", title: "Chemotherapeutic Agents", chapters: [
+    { num: "40", title: "Antiseptics and Disinfectants", subs: [] },
+    { num: "41", title: "Chelating Agents", subs: [] },
+    { num: "42", title: "Diagnostic Agents and Contrast Media", subs: [] }
+  ]},
+  { part: "Part XI", title: "Vitamins and Nutritional Agents", chapters: [
+    { num: "43", title: "Vitamins", subs: ["Fat Soluble Vitamins","Water Soluble Vitamins"] },
+    { num: "44", title: "Hematinics", subs: ["Iron Preparations","Folic Acid","Vitamin B12"] },
+    { num: "45", title: "Electrolyte and Fluid Replacement Therapy", subs: [] }
+  ]},
+  { part: "Part XII", title: "Advanced and Modern Therapeutics", chapters: [
+    { num: "46", title: "Biotechnology Derived Drugs", subs: ["Recombinant Proteins","Monoclonal Antibodies","Gene Therapy"] },
+    { num: "47", title: "Peptide and Protein Drugs", subs: [] },
+    { num: "48", title: "Nanomedicine and Targeted Drug Delivery", subs: [] },
+    { num: "49", title: "Personalized Medicine and Pharmacogenomics", subs: [] },
+    { num: "50", title: "Recent Advances in Medicinal Chemistry", subs: ["AI in Drug Design","PROTACs","CRISPR Therapeutics","RNA-Based Drugs","Antibody Drug Conjugates (ADCs)"] }
+  ]}
+];
+
+let pageCounter = 1;
+
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function highlight(text, q) {
+  if (!q) return esc(text);
+  const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+  return esc(text).replace(re, '<mark class="highlight">$1</mark>');
+}
+
+function buildToc(query) {
+  const q = query ? query.trim().toLowerCase() : '';
+  const toc = document.getElementById('toc');
+  toc.innerHTML = '';
+
+  data.forEach((part, pi) => {
+    const partMatches = !q || part.title.toLowerCase().includes(q) || part.part.toLowerCase().includes(q);
+    const chapterMatches = part.chapters.filter(c =>
+      c.title.toLowerCase().includes(q) ||
+      c.subs.some(s => s.toLowerCase().includes(q))
+    );
+    if (q && !partMatches && chapterMatches.length === 0) return;
+
+    const block = document.createElement('div');
+    block.className = 'part-block';
+
+    const chapCount = part.chapters.length;
+    const pg = pageCounter;
+    pageCounter += chapCount * 4 + 2;
+
+    const partRow = document.createElement('div');
+    partRow.className = 'part-row';
+    partRow.innerHTML = `
+      <span class="part-number">${esc(part.part)}</span>
+      <span class="part-title">${highlight(part.title, q)} <span class="chapter-count">${chapCount} ch</span></span>
+      <span class="dots"></span>
+      <span class="page-num">${pg}</span>
+      <span class="toggle-icon"></span>
+    `;
+
+    const chapContainer = document.createElement('div');
+    chapContainer.className = 'chapters' + (q ? ' open' : '');
+
+    (q ? chapterMatches : part.chapters).forEach(ch => {
+      const chRow = document.createElement('div');
+      chRow.className = 'chapter-row';
+      const subMatches = q ? ch.subs.filter(s => s.toLowerCase().includes(q)) : ch.subs;
+      chRow.innerHTML = `
+        <span class="chapter-num">${esc(ch.num)}.</span>
+        <span class="chapter-title">${highlight(ch.title, q)}</span>
+        <span class="dots"></span>
+        <span class="page-num" style="font-size:11px;color:var(--ink-light)">${pg + parseInt(ch.num)*3}</span>
+        ${ch.subs.length ? '<span class="toggle-icon"></span>' : ''}
+      `;
+
+      const subContainer = document.createElement('div');
+      subContainer.className = 'sub-chapters' + (q && subMatches.length ? ' open' : '');
+      subMatches.forEach(s => {
+        const sr = document.createElement('div');
+        sr.className = 'sub-row';
+        sr.innerHTML = `<span class="sub-dot"></span><span class="sub-title">${highlight(s, q)}</span>`;
+        subContainer.appendChild(sr);
+      });
+
+      if (ch.subs.length) {
+        chRow.addEventListener('click', () => {
+          const isOpen = subContainer.classList.toggle('open');
+          chRow.classList.toggle('active', isOpen);
+        });
+      }
+
+      chapContainer.appendChild(chRow);
+      if (ch.subs.length) chapContainer.appendChild(subContainer);
+    });
+
+    if (q) {
+      chapContainer.classList.add('open');
+      partRow.classList.add('active');
+    } else {
+      partRow.addEventListener('click', () => {
+        const isOpen = chapContainer.classList.toggle('open');
+        partRow.classList.toggle('active', isOpen);
+      });
+    }
+
+    block.appendChild(partRow);
+    block.appendChild(chapContainer);
+
+    if (pi < data.length - 1) {
+      const div = document.createElement('div');
+      div.className = 'divider';
+      block.appendChild(div);
+    }
+
+    toc.appendChild(block);
+  });
+}
+
+function filterContent(val) {
+  pageCounter = 1;
+  buildToc(val);
+}
+
+buildToc('');
+</script>
+</body>
+</html>

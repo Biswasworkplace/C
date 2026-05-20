@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Common Reactions - OrganoChem</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-multi-page="true" id="top">
+<div class="progress-bar" id="progress"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="overlay-backdrop" id="backdrop" onclick="closeDetail()"></div>
+<div class="detail-overlay" id="detailPanel">
+  <div onclick="closeDetail()" class="detail-close" role="button" aria-label="Close content" tabindex="0">x</div>
+  <div id="detailContent"></div>
+</div>
+<nav>
+  <div class="nav-logo"><a href="index.html" style="text-decoration:none;color:inherit">OrganoChem</a></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Index</a></li>
+    <li><a href="pdf-notes.html">PDF Notes</a></li>
+    <li><a href="common-reactions.html">Common Reactions</a></li>
+    <li class="parts-menu">
+      <button class="parts-button" type="button">Parts</button>
+      <div class="parts-dropdown">
+        <a href="parts/part-01-goc.html"><span>01</span>General Organic Chemistry</a>
+        <a href="parts/part-02-stereochemistry.html"><span>02</span>Stereochemistry</a>
+        <a href="parts/part-03-functional-groups.html"><span>03</span>Functional Group Chemistry</a>
+        <a href="parts/part-04-redox.html"><span>04</span>Oxidation & Reduction</a>
+        <a href="parts/part-05-rearrangements.html"><span>05</span>Rearrangement Reactions</a>
+        <a href="parts/part-06-couplings.html"><span>06</span>Coupling Reactions</a>
+        <a href="parts/part-07-named-reactions.html"><span>07</span>Named Reactions</a>
+        <a href="parts/part-08-analytical.html"><span>08</span>Analytical & Practical Organic</a>
+        <a href="parts/part-09-pharma-industrial.html"><span>09</span>Industrial & Pharma Organic Chemistry</a>
+        <a href="parts/part-10-advanced.html"><span>10</span>Advanced Concepts</a>
+        <a href="common-reactions.html"><span>CR</span>Common Reactions</a>
+        <a href="interview.html"><span>IV</span>Interview Preparation</a>
+        <a href="structure-editor.html"><span>SE</span>Online Structure Editor</a>
+      </div>
+    </li>
+    <li><a href="interview.html">Interview</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode" title="Toggle dark / light mode"></button>
+    <div class="nav-indicator"></div>
+  </div>
+</nav>
+<aside class="floating-toc" aria-label="Chapter navigation">
+  <a href="parts/part-01-goc.html" title="GOC">01</a>
+  <a href="parts/part-02-stereochemistry.html" title="Stereochemistry">02</a>
+  <a href="parts/part-03-functional-groups.html" title="Functional Groups">03</a>
+  <a href="parts/part-04-redox.html" title="Oxidation & Reduction">04</a>
+  <a href="parts/part-05-rearrangements.html" title="Rearrangements">05</a>
+  <a href="parts/part-06-couplings.html" title="Couplings">06</a>
+  <a href="parts/part-07-named-reactions.html" title="Named Reactions">07</a>
+  <a href="parts/part-08-analytical.html" title="Analytical">08</a>
+  <a href="parts/part-09-pharma-industrial.html" title="Pharma">09</a>
+  <a href="parts/part-10-advanced.html" title="Advanced">10</a>
+  <a href="common-reactions.html" title="Common Reactions">CR</a>
+  <a href="interview.html" title="Interview Prep">IV</a>
+</aside>
+<a class="top-button" href="#top" title="Back to top">^</a>
+<main>
+<section id="common-reactions" class="atlas-page active">
+  <div class="chapter-divider">
+    <div class="chapter-num">CR</div>
+    <div class="chapter-info">
+      <div class="chapter-label">Reference Reaction Map</div>
+      <div class="chapter-title">Common Organic Reactions</div>
+    </div>
+    <div class="chapter-line"></div>
+  </div>
+  <div class="content-area">
+    <div class="section-badge">Functional Group Transformations</div>
+    <h2 class="glow-header">Common Reactions by Starting Material</h2>
+    <p class="glow-sub">A practical transformation map built around the CommonOrganicChemistry.com reaction index: first identify the functional group, then choose the product class, then check reagent fit, chemoselectivity, and scale-up risk.</p>
+    <div class="page-actions">
+      <a class="page-pill" href="index.html">Back to Master Index</a>
+      <a class="page-pill" href="parts/part-03-functional-groups.html">Functional Groups</a>
+      <a class="page-pill" href="parts/part-07-named-reactions.html">Named Reactions</a>
+      <a class="page-pill" href="https://www.commonorganicchemistry.com/index.htm" target="_blank" rel="noopener">Source Index</a>
+    </div>
+
+    <div class="syllabus-list">
+      <div class="syllabus-item"><strong>Decision 1: Functional group</strong><span>Classify substrate: alcohol, carbonyl, ester/acid, amine/amide/nitrile, nitro, alkene/alkyne, aryl halide, or protected intermediate.</span></div>
+      <div class="syllabus-item"><strong>Decision 2: Product class</strong><span>Select the product family: oxidation level, substitution product, reduction product, C-C bond, C-N bond, or protecting group.</span></div>
+      <div class="syllabus-item"><strong>Decision 3: Compatibility</strong><span>Check compatibility: water, acid/base sensitivity, over-reduction, over-oxidation, beta-elimination, catalyst poison, and purification load.</span></div>
+      <div class="syllabus-item"><strong>Decision 4: Practicality</strong><span>For synthesis planning, prefer transformations that are mild, selective, operationally simple, and generate impurities that can be purged.</span></div>
+    </div>
+
+    <h3 class="sub">High-Yield Transformation Table</h3>
+    <table class="chem-table">
+      <thead><tr><th>Starting group</th><th>Target product</th><th>Typical reagent set</th><th>Selection note</th></tr></thead>
+      <tbody>
+        <tr><td>Secondary alcohol</td><td>Ketone</td><td>DMP, Swern, MnO2, PCC</td><td>DMP and Swern are mild; MnO2 is especially useful for allylic/benzylic alcohols; chromium waste makes PCC less attractive.</td></tr>
+        <tr><td>Primary alcohol</td><td>Aldehyde or acid</td><td>DMP, Swern, PCC; Jones/KMnO4 for acid</td><td>Stop at aldehyde with anhydrous mild oxidants; use stronger aqueous oxidants when acid is desired.</td></tr>
+        <tr><td>Alcohol</td><td>Halide, azide, sulfonate</td><td>SOCl2/PBr3; DPPA/Mitsunobu; MsCl/TsCl</td><td>Convert poor leaving group OH into a better leaving group before substitution.</td></tr>
+        <tr><td>Aldehyde/ketone</td><td>Alcohol</td><td>NaBH4, LiAlH4, Grignard</td><td>NaBH4 is chemoselective for aldehydes/ketones; Grignard adds carbon and requires dry conditions.</td></tr>
+        <tr><td>Ketone</td><td>Methylene</td><td>Wittig, Wolff-Kishner, Clemmensen</td><td>Choose basic, acidic, or neutral conditions based on functional group tolerance.</td></tr>
+        <tr><td>Ester</td><td>Acid, aldehyde, alcohol</td><td>Hydrolysis; DIBAL-H; LiAlH4</td><td>DIBAL-H at low temperature can stop at aldehyde; LiAlH4 usually reduces fully to alcohol.</td></tr>
+        <tr><td>Carboxylic acid</td><td>Ester, alcohol, acid chloride</td><td>ROH/H+; BH3 or LiAlH4; SOCl2/oxalyl chloride</td><td>Acid chlorides are powerful branch points for amides, esters, and ketones.</td></tr>
+        <tr><td>Amine</td><td>Amide or urea</td><td>Acid chloride, anhydride, HATU/EDCI; isocyanate/CDI</td><td>Control base and stoichiometry to reduce bis-acylation or salt formation.</td></tr>
+        <tr><td>Amide</td><td>Nitrile or amine</td><td>POCl3/SOCl2; LiAlH4/BH3</td><td>Dehydration gives nitrile; strong hydride reduction gives amine.</td></tr>
+        <tr><td>Nitrile</td><td>Amide, acid, amine, aldehyde</td><td>Partial hydrolysis; hydrolysis; LiAlH4/H2; DIBAL-H</td><td>Nitriles are useful masked carbonyl/acid equivalents.</td></tr>
+        <tr><td>Nitro arene</td><td>Aniline</td><td>Fe/HCl, SnCl2, H2/Pd-C</td><td>Metal/acid reductions are robust; catalytic hydrogenation is cleaner but can affect reducible groups.</td></tr>
+        <tr><td>Aryl halide/triflate</td><td>Biaryl, aryl amine, alkyne, alkene</td><td>Suzuki, Buchwald, Sonogashira, Heck</td><td>Pd couplings depend strongly on ligand, base, solvent, and aryl halide electronics.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="accordion">
+      <div class="accordion-item" id="acc-common-oxidation">
+        <div class="accordion-header" onclick="toggleAcc('acc-common-oxidation')">
+          <div class="accordion-icon">+</div>
+          <div class="accordion-label">Alcohol Oxidation and Leaving Group Strategy</div>
+          <div class="accordion-meta">Alcohol -> carbonyl, acid, halide, azide, sulfonate</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="reaction-card">
+              <div class="reaction-name">Alcohol as a synthesis hub</div>
+              <div class="reaction-desc">Alcohols are common intermediates because they can be oxidized, reduced indirectly, esterified, protected, or converted into better leaving groups. The main choice is whether you need to change oxidation state or replace OH with another atom/group.</div>
+              <div class="formula-big">R2CHOH -> R2C=O | RCH2OH -> RCHO -> RCO2H | ROH -> ROMs/ROTs -> RNu</div>
+              <div class="reaction-tags">
+                <span class="reaction-tag tag-type">Oxidation</span>
+                <span class="reaction-tag tag-mech">Substitution planning</span>
+                <span class="reaction-tag tag-cond">Mild vs strong conditions</span>
+              </div>
+              <table class="chem-table">
+                <thead><tr><th>Transformation</th><th>Best first choices</th><th>Watch for</th></tr></thead>
+                <tbody>
+                  <tr><td>2 deg alcohol to ketone</td><td>DMP, Swern, MnO2, PCC</td><td>Acid sensitive substrates, sulfur odor in Swern, chromium disposal for PCC.</td></tr>
+                  <tr><td>1 deg alcohol to aldehyde</td><td>DMP, Swern, PCC</td><td>Water and strong oxidants can over-oxidize aldehyde to acid.</td></tr>
+                  <tr><td>Alcohol to halide</td><td>SOCl2, PBr3, HBr, Appel</td><td>Rearrangement risk under carbocation-forming acidic conditions.</td></tr>
+                  <tr><td>Alcohol to azide</td><td>DPPA/Mitsunobu or sulfonate then NaN3</td><td>Azides need energetic-material caution and careful scale assessment.</td></tr>
+                  <tr><td>Alcohol to sulfonate</td><td>MsCl or TsCl with base</td><td>Mesylates/tosylates can eliminate or hydrolyze if stored poorly.</td></tr>
+                </tbody>
+              </table>
+              <div class="page-actions">
+                <a class="page-pill" href="https://www.commonorganicchemistry.com/Rxn_Pages/Alcohol_to_Ketone/Alcohol_to_Ketone_Index.htm" target="_blank" rel="noopener">Alcohol to Ketone</a>
+                <a class="page-pill" href="https://www.commonorganicchemistry.com/Rxn_Pages/Alcohol_to_Aldehyde/Alcohol_to_Aldehyde_Index.htm" target="_blank" rel="noopener">Alcohol to Aldehyde</a>
+                <a class="page-pill" href="https://www.commonorganicchemistry.com/Rxn_Pages/Alcohol_to_Halide/Alcohol_to_Halide_Index.htm" target="_blank" rel="noopener">Alcohol to Halide</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="acc-common-carbonyl">
+        <div class="accordion-header" onclick="toggleAcc('acc-common-carbonyl')">
+          <div class="accordion-icon">+</div>
+          <div class="accordion-label">Carbonyl, Ester, Acid, Amide and Nitrile Interconversions</div>
+          <div class="accordion-meta">Oxidation level control</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="reaction-card">
+              <div class="reaction-name">Carbonyl oxidation-state ladder</div>
+              <div class="reaction-desc">Carbonyl chemistry is usually an oxidation-level problem. Aldehydes and ketones reduce easily to alcohols; esters and acids require stronger hydrides; nitriles can behave like masked acids, amides, amines, or aldehydes depending on hydrolysis/reduction conditions.</div>
+              <div class="formula-big">RCO2R' <-> RCO2H -> RCOCl -> RCONHR' | RCN -> RCONH2 -> RCO2H | RCN -> RCH2NH2</div>
+              <table class="chem-table">
+                <thead><tr><th>Family</th><th>Common move</th><th>Useful detail</th></tr></thead>
+                <tbody>
+                  <tr><td>Aldehyde</td><td>To alcohol, acid, difluoride, alkene</td><td>NaBH4 reduces; oxidants give acids; Wittig converts C=O to C=C.</td></tr>
+                  <tr><td>Ketone</td><td>To alcohol or methylene</td><td>Hydride gives secondary alcohol; Wolff-Kishner/Clemmensen remove C=O.</td></tr>
+                  <tr><td>Ester</td><td>To acid, aldehyde, alcohol</td><td>Hydrolysis, DIBAL-H, and LiAlH4 separate the three common outcomes.</td></tr>
+                  <tr><td>Acid</td><td>To ester, alcohol, acid chloride</td><td>Acid chloride formation activates acids for fast downstream acyl substitution.</td></tr>
+                  <tr><td>Amide</td><td>To nitrile or amine</td><td>Dehydration vs reduction depends on reagent class.</td></tr>
+                  <tr><td>Nitrile</td><td>To amide, acid, amine, aldehyde, ester</td><td>Partial hydrolysis, full hydrolysis, strong reduction, DIBAL-H, and alcoholysis are the common branches.</td></tr>
+                </tbody>
+              </table>
+              <div class="warn-box"><strong>Route planning caution:</strong> Strong hydrides, acid chlorides, and hydrolysis conditions can destroy protecting groups or sensitive heterocycles. Check compatibility before choosing the shortest arrow.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="acc-common-nitrogen">
+        <div class="accordion-header" onclick="toggleAcc('acc-common-nitrogen')">
+          <div class="accordion-icon">+</div>
+          <div class="accordion-label">Nitrogen Chemistry: Amines, Amides, Nitro and Reductive Amination</div>
+          <div class="accordion-meta">C-N bond formation and reduction</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="reaction-card">
+              <div class="reaction-name">Nitrogen functional group playbook</div>
+              <div class="reaction-desc">Nitrogen groups are central in medicinal chemistry. The common operations are acylation of amines, amide coupling, nitro reduction, nitrile reduction, urea formation, and reductive amination from carbonyl compounds.</div>
+              <div class="formula-big">RNH2 + RCOX -> RCONHR | ArNO2 -> ArNH2 | R2C=O + R'NH2 + reductant -> R2CHNHR'</div>
+              <table class="chem-table">
+                <thead><tr><th>Reaction</th><th>Typical conditions</th><th>Common risk</th></tr></thead>
+                <tbody>
+                  <tr><td>Amine to amide</td><td>Acid chloride/base, anhydride, HATU, EDCI, T3P</td><td>Salt formation, over-acylation, poor coupling with hindered partners.</td></tr>
+                  <tr><td>Nitro to amine</td><td>Fe/HCl, SnCl2, Zn/NH4Cl, H2/Pd-C</td><td>Other reducible groups may react under hydrogenation.</td></tr>
+                  <tr><td>Reductive amination</td><td>NaBH3CN, NaBH(OAc)3, H2/catalyst</td><td>Imine formation can be slow; pH controls selectivity.</td></tr>
+                  <tr><td>Urea formation</td><td>Isocyanate, CDI, triphosgene equivalents</td><td>Moisture and competing amine basicity affect conversion.</td></tr>
+                  <tr><td>Amide to amine</td><td>LiAlH4, BH3</td><td>Very strong reduction; quench and compatibility matter.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="acc-common-unsaturated">
+        <div class="accordion-header" onclick="toggleAcc('acc-common-unsaturated')">
+          <div class="accordion-icon">+</div>
+          <div class="accordion-label">Alkenes, Alkynes and Substitution Handles</div>
+          <div class="accordion-meta">Addition, oxidation, reduction, SN2/SNAr</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="reaction-card">
+              <div class="reaction-name">Unsaturated and leaving-group chemistry</div>
+              <div class="reaction-desc">Alkenes and alkynes are handles for hydrogenation, hydration, epoxidation, ozonolysis, and oxidative cleavage. Alkyl chlorides, bromides, iodides, mesylates, tosylates, and triflates are handles for substitution and elimination. Activated aryl halides can undergo SNAr when electron-withdrawing groups stabilize the Meisenheimer intermediate.</div>
+              <table class="chem-table">
+                <thead><tr><th>Substrate</th><th>Common transformation</th><th>Planning note</th></tr></thead>
+                <tbody>
+                  <tr><td>Alkene</td><td>To alkane, alcohol, aldehyde, epoxide</td><td>Choose hydrogenation, hydroboration/oxymercuration, ozonolysis, or peracid conditions.</td></tr>
+                  <tr><td>Alkyne</td><td>To alkane, cis/trans alkene, ketone/aldehyde</td><td>Lindlar gives cis alkene; dissolving metal gives trans alkene; hydration gives carbonyl.</td></tr>
+                  <tr><td>Alkyl halide/sulfonate</td><td>To alcohol, ether, azide, nitrile, amine</td><td>Primary substrates favor SN2; tertiary substrates favor SN1/E1/E2.</td></tr>
+                  <tr><td>Aryl fluoride/chloride/bromide</td><td>SNAr substitution</td><td>Best with ortho/para nitro, cyano, carbonyl, or other electron-withdrawing groups.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="acc-common-pd">
+        <div class="accordion-header" onclick="toggleAcc('acc-common-pd')">
+          <div class="accordion-icon">+</div>
+          <div class="accordion-label">Palladium Couplings and Named Reactions</div>
+          <div class="accordion-meta">Suzuki, Buchwald, Sonogashira, Heck, Mitsunobu, Wittig</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="reaction-card">
+              <div class="reaction-name">Modern bond-forming toolkit</div>
+              <div class="reaction-desc">The Common Organic Chemistry index highlights palladium couplings and named reactions because they are practical shortcuts in medicinal and process chemistry. They are not only named reactions; they are route-design tools.</div>
+              <table class="chem-table">
+                <thead><tr><th>Reaction</th><th>Builds</th><th>Typical partners</th><th>Key choice</th></tr></thead>
+                <tbody>
+                  <tr><td>Suzuki</td><td>C(sp2)-C(sp2)</td><td>Aryl halide/triflate + boronic acid/ester</td><td>Base, water content, ligand, and boron partner stability.</td></tr>
+                  <tr><td>Buchwald-Hartwig</td><td>C-N</td><td>Aryl halide + amine</td><td>Ligand/base screen is often decisive.</td></tr>
+                  <tr><td>Sonogashira</td><td>C(sp2)-C(sp)</td><td>Aryl halide + terminal alkyne</td><td>Copper-free conditions can reduce Glaser homocoupling.</td></tr>
+                  <tr><td>Heck</td><td>C(sp2)-C(sp2)</td><td>Aryl halide + alkene</td><td>Beta-hydride elimination controls alkene geometry.</td></tr>
+                  <tr><td>Mitsunobu</td><td>C-O, C-N, C-S substitution with inversion</td><td>Alcohol + acidic nucleophile + PPh3/DIAD or DEAD</td><td>Requires acidic nucleophile; purification can be heavy.</td></tr>
+                  <tr><td>Wittig</td><td>Alkene</td><td>Carbonyl + phosphonium ylide</td><td>Ylide type controls E/Z tendency.</td></tr>
+                </tbody>
+              </table>
+              <div class="page-actions">
+                <a class="page-pill" href="https://www.commonorganicchemistry.com/Rxn_Pages/Suzuki/Suzuki.htm" target="_blank" rel="noopener">Suzuki Examples</a>
+                <a class="page-pill" href="https://www.commonorganicchemistry.com/Rxn_Pages/Mitsunobu/Mitsunobu_Index.htm" target="_blank" rel="noopener">Mitsunobu Conditions</a>
+                <a class="page-pill" href="https://www.commonorganicchemistry.com/Rxn_Pages/Wittig/Wittig_Index.htm" target="_blank" rel="noopener">Wittig Conditions</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="acc-common-protection">
+        <div class="accordion-header" onclick="toggleAcc('acc-common-protection')">
+          <div class="accordion-icon">+</div>
+          <div class="accordion-label">Protection and Deprotection Map</div>
+          <div class="accordion-meta">Boc, Cbz, benzyl, THP, SEM, TBS, PMB, trityl, acetyl</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <div class="reaction-card">
+              <div class="reaction-name">Protecting group selection</div>
+              <div class="reaction-desc">Protecting groups are useful only when they survive the planned chemistry and can be removed without damaging the product. Select them backward from the deprotection step, not only forward from the starting material.</div>
+              <table class="chem-table">
+                <thead><tr><th>Group</th><th>Common use</th><th>Removal logic</th></tr></thead>
+                <tbody>
+                  <tr><td>Boc</td><td>Amine protection</td><td>Acid labile; often removed with TFA or HCl/dioxane.</td></tr>
+                  <tr><td>Cbz</td><td>Amine protection</td><td>Hydrogenolysis; avoid reducible groups.</td></tr>
+                  <tr><td>Benzyl/PMB</td><td>Alcohol/phenol protection</td><td>Hydrogenolysis or oxidative cleavage for PMB.</td></tr>
+                  <tr><td>TBS</td><td>Alcohol protection</td><td>Fluoride or acid; sensitive to strong acid over time.</td></tr>
+                  <tr><td>THP</td><td>Alcohol protection</td><td>Acid labile; can generate diastereomeric mixtures.</td></tr>
+                  <tr><td>Trityl</td><td>Alcohol/amine protection</td><td>Bulky and acid labile; useful for selectivity.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">Fast Route-Design Checklist</h3>
+    <div class="qa-grid">
+      <div class="qa-card"><div class="qa-q">Chemoselectivity</div><div class="qa-a">Will the reagent attack only the intended functional group? Check carbonyls, nitro groups, alkenes, aryl halides, and protecting groups.</div></div>
+      <div class="qa-card"><div class="qa-q">Oxidation level</div><div class="qa-a">Ask whether the product is more oxidized, more reduced, or simply substituted. This prevents choosing a reagent class too early.</div></div>
+      <div class="qa-card"><div class="qa-q">Operational fit</div><div class="qa-a">Dry conditions, low temperature, microwave heating, hydrogenation, azides, and chromium reagents all change scale-up practicality.</div></div>
+      <div class="qa-card"><div class="qa-q">Purification</div><div class="qa-a">Triphenylphosphine oxide, metal residues, inorganic salts, colored Pd residues, and polar amide byproducts may dominate the work-up.</div></div>
+      <div class="qa-card"><div class="qa-q">Retrosynthesis</div><div class="qa-a">Use the map backward: product alcohol can come from carbonyl reduction or Grignard addition; biaryl can come from Suzuki; amine can come from nitro/nitrile/reductive amination.</div></div>
+      <div class="qa-card"><div class="qa-q">Interview answer style</div><div class="qa-a">Name the functional group change, reagent, mechanism class, side reaction, and one purification/process concern.</div></div>
+    </div>
+
+    <div class="info-box"><strong>Reference note:</strong> The topic structure follows the CommonOrganicChemistry.com reaction index and its linked pages for conditions/examples. The study notes here are rewritten and organized for your OrganoChem atlas.</div>
+  </div>
+</section>
+</main>
+<footer>
+  <p>OrganoChem - <span>Common Organic Reactions Reference Map</span></p>
+</footer>
+<script src="assets/js/main.js?v=5"></script>
+</body>
+</html>
