@@ -13,20 +13,21 @@
   --card:#0f1720;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Georgia',serif;font-size:16px;line-height:1.7}
+body{background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 .scroll-progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));z-index:200;box-shadow:0 0 18px rgba(86,199,189,.45)}
 .cursor-light{position:fixed;left:0;top:0;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(86,199,189,.16),rgba(216,181,109,.08) 38%,transparent 68%);filter:blur(4px);transform:translate(-50%,-50%);opacity:.72;transition:opacity .2s}
+.bio-particles{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.82;mix-blend-mode:screen}
 body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.6),transparent 85%)}
 body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 82% 18%,rgba(86,199,189,.16),transparent 30%),radial-gradient(circle at 18% 82%,rgba(216,181,109,.1),transparent 30%)}
 nav,main,footer{position:relative;z-index:1}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,11,16,0.84);backdrop-filter:blur(16px);border-bottom:1px solid rgba(86,199,189,.18);padding:0 2rem}
 .nav-inner{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:56px}
-.nav-logo{font-size:15px;font-family:sans-serif;color:var(--text2);letter-spacing:0.05em}
+.nav-logo{font-size:15px;font-family:Inter,"Segoe UI",Arial,sans-serif;color:var(--text2);letter-spacing:0.05em}
 .nav-links{display:flex;gap:1.8rem}
-.nav-links a{font-family:sans-serif;font-size:13px;color:var(--text2);letter-spacing:0.04em;transition:color 0.2s,transform .2s;position:relative}
+.nav-links a{font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:13px;color:var(--text2);letter-spacing:0.04em;transition:color 0.2s,transform .2s;position:relative}
 .nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .22s}
 .nav-links a:hover,.nav-links a.active{color:var(--accent);text-decoration:none;transform:translateY(-1px)}
 .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
@@ -63,12 +64,12 @@ section:not(#hero).section-open{animation:sectionPulse 1s ease both}
 .bond.b1{left:21%;top:33%;width:56%;transform:rotate(-16deg)}.bond.b2{right:16%;top:22%;width:48%;transform:rotate(68deg)}.bond.b3{left:29%;bottom:20%;width:58%;transform:rotate(-20deg)}
 @keyframes spin{to{transform:rotate(360deg)}}@keyframes floatStage{50%{transform:translateY(-14px) rotate(2deg)}}
 .hero-tag{font-family:sans-serif;font-size:12px;letter-spacing:0.12em;color:var(--accent2);text-transform:uppercase;margin-bottom:1.2rem}
-.hero-name{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:400;line-height:1.15;margin-bottom:1rem;color:var(--text)}
-.hero-title{font-size:1.1rem;color:var(--text2);margin-bottom:0.5rem;font-family:sans-serif}
-.hero-org{font-size:1rem;color:var(--text3);font-family:sans-serif;margin-bottom:2rem}
-.hero-desc{max-width:580px;font-size:1.05rem;color:var(--text2);line-height:1.8;margin-bottom:2.5rem}
+.hero-name{font-size:clamp(2.5rem,5vw,4rem);font-weight:850;line-height:1.12;margin-bottom:1rem;color:var(--text);letter-spacing:0}
+.hero-title{font-size:1.16rem;color:var(--text2);margin-bottom:0.5rem;font-family:Inter,"Segoe UI",Arial,sans-serif}
+.hero-org{font-size:1.02rem;color:var(--text3);font-family:Inter,"Segoe UI",Arial,sans-serif;margin-bottom:2rem}
+.hero-desc{max-width:680px;font-size:1.08rem;color:var(--text2);line-height:1.82;margin-bottom:2.5rem}
 .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
-.btn{font-family:sans-serif;font-size:13px;padding:10px 22px;border-radius:4px;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer;will-change:transform}
+.btn{font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:13px;padding:10px 22px;border-radius:4px;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer;will-change:transform}
 .btn-primary{background:var(--accent);color:#0d0d0d;border:1px solid var(--accent);font-weight:600}
 .btn-primary:hover{background:transparent;color:var(--accent);text-decoration:none;transform:translateY(-2px);box-shadow:0 18px 34px rgba(200,169,110,.14)}
 .btn-outline{background:transparent;color:var(--text2);border:1px solid var(--border)}
@@ -80,17 +81,17 @@ section:not(#hero).section-open{animation:sectionPulse 1s ease both}
 /* SECTION HEADERS */
 .sec-header{margin-bottom:3rem}
 .sec-tag{font-family:sans-serif;font-size:11px;letter-spacing:0.14em;color:var(--accent2);text-transform:uppercase;margin-bottom:0.6rem}
-.sec-title{font-size:1.7rem;font-weight:400;color:var(--text)}
+.sec-title{font-size:1.9rem;font-weight:850;color:var(--text);letter-spacing:0}
 
 /* ABOUT */
 .about-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:4rem}
-.about-text p{color:var(--text2);margin-bottom:1rem;line-height:1.85}
+.about-text p{color:var(--text2);margin-bottom:1rem;line-height:1.82;font-size:1rem}
 .skills-grid{display:grid;gap:1rem}
 .skill-card{background:linear-gradient(145deg,var(--card),rgba(18,27,37,.76));border:1px solid var(--border);border-radius:8px;padding:1rem 1.2rem;transition:transform .25s,border-color .25s,box-shadow .25s}
 .skill-card:hover{transform:translateY(-5px);border-color:rgba(200,169,110,.55);box-shadow:0 20px 44px rgba(0,0,0,.28)}
 .skill-label{font-family:sans-serif;font-size:11px;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase;margin-bottom:0.5rem}
 .skill-tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-family:sans-serif;font-size:11px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:3px 10px;border-radius:20px}
+.tag{font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:12px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:20px}
 
 /* EXPERIENCE */
 .exp-list{display:flex;flex-direction:column;gap:2.5rem}
@@ -101,10 +102,10 @@ section:not(#hero).section-open{animation:sectionPulse 1s ease both}
 .exp-period{font-size:12px;color:var(--text3);margin-bottom:0.4rem;letter-spacing:0.03em}
 .exp-company{font-size:13px;color:var(--accent2);font-weight:500}
 .exp-content{}
-.exp-role{font-size:1.1rem;color:var(--text);margin-bottom:0.3rem}
+.exp-role{font-size:1.16rem;color:var(--text);margin-bottom:0.3rem;font-weight:800}
 .exp-loc{font-family:sans-serif;font-size:12px;color:var(--text3);margin-bottom:1rem}
 .exp-bullets{list-style:none;padding:0}
-.exp-bullets li{font-size:14px;color:var(--text2);padding:4px 0;padding-left:1.2rem;position:relative;line-height:1.65}
+.exp-bullets li{font-size:15px;color:var(--text2);padding:4px 0;padding-left:1.2rem;position:relative;line-height:1.7}
 .exp-bullets li::before{content:'—';position:absolute;left:0;color:var(--accent);font-size:12px}
 .exp-badge{display:inline-flex;align-items:center;gap:6px;font-family:sans-serif;font-size:12px;background:rgba(200,169,110,0.1);border:1px solid rgba(200,169,110,0.3);color:var(--accent);padding:4px 12px;border-radius:20px;margin-top:1rem}
 
@@ -112,8 +113,8 @@ section:not(#hero).section-open{animation:sectionPulse 1s ease both}
 .projects-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
 .proj-card{background:linear-gradient(145deg,var(--card),rgba(13,19,27,.92));border:1px solid var(--border);border-radius:10px;padding:1.5rem;transition:border-color 0.2s,transform .24s,box-shadow .24s;transform-style:preserve-3d}
 .proj-card:hover{border-color:var(--accent);transform:perspective(900px) rotateX(2deg) rotateY(-2deg) translateY(-6px);box-shadow:0 26px 52px rgba(0,0,0,.32)}
-.proj-title{font-size:1rem;color:var(--text);margin-bottom:0.5rem}
-.proj-desc{font-family:sans-serif;font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:1rem}
+.proj-title{font-size:1.08rem;color:var(--text);margin-bottom:0.5rem;font-weight:850}
+.proj-desc{font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:1rem}
 .proj-apis{display:flex;flex-wrap:wrap;gap:5px}
 .api-tag{font-family:sans-serif;font-size:11px;background:rgba(143,184,154,0.08);border:1px solid rgba(143,184,154,0.25);color:var(--accent2);padding:2px 9px;border-radius:12px}
 
@@ -142,7 +143,7 @@ section:not(#hero).section-open{animation:sectionPulse 1s ease both}
 .contact-item{transition:transform .2s}.contact-item:hover{transform:translateX(6px)}
 .c-icon{font-size:1.2rem;margin-top:2px}
 .c-label{font-family:sans-serif;font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px}
-.c-val{font-size:14px;color:var(--text2)}
+.c-val{font-size:15px;color:var(--text2)}
 .contact-note{color:var(--text2);font-size:1rem;line-height:1.8;margin-bottom:1.5rem}
 
 footer{text-align:center;padding:2rem;font-family:sans-serif;font-size:12px;color:var(--text3);border-top:1px solid var(--border)}
@@ -165,6 +166,7 @@ footer{text-align:center;padding:2rem;font-family:sans-serif;font-size:12px;colo
 </head>
 <body>
 <div class="scroll-progress" id="scrollProgress"></div>
+<canvas class="bio-particles" id="bioParticles" aria-hidden="true"></canvas>
 <div class="cursor-light" id="cursorLight"></div>
 
 <nav>
@@ -511,6 +513,80 @@ const progress=document.getElementById('scrollProgress');
 const cursor=document.getElementById('cursorLight');
 const navLinks=[...document.querySelectorAll('.nav-links a')];
 const sections=[...document.querySelectorAll('section')];
+function initBioParticles(){
+  const canvas=document.getElementById('bioParticles');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const state={dots:[],mouse:{x:null,y:null}};
+  const palette=['255,255,255','86,199,189','216,181,109'];
+  function resize(){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const w=window.innerWidth;
+    const h=window.innerHeight;
+    canvas.width=Math.max(1,Math.floor(w*dpr));
+    canvas.height=Math.max(1,Math.floor(h*dpr));
+    canvas.style.width=w+'px';
+    canvas.style.height=h+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const count=Math.max(76,Math.min(150,Math.round(w*h/11500)));
+    state.dots=Array.from({length:count},(_,i)=>({
+      x:Math.random()*w,
+      y:Math.random()*h,
+      vx:(Math.random()-.5)*1.2,
+      vy:(Math.random()-.5)*1.2,
+      r:Math.random()*1.7+0.8,
+      c:palette[i%palette.length]
+    }));
+  }
+  function draw(){
+    const w=canvas.clientWidth;
+    const h=canvas.clientHeight;
+    ctx.clearRect(0,0,w,h);
+    state.dots.forEach(dot=>{
+      dot.x+=dot.vx;
+      dot.y+=dot.vy;
+      if(dot.x<0){dot.x=w;dot.y=Math.random()*h}
+      if(dot.x>w){dot.x=0;dot.y=Math.random()*h}
+      if(dot.y<0){dot.y=h;dot.x=Math.random()*w}
+      if(dot.y>h){dot.y=0;dot.x=Math.random()*w}
+      if(state.mouse.x!==null){
+        const dx=state.mouse.x-dot.x;
+        const dy=state.mouse.y-dot.y;
+        const d=Math.hypot(dx,dy);
+        if(d<170&&d>0){
+          dot.x+=(dx/d)*0.46;
+          dot.y+=(dy/d)*0.46;
+        }
+      }
+    });
+    for(let i=0;i<state.dots.length;i++){
+      for(let j=i+1;j<state.dots.length;j++){
+        const a=state.dots[i],b=state.dots[j];
+        const dist=Math.hypot(a.x-b.x,a.y-b.y);
+        if(dist<145){
+          ctx.strokeStyle=`rgba(255,255,255,${(1-dist/145)*0.2})`;
+          ctx.lineWidth=1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    state.dots.forEach(dot=>{
+      ctx.fillStyle=`rgba(${dot.c},0.76)`;
+      ctx.beginPath();
+      ctx.arc(dot.x,dot.y,dot.r,0,Math.PI*2);
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);
+  window.addEventListener('mousemove',event=>{state.mouse.x=event.clientX;state.mouse.y=event.clientY;});
+  window.addEventListener('mouseleave',()=>{state.mouse.x=null;state.mouse.y=null;});
+  resize();
+  draw();
+}
 function updateProgress(){
   const max=document.documentElement.scrollHeight-window.innerHeight;
   const pct=max>0?(window.scrollY/max)*100:0;
@@ -545,6 +621,7 @@ window.addEventListener('mousemove',event=>{
 });
 window.addEventListener('mouseleave',()=>cursor.style.opacity='0');
 window.addEventListener('mouseenter',()=>cursor.style.opacity='.8');
+initBioParticles();
 updateProgress();
 setActiveNav();
 </script>

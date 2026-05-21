@@ -1,0 +1,23 @@
+# OS/editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Local backups and generated duplicates
+index (1).html
+index-single-backup-*.html
+*-backup-*.html
+
+# Logs/temp files
+*.log
+*.tmp
+*.bak
+
+# Local environment files
+.env
+.env.*
+
+# Nested repository metadata copied from source folders
+**/.git/

@@ -10,38 +10,47 @@
 [data-theme="dark"]{--bg:#07111f;--panel:#0f2437;--panel2:#102a2f;--text:#ffffff;--muted:#d8edf5;--line:#8fb6c2;--accent:#56c7bd;--gold:#ffe66d;--green:#1d9e75}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{min-height:100vh;background:radial-gradient(circle at 8% 8%,rgba(86,199,189,.16),transparent 28rem),linear-gradient(135deg,#07111f,#0f2437 58%,#102a2f);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;line-height:1.6}
+body{min-height:100vh;background:radial-gradient(circle at 8% 8%,rgba(86,199,189,.16),transparent 28rem),linear-gradient(135deg,#07111f,#0f2437 58%,#102a2f);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 a{color:inherit;text-decoration:none}
 .top{position:sticky;top:0;z-index:20;background:rgba(7,17,31,.9);backdrop-filter:blur(14px);border-bottom:1px solid rgba(143,182,194,.35);padding:.75rem 1rem}
 .top-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:.8rem;justify-content:space-between}
-.brand{font-weight:900;letter-spacing:.02em}.brand span{display:block;font-size:.68rem;color:var(--muted);font-family:monospace;text-transform:uppercase;letter-spacing:.1em}
-.nav{display:flex;gap:.45rem;overflow:auto}.nav a{white-space:nowrap;border:1px solid rgba(143,182,194,.42);border-radius:8px;padding:.42rem .65rem;font-size:.78rem;font-weight:800;color:var(--muted);background:rgba(255,255,255,.04)}.nav a:hover{color:var(--gold);border-color:var(--gold)}
+.brand{font-weight:900;letter-spacing:.02em;font-size:1.08rem}.brand span{display:block;font-size:.74rem;color:var(--muted);font-family:monospace;text-transform:uppercase;letter-spacing:.1em}
+.nav{display:flex;gap:.45rem;overflow:auto}.nav a{white-space:nowrap;border:1px solid rgba(143,182,194,.42);border-radius:8px;padding:.48rem .72rem;font-size:.84rem;font-weight:850;color:var(--muted);background:rgba(255,255,255,.04)}.nav a:hover{color:var(--gold);border-color:var(--gold)}
 main{max-width:1240px;margin:0 auto;padding:1.2rem}
 .hero{padding:clamp(2rem,5vw,4rem) 0 1.5rem}
-.kicker{font-family:monospace;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);font-size:.72rem;font-weight:900;margin-bottom:.5rem}
-h1{font-size:clamp(2rem,5vw,4.2rem);line-height:1.05;margin-bottom:.75rem;font-weight:900}
-.hero p{max-width:820px;color:var(--muted);font-size:1.04rem}
+.kicker{font-family:monospace;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);font-size:.78rem;font-weight:900;margin-bottom:.5rem}
+h1{font-size:clamp(2.1rem,5vw,4.4rem);line-height:1.05;margin-bottom:.8rem;font-weight:900}
+.hero p{max-width:940px;color:var(--muted);font-size:1.12rem;line-height:1.75}
 .dept-map{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.8rem;margin:1.3rem 0 2rem}
 .dept-link{display:block;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:.9rem;box-shadow:var(--shadow);transition:transform .18s,border-color .18s}
 .dept-link:hover{transform:translateY(-4px);border-color:var(--gold)}
-.dept-link strong{display:block;color:var(--accent);font-size:.93rem}.dept-link span{display:block;margin-top:.25rem;color:var(--muted);font-size:.76rem}
+.dept-link strong{display:block;color:var(--accent);font-size:1rem;line-height:1.25}.dept-link span{display:block;margin-top:.28rem;color:var(--muted);font-size:.84rem;line-height:1.35}
 .dept{border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:var(--shadow);overflow:hidden;margin:1rem 0 1.3rem}
 .dept-head{padding:1rem 1.1rem;background:linear-gradient(135deg,var(--accent),#0f6b7f);color:#fff;display:flex;align-items:flex-start;gap:.85rem}
 .dept-no{display:grid;place-items:center;min-width:2.35rem;height:2.1rem;border-radius:8px;background:var(--gold);color:#06111f;font-family:monospace;font-weight:900}
-.dept-title h2{font-size:1.25rem;line-height:1.2}.dept-title p{font-size:.86rem;opacity:.9;margin-top:.2rem;color:#fff}
-.qa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.75rem;padding:1rem}
+.dept-title h2{font-size:1.45rem;line-height:1.2}.dept-title p{font-size:.98rem;opacity:.93;margin-top:.24rem;color:#fff;line-height:1.45}
+.qa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:.85rem;padding:1rem}
 .qa-card{border:1px solid rgba(143,182,194,.55);border-radius:10px;background:linear-gradient(145deg,var(--panel),var(--panel2));padding:.9rem;transition:transform .16s,border-color .16s}
 .qa-card:hover{transform:translateY(-3px);border-color:var(--accent)}
-.qa-q{font-weight:900;color:var(--accent);font-size:.92rem;margin-bottom:.35rem}.qa-a{font-size:.88rem;color:var(--text)}
-.qa-index{display:inline-grid;place-items:center;min-width:2.25rem;height:1.55rem;margin-right:.45rem;border-radius:7px;background:var(--gold);color:#06111f;font-family:monospace;font-size:.72rem;font-weight:900}
-.tag-row{display:flex;flex-wrap:wrap;gap:.45rem;padding:0 1rem 1rem}.tag{border:1px solid var(--line);border-radius:999px;padding:.28rem .55rem;font-size:.72rem;font-weight:800;color:var(--muted);background:var(--panel2)}
+.qa-q{font-weight:900;color:var(--accent);font-size:1rem;line-height:1.38;margin-bottom:.42rem}.qa-a{font-size:.96rem;line-height:1.62;color:var(--text)}
+.qa-index{display:inline-grid;place-items:center;min-width:2.35rem;height:1.6rem;margin-right:.45rem;border-radius:7px;background:var(--gold);color:#06111f;font-family:monospace;font-size:.76rem;font-weight:900}
+.tag-row{display:flex;flex-wrap:wrap;gap:.45rem;padding:0 1rem 1rem}.tag{border:1px solid var(--line);border-radius:999px;padding:.32rem .62rem;font-size:.8rem;font-weight:850;color:var(--muted);background:var(--panel2)}
 .dept-tools{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;padding:1rem 1rem 0}
 .dept-count{font-family:monospace;font-size:.74rem;font-weight:900;color:var(--gold);letter-spacing:.08em;text-transform:uppercase}
-.jump-row{display:flex;gap:.45rem;overflow:auto;padding:.75rem 0}.jump-row a{white-space:nowrap;border:1px solid rgba(143,182,194,.42);border-radius:999px;padding:.36rem .6rem;font-size:.74rem;font-weight:800;color:var(--muted);background:rgba(255,255,255,.04)}
+.jump-row{display:flex;gap:.45rem;overflow:auto;padding:.75rem 0}.jump-row a{white-space:nowrap;border:1px solid rgba(143,182,194,.42);border-radius:999px;padding:.42rem .68rem;font-size:.82rem;font-weight:850;color:var(--muted);background:rgba(255,255,255,.04)}
 .jump-row a:hover{color:var(--gold);border-color:var(--gold)}
+.interview-controls{position:sticky;top:76px;z-index:12;display:grid;grid-template-columns:minmax(220px,1fr) 220px auto;gap:.65rem;align-items:center;border:1px solid rgba(143,182,194,.45);border-radius:14px;background:rgba(7,17,31,.92);backdrop-filter:blur(14px);padding:.75rem;margin:1rem 0;box-shadow:var(--shadow)}
+.interview-controls input,.interview-controls select{width:100%;border:1px solid rgba(143,182,194,.55);border-radius:10px;background:var(--panel);color:var(--text);padding:.68rem .78rem;font:800 .92rem Inter,"Segoe UI",Arial,sans-serif;outline:none}
+.interview-controls input:focus,.interview-controls select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,230,109,.12)}
+.answer-toggle{border:1px solid rgba(143,182,194,.55);border-radius:10px;background:var(--gold);color:#06111f;padding:.68rem .78rem;font:900 .86rem Inter,"Segoe UI",Arial,sans-serif;cursor:pointer;white-space:nowrap}
+.result-count{font-family:monospace;font-size:.78rem;color:var(--gold);font-weight:900;letter-spacing:.06em;text-transform:uppercase;grid-column:1/-1}
+.qa-card{cursor:pointer}
+.qa-a{display:none;margin-top:.48rem;padding-top:.55rem;border-top:1px solid rgba(143,182,194,.28)}
+.qa-card.open .qa-a,.show-all-answers .qa-a{display:block}
+.qa-card.is-hidden,.dept.is-hidden{display:none!important}
 .tip{border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;background:var(--panel);padding:1rem;margin:1rem 0 2rem;color:var(--text)}
 footer{text-align:center;color:var(--muted);font-size:.78rem;padding:1.4rem;border-top:1px solid rgba(143,182,194,.35)}
-@media(max-width:720px){.top-inner{align-items:flex-start;flex-direction:column}.nav{width:100%}.qa-grid{grid-template-columns:1fr;padding:.75rem}.dept-head{padding:.85rem}.dept-map{grid-template-columns:1fr 1fr}main{padding:.8rem}}
+@media(max-width:720px){body{font-size:15px}.top-inner{align-items:flex-start;flex-direction:column}.nav{width:100%}.nav a{font-size:.78rem}.interview-controls{position:relative;top:auto;grid-template-columns:1fr}.qa-grid{grid-template-columns:1fr;padding:.75rem}.dept-head{padding:.85rem}.dept-title h2{font-size:1.18rem}.dept-title p{font-size:.88rem}.dept-map{grid-template-columns:1fr}main{padding:.8rem}.qa-q{font-size:.95rem}.qa-a{font-size:.9rem}}
 </style>
 </head>
 <body>
@@ -201,7 +210,9 @@ function qaCards(dept){
   let html='';
   for(let i=0;i<200;i++){
     const topic=dept.topics[i%dept.topics.length];
-    html+=`<div class="qa-card"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${makeQuestion(topic,dept.title,i)}</div><div class="qa-a">${makeAnswer(topic,i)}</div></div>`;
+    const q=makeQuestion(topic,dept.title,i);
+    const a=makeAnswer(topic,i);
+    html+=`<div class="qa-card" data-search="${(dept.title+' '+topic+' '+q+' '+a).toLowerCase().replace(/"/g,'&quot;')}"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${q}</div><div class="qa-a">${a}</div></div>`;
   }
   return html;
 }
@@ -214,9 +225,51 @@ function renderInterviewBank(){
     <p>Each department contains 200 interview Q&A cards. Total bank: ${deptSeeds.length*200} Q&A covering R&D, analytical, regulatory, formulation, QA, QC, production, technology transfer, IP, clinical/PV, packaging/supply chain, and EHS/validation.</p>
     <div class="jump-row">${deptSeeds.map(d=>`<a href="#${d.id}">${d.no} ${d.title.split('/')[0].trim()}</a>`).join('')}</div>
   </section>
+  <section class="interview-controls" aria-label="Interview filters">
+    <input id="interviewSearch" type="search" placeholder="Search 2400 Q&A: HPLC, CAPA, route, stability..." autocomplete="off">
+    <select id="deptFilter" aria-label="Department filter">
+      <option value="all">All departments</option>
+      ${deptSeeds.map(d=>`<option value="${d.id}">${d.no} ${d.title}</option>`).join('')}
+    </select>
+    <button class="answer-toggle" id="answerToggle" type="button">Show Answers</button>
+    <div class="result-count" id="resultCount">Showing ${deptSeeds.length*200} Q&A</div>
+  </section>
   <section class="dept-map" aria-label="Department map">${deptSeeds.map(d=>`<a class="dept-link" href="#${d.id}"><strong>${d.no} ${d.title}</strong><span>${d.sub}</span></a>`).join('')}</section>
   ${deptSeeds.map(d=>`<section class="dept" id="${d.id}"><div class="dept-head"><div class="dept-no">${d.no}</div><div class="dept-title"><h2>${d.title}</h2><p>${d.sub}</p></div></div><div class="dept-tools"><div class="dept-count">200 Q&A</div></div><div class="tag-row">${d.tags.map(tag=>`<span class="tag">${tag}</span>`).join('')}</div><div class="qa-grid">${qaCards(d)}</div></section>`).join('')}
   <div class="tip"><strong>Interview tip:</strong> Har answer ko 3-part format me bolo: definition, practical example, and quality/regulatory impact.</div>`;
+  setupInterviewControls();
+}
+function setupInterviewControls(){
+  const search=document.getElementById('interviewSearch');
+  const dept=document.getElementById('deptFilter');
+  const count=document.getElementById('resultCount');
+  const toggle=document.getElementById('answerToggle');
+  function apply(){
+    const q=(search?.value||'').trim().toLowerCase();
+    const selected=dept?.value||'all';
+    let visible=0;
+    document.querySelectorAll('.dept').forEach(section=>{
+      const deptOk=selected==='all'||section.id===selected;
+      let sectionVisible=0;
+      section.querySelectorAll('.qa-card').forEach(card=>{
+        const match=deptOk&&(!q||card.dataset.search.includes(q));
+        card.classList.toggle('is-hidden',!match);
+        if(match){visible++;sectionVisible++;}
+      });
+      section.classList.toggle('is-hidden',sectionVisible===0);
+    });
+    if(count)count.textContent=`Showing ${visible} Q&A`;
+  }
+  search?.addEventListener('input',apply);
+  dept?.addEventListener('change',apply);
+  toggle?.addEventListener('click',()=>{
+    document.body.classList.toggle('show-all-answers');
+    toggle.textContent=document.body.classList.contains('show-all-answers')?'Hide Answers':'Show Answers';
+  });
+  document.querySelectorAll('.qa-card').forEach(card=>{
+    card.addEventListener('click',()=>card.classList.toggle('open'));
+  });
+  apply();
 }
 renderInterviewBank();
 </script>

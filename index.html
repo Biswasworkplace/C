@@ -419,10 +419,51 @@ align-items:center;
 position:relative;
 overflow:hidden;
 padding:clamp(42px,7vw,86px);
+background:#101010!important;
+border-color:#2a2a2a!important;
+box-shadow:inset 0 0 0 1px rgba(255,255,255,0.04),0 20px 60px rgba(0,0,0,0.36)!important;
+isolation:isolate;
+}
+.home-profile-hero::before{
+content:'';
+position:absolute;
+inset:0;
+z-index:0;
+pointer-events:none;
+background:
+radial-gradient(circle at 24% 20%,rgba(255,255,255,0.09),transparent 22%),
+radial-gradient(circle at 74% 58%,rgba(86,199,189,0.14),transparent 26%),
+linear-gradient(180deg,rgba(255,255,255,0.04),rgba(0,0,0,0.3));
+}
+.home-profile-hero::after{
+content:'';
+position:absolute;
+inset:0;
+z-index:0;
+pointer-events:none;
+background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.035) 1px,transparent 1px);
+background-size:54px 54px;
+mask-image:radial-gradient(circle at 50% 50%,#000 0%,transparent 76%);
+opacity:.35;
+}
+.home-particles{
+position:absolute;
+inset:0;
+z-index:1;
+width:100%;
+height:100%;
+pointer-events:none;
+opacity:.78;
+mix-blend-mode:screen;
+}
+.home-profile-hero .molecule-bg{
+z-index:1;
+opacity:.2;
+filter:drop-shadow(0 0 20px rgba(86,199,189,0.16));
 }
 .home-profile-copy{
 position:relative;
-z-index:2;
+z-index:3;
 max-width:980px;
 }
 .home-profile-kicker{
@@ -505,19 +546,48 @@ color:#06111f!important;
 background:#ffe66d!important;
 border-color:#ffe66d!important;
 }
+
+/* Readability polish */
+body,#app{font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+.topbar{padding:11px 18px;}
+.topbar-title{font-size:18px;line-height:1.15;}
+.topbar-sub{font-size:12px;line-height:1.25;}
+.header-nav a,.nav-dropdown-trigger{font-size:13px;min-height:34px;padding:0 12px;font-weight:800;}
+.nav-dropdown-menu a{font-size:13px;line-height:1.28;}
+.back-btn{font-size:13px;min-height:32px;}
+.hero-h{font-size:26px;line-height:1.25;}
+.hero-p{font-size:15px;line-height:1.7;max-width:680px;}
+.ch-name,.med-ch-title{font-size:14px;line-height:1.35;}
+.ch-count,.ch-meta,.med-topic-count{font-size:12px;}
+.topic-btn,.index-ch-btn,.med-side-chapter,.med-side-topic{font-size:13px;line-height:1.42;}
+.ch-title{font-size:22px;line-height:1.25;}
+.note-topic-title{font-size:21px;line-height:1.3;}
+.ai-body{font-size:16px;line-height:1.85;}
+.ai-body p,.ai-body li,.ai-body td{font-size:16px;line-height:1.78;}
+.ai-body .sec-label{font-size:16px;font-weight:800;}
+.ai-body .rxn,.ai-body .tip,.ai-body .warn,.ai-body .example-box,.ai-body .step-text{font-size:15px;line-height:1.72;}
+.website-page-btn strong{font-size:15px;}
+.website-page-btn span{font-size:12px;}
+.software-name{font-size:15px;}
+.software-role{font-size:12px;}
+.software-detail h3{font-size:32px;}
+.software-detail p{font-size:17px;line-height:1.78;}
+.software-detail li{font-size:16px;line-height:1.72;}
+.home-profile-type{font-size:clamp(19px,1.55vw,24px);line-height:1.62;font-weight:600;}
 @media(max-width:760px){
 .topbar{align-items:flex-start;flex-wrap:wrap;}
 .header-nav{order:3;width:100%;margin-left:0;overflow:auto;padding-top:4px;}
-.header-nav a,.nav-dropdown-trigger{font-size:11px;padding:0 8px;}
+.header-nav a,.nav-dropdown-trigger{font-size:12px;padding:0 9px;min-height:32px;}
 .nav-dropdown-menu{position:fixed;top:94px;left:12px;width:calc(100vw - 24px);}
 .website-frame{height:70vh;min-height:520px;}
 .home-website-frame{height:70vh;min-height:560px;}
 .library-frame-title{color:#17324a;}
 .home-profile-hero{padding:28px 18px;min-height:calc(100vh - 116px);}
 .home-profile-title{font-size:34px;}
-.home-profile-type{font-size:18px;min-height:720px;}
+.home-profile-type{font-size:17px;line-height:1.58;min-height:720px;}
 .software-wrap{grid-template-columns:1fr;min-height:auto;}
 .software-detail{min-height:auto;}
+.ai-body,.ai-body p,.ai-body li,.ai-body td{font-size:15px;}
 .back-btn{margin-left:0;}
 .page{padding:12px;}
 .index-sidebar{position:relative;top:auto;left:auto;bottom:auto;width:100%;max-height:260px;margin-bottom:12px;}
@@ -544,8 +614,10 @@ border-color:#ffe66d!important;
     </div>
     <div class="header-nav" aria-label="Main navigation">
       <a class="active" href="#" onclick="showHome();return false;">Home</a>
+      <a href="#" onclick="openWebsiteDirect('portfolio');return false;">Bio</a>
+      <a href="#" onclick="openMyLibrary();return false;">My Library</a>
       <div class="nav-dropdown-wrap">
-        <button class="nav-dropdown-trigger" type="button" onclick="toggleOrganicMenu()">Organic Chemistry</button>
+        <button class="nav-dropdown-trigger" type="button" onclick="toggleNavMenu('organicMenu')">Chemistry</button>
         <div class="nav-dropdown-menu" id="organicMenu">
           <a href="#" onclick="showFunctionalGroupIndex();return false;">FGC - Functional Group Conversion</a>
           <a href="#" onclick="openWebsiteDirect('part01');return false;">01 - General Organic Chemistry</a>
@@ -561,13 +633,21 @@ border-color:#ffe66d!important;
           <a href="#" onclick="openWebsiteDirect('common');return false;">CR - Common Reactions</a>
         </div>
       </div>
-      <a href="#" onclick="openMyLibrary();return false;">My Library</a>
-      <a href="#" onclick="openWebsiteDirect('interview');return false;">Interview</a>
-      <a href="#" onclick="openWebsiteDirect('pdf');return false;">PDF Notes</a>
-      <a href="#" onclick="openWebsiteDirect('structure');return false;">Structure Editor</a>
-      <a href="#" onclick="openWebsiteDirect('portfolio');return false;">Bio</a>
-      <a href="#" onclick="openSoftwarePage();return false;">Software</a>
+      <div class="nav-dropdown-wrap">
+        <button class="nav-dropdown-trigger" type="button" onclick="toggleNavMenu('careerMenu')">Career</button>
+        <div class="nav-dropdown-menu" id="careerMenu">
+          <a href="#" onclick="openWebsiteDirect('interview');return false;">Interview Prep</a>
+        </div>
+      </div>
       <a href="#" onclick="openInfoPage('contact');return false;">Contact</a>
+      <div class="nav-dropdown-wrap">
+        <button class="nav-dropdown-trigger" type="button" onclick="toggleNavMenu('toolsMenu')">Tools</button>
+        <div class="nav-dropdown-menu" id="toolsMenu">
+          <a href="#" onclick="openSoftwarePage();return false;">Software</a>
+          <a href="#" onclick="openWebsiteDirect('structure');return false;">Structure Editor</a>
+          <a href="#" onclick="openWebsiteDirect('pdf');return false;">PDF Notes</a>
+        </div>
+      </div>
       <button class="theme-switch" id="themeSwitch" type="button" onclick="toggleThemeMode()" aria-label="Toggle light and dark mode" title="Toggle light / dark mode"><span class="switch-dark">DARK</span><span class="switch-light">LIGHT</span></button>
     </div>
     <button class="back-btn" id="backBtn" onclick="showHome()">
@@ -590,6 +670,7 @@ border-color:#ffe66d!important;
     <div id="homeView">
       <div class="embedded-home-content" id="embeddedHomeContent">
 <section class="hero home-profile-hero" id="home">
+  <canvas class="home-particles" id="homeParticles" aria-hidden="true"></canvas>
   <svg class="molecule-bg" viewBox="0 0 600 600">
     <g class="mol-spin">
       <g stroke="rgba(0,229,255,0.7)" stroke-width="1.2" fill="none">
@@ -889,8 +970,8 @@ function safeGetLocal(key){
 function safeSetLocal(key,value){
   try{localStorage.setItem(key,value)}catch(e){}
 }
-const savedShellTheme=safeGetLocal('biswas-theme');
-if(savedShellTheme==='light')document.body.classList.add('light-mode');
+safeSetLocal('biswas-theme','dark');
+document.body.classList.remove('light-mode');
 function applyThemeToFrames(){
   const light=document.body.classList.contains('light-mode');
   safeSetLocal('organo-theme',light?'light':'dark');
@@ -925,12 +1006,19 @@ function setHeaderActive(label){
   });
 }
 
+function toggleNavMenu(id){
+  document.querySelectorAll('.nav-dropdown-menu.open').forEach(menu=>{
+    if(menu.id!==id)menu.classList.remove('open');
+  });
+  document.getElementById(id)?.classList.toggle('open');
+}
+
 function toggleOrganicMenu(){
-  document.getElementById('organicMenu')?.classList.toggle('open');
+  toggleNavMenu('organicMenu');
 }
 
 function closeOrganicMenu(){
-  document.getElementById('organicMenu')?.classList.remove('open');
+  document.querySelectorAll('.nav-dropdown-menu.open').forEach(menu=>menu.classList.remove('open'));
 }
 
 function setIndexSidebarVisible(show){
@@ -1612,6 +1700,86 @@ async function fetchNotes(topic,idx){
   if(btn)btn.classList.add('done');
 }
 
+let homeParticleState=null;
+function initHomeParticles(){
+  const canvas=document.getElementById('homeParticles');
+  const section=document.getElementById('home');
+  if(!canvas||!section)return;
+  if(homeParticleState?.canvas===canvas)return;
+  const ctx=canvas.getContext('2d');
+  const state={canvas,ctx,dots:[],mouse:{x:null,y:null},raf:null};
+  const colors=['255,255,255','86,199,189','255,230,109'];
+  function resize(){
+    const rect=section.getBoundingClientRect();
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.max(1,Math.floor(rect.width*dpr));
+    canvas.height=Math.max(1,Math.floor(rect.height*dpr));
+    canvas.style.width=rect.width+'px';
+    canvas.style.height=rect.height+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const count=Math.max(54,Math.min(120,Math.round(rect.width*rect.height/15000)));
+    state.dots=Array.from({length:count},(_,i)=>({
+      x:Math.random()*rect.width,
+      y:Math.random()*rect.height,
+      vx:(Math.random()-.5)*0.35,
+      vy:(Math.random()-.5)*0.35,
+      r:Math.random()*1.8+0.8,
+      c:colors[i%colors.length]
+    }));
+  }
+  function frame(){
+    const w=canvas.clientWidth;
+    const h=canvas.clientHeight;
+    ctx.clearRect(0,0,w,h);
+    state.dots.forEach(dot=>{
+      dot.x+=dot.vx;
+      dot.y+=dot.vy;
+      if(dot.x<0||dot.x>w)dot.vx*=-1;
+      if(dot.y<0||dot.y>h)dot.vy*=-1;
+      if(state.mouse.x!==null){
+        const dx=dot.x-state.mouse.x;
+        const dy=dot.y-state.mouse.y;
+        const d=Math.hypot(dx,dy);
+        if(d<130&&d>0){
+          dot.x+=(dx/d)*0.18;
+          dot.y+=(dy/d)*0.18;
+        }
+      }
+    });
+    for(let i=0;i<state.dots.length;i++){
+      for(let j=i+1;j<state.dots.length;j++){
+        const a=state.dots[i],b=state.dots[j];
+        const dist=Math.hypot(a.x-b.x,a.y-b.y);
+        if(dist<125){
+          ctx.strokeStyle=`rgba(255,255,255,${(1-dist/125)*0.16})`;
+          ctx.lineWidth=1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    state.dots.forEach(dot=>{
+      ctx.fillStyle=`rgba(${dot.c},0.72)`;
+      ctx.beginPath();
+      ctx.arc(dot.x,dot.y,dot.r,0,Math.PI*2);
+      ctx.fill();
+    });
+    state.raf=requestAnimationFrame(frame);
+  }
+  section.addEventListener('mousemove',e=>{
+    const rect=section.getBoundingClientRect();
+    state.mouse.x=e.clientX-rect.left;
+    state.mouse.y=e.clientY-rect.top;
+  });
+  section.addEventListener('mouseleave',()=>{state.mouse.x=null;state.mouse.y=null;});
+  window.addEventListener('resize',resize);
+  resize();
+  frame();
+  homeParticleState=state;
+}
+
 function showHome(){
   setFullWidth(true);
   document.querySelector('.page')?.classList.remove('medicinal-index-mode');
@@ -1627,6 +1795,7 @@ function showHome(){
   syncSidebarIndex(null);
   setHeaderActive('Home');
   closeOrganicMenu();
+  initHomeParticles();
   startHomeTypewriter(true);
 }
 
@@ -1796,6 +1965,7 @@ buildIndex();
 buildSidebarIndex();
 setFullWidth(true);
 syncCornerTheme();
+initHomeParticles();
 startHomeTypewriter();
 </script>
 
