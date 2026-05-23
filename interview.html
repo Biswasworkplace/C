@@ -46,11 +46,26 @@ h1{font-size:clamp(2.1rem,5vw,4.4rem);line-height:1.05;margin-bottom:.8rem;font-
 .result-count{font-family:monospace;font-size:.78rem;color:var(--gold);font-weight:900;letter-spacing:.06em;text-transform:uppercase;grid-column:1/-1}
 .qa-card{cursor:pointer}
 .qa-a{display:none;margin-top:.48rem;padding-top:.55rem;border-top:1px solid rgba(143,182,194,.28)}
-.qa-card.open .qa-a,.show-all-answers .qa-a{display:block}
+.qa-card.open .qa-a,.qa-item.open .qa-a{display:block}
 .qa-card.is-hidden,.dept.is-hidden{display:none!important}
+.dept-list{display:grid;gap:.65rem;margin:1.2rem 0 2rem;max-width:860px}
+.dept-row{width:100%;border:1px solid rgba(143,182,194,.55);border-radius:8px;background:rgba(255,255,255,.04);color:var(--text);padding:1rem 1.05rem;text-align:left;font:900 1.02rem Inter,"Segoe UI",Arial,sans-serif;cursor:pointer;display:grid;grid-template-columns:2.3rem minmax(0,1fr) auto;align-items:center;column-gap:.65rem;transition:border-color .18s,background .18s,color .18s,transform .18s}
+.dept-row:hover{border-color:var(--gold);color:var(--gold);background:rgba(255,255,255,.07);transform:translateX(4px)}
+.dept-row span:first-child{color:var(--gold);font-family:monospace;font-size:.9rem;min-width:0}
+.dept-row small{display:block;margin-top:.18rem;color:var(--muted);font-size:.82rem;line-height:1.35;font-weight:700}
+.dept-row-arrow{font-size:1.2rem;color:var(--muted)}
+.dept-page-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1rem 0 1.2rem}
+.dept-back{border:1px solid rgba(143,182,194,.55);border-radius:8px;background:transparent;color:var(--muted);padding:.6rem .75rem;font:900 .85rem Inter,"Segoe UI",Arial,sans-serif;cursor:pointer}
+.dept-back:hover{color:var(--gold);border-color:var(--gold)}
+.qa-list{display:grid;gap:.75rem;margin:1rem 0 2rem}
+.qa-item{border-bottom:1px solid rgba(143,182,194,.35);padding:.95rem 0;cursor:pointer}
+.qa-item:hover .qa-q{color:var(--gold)}
+.qa-item .qa-q{margin-bottom:.4rem}
+.qa-item .qa-a{background:transparent;border-top:0;padding-top:.25rem;color:var(--muted)}
+.qa-item.is-hidden{display:none!important}
 .tip{border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;background:var(--panel);padding:1rem;margin:1rem 0 2rem;color:var(--text)}
 footer{text-align:center;color:var(--muted);font-size:.78rem;padding:1.4rem;border-top:1px solid rgba(143,182,194,.35)}
-@media(max-width:720px){body{font-size:15px}.top-inner{align-items:flex-start;flex-direction:column}.nav{width:100%}.nav a{font-size:.78rem}.interview-controls{position:relative;top:auto;grid-template-columns:1fr}.qa-grid{grid-template-columns:1fr;padding:.75rem}.dept-head{padding:.85rem}.dept-title h2{font-size:1.18rem}.dept-title p{font-size:.88rem}.dept-map{grid-template-columns:1fr}main{padding:.8rem}.qa-q{font-size:.95rem}.qa-a{font-size:.9rem}}
+@media(max-width:720px){body{font-size:15px}.top-inner{align-items:flex-start;flex-direction:column}.nav{width:100%}.nav a{font-size:.78rem}.interview-controls{position:relative;top:auto;grid-template-columns:1fr}.qa-grid{grid-template-columns:1fr;padding:.75rem}.dept-head{padding:.85rem}.dept-title h2{font-size:1.18rem}.dept-title p{font-size:.88rem}.dept-map{grid-template-columns:1fr}main{padding:.8rem}.qa-q{font-size:.95rem}.qa-a{font-size:.9rem}.dept-page-head{align-items:flex-start;flex-direction:column}.dept-row{padding:.9rem;font-size:.95rem}}
 </style>
 </head>
 <body>
@@ -58,7 +73,7 @@ footer{text-align:center;color:var(--muted);font-size:.78rem;padding:1.4rem;bord
   <div class="top-inner">
     <a class="brand" href="index.html">Shubh.Online <span>Pharma Interview Desk</span></a>
     <nav class="nav" aria-label="Departments">
-      <a href="#chemical">Chemical Research</a><a href="#analytical">Analytical</a><a href="#regulatory">Regulatory</a><a href="#formulation">Formulation</a><a href="#qa">QA</a><a href="#production">Production</a><a href="#qc">QC</a><a href="#clinical">Clinical</a>
+      <a href="#chemical" onclick="openInterviewDepartment('chemical');return false;">Chemical Research</a><a href="#analytical" onclick="openInterviewDepartment('analytical');return false;">Analytical</a><a href="#regulatory" onclick="openInterviewDepartment('regulatory');return false;">Regulatory</a><a href="#formulation" onclick="openInterviewDepartment('formulation');return false;">Formulation</a><a href="#qa" onclick="openInterviewDepartment('qa');return false;">QA</a><a href="#production" onclick="openInterviewDepartment('production');return false;">Production</a><a href="#qc" onclick="openInterviewDepartment('qc');return false;">QC</a><a href="#clinical" onclick="openInterviewDepartment('clinical');return false;">Clinical</a>
     </nav>
   </div>
 </header>
@@ -185,6 +200,4840 @@ const deptSeeds=[
   {id:'ehs',no:'12',title:'EHS / Engineering / Validation',sub:'Process safety, HAZOP, utilities, cleaning validation, equipment qualification and plant support.',tags:['HAZOP','SDS','IQ/OQ/PQ','Cleaning validation','Utilities','Safety'],topics:['HAZOP study','SDS review','PPE selection','solvent handling','flammability risk','dust explosion','process safety','emergency response','spill control','waste management','effluent treatment','cleaning validation','MACO calculation','swab sampling','rinse sampling','equipment qualification','IQ protocol','OQ protocol','PQ protocol','utility qualification','HVAC qualification','water system','compressed air','calibration program','preventive maintenance','breakdown maintenance','change part qualification','safety permit','hot work permit','confined space entry']}
 ];
 
+const chemicalTopicLabels={
+  'route selection':'route selection',
+  'retrosynthetic analysis':'retrosynthetic analysis',
+  'non-infringing route':'non-infringing route',
+  'process impurity':'process impurity',
+  'genotoxic impurity':'genotoxic impurity',
+  'nitrosamine risk':'nitrosamine risk',
+  'reagent selection':'reagent selection',
+  'solvent selection':'solvent selection',
+  'reaction optimization':'reaction optimization',
+  'DoE study':'DoE study',
+  'QbD approach':'QbD approach',
+  'critical process parameter':'critical process parameter',
+  'critical quality attribute':'critical quality attribute',
+  'scale-up observation':'scale-up observation',
+  'heat transfer':'heat transfer',
+  'mixing effect':'mixing effect',
+  'crystallization':'crystallization',
+  'filtration':'filtration',
+  'drying':'drying',
+  'polymorphism':'polymorphism',
+  'salt formation':'salt formation',
+  'purge study':'purge study',
+  'mass balance':'mass balance',
+  'yield improvement':'yield improvement',
+  'process safety':'process safety',
+  'work-up design':'work-up design',
+  'catalyst control':'catalyst control',
+  'chiral purity':'chiral purity',
+  'intermediate specification':'intermediate specification',
+  'technology transfer package':'technology transfer package'
+};
+
+const chemicalBaseAnswers={
+  'route selection':'Route selection means choosing the best synthetic pathway to manufacture an API. While selecting a route, we consider yield, impurity profile, safety, raw material availability, cost, scalability, environmental impact, and patent situation. The final route should be commercially feasible and easy to scale up in plant manufacturing.',
+  'retrosynthetic analysis':'Retrosynthetic analysis helps break a complex API molecule into simpler starting materials. It helps identify multiple synthetic approaches, reduce process complexity, improve yield, avoid difficult chemistry, and sometimes develop non-infringing routes.',
+  'non-infringing route':'A non-infringing route is a synthetic pathway designed to avoid violating existing patents while still producing the desired API efficiently and safely. It is controlled through patent searches, freedom-to-operate analysis, and avoiding protected intermediates, reagents, catalysts, and conditions.',
+  'process impurity':'Process impurities are important because they affect API quality, safety, efficacy, stability, and regulatory approval. Investigation usually starts with LCMS, GCMS, or NMR identification, followed by source mapping from reagent quality, solvent effect, degradation pathway, work-up, and reaction conditions.',
+  'genotoxic impurity':'A genotoxic impurity can damage DNA and potentially cause mutations or cancer. GTIs are controlled by safer reagent selection, optimized conditions, effective purification, purge studies, and sensitive analytical methods to keep levels below regulatory limits.',
+  'nitrosamine risk':'Nitrosamine risk is evaluated by reviewing amines, nitrites, acidic conditions, recycled solvents, water quality, raw materials, and degradation pathways. Analytical confirmation is generally performed by sensitive LCMS methods.',
+  'reagent selection':'Reagent selection means choosing a reagent based on reactivity, selectivity, impurity risk, safety, cost, availability, scalability, environmental impact, and supplier quality. Auditors expect scientific justification, COA review, and vendor qualification.',
+  'solvent selection':'Solvent selection affects reaction conversion, impurity profile, crystallization behavior, filtration, drying, recovery efficiency, safety, residual solvent limits, and environmental impact. Small changes in polarity or water content can significantly change yield and purity.',
+  'reaction optimization':'Reaction optimization means improving reaction conditions to achieve better yield, purity, safety, and reproducibility. Temperature, solvent, catalyst loading, pH, reagent ratio, addition rate, and reaction time are optimized systematically.',
+  'DoE study':'DoE helps study multiple process parameters together instead of changing one factor at a time. It identifies critical parameters, interaction effects, and optimal operating conditions with stronger statistical confidence and fewer experiments.',
+  'QbD approach':'QbD or Quality by Design is a scientific approach where quality is built into the process during development. It includes identifying CQAs and CPPs, risk assessment, DoE studies, design space, and a practical control strategy.',
+  'critical process parameter':'CPPs are important because they directly impact product quality, impurity profile, yield, and reproducibility. If CPPs are not controlled, the process may produce out-of-specification or inconsistent batches.',
+  'critical quality attribute':'A CQA is any physical, chemical, biological, or microbiological property that must remain within limits to ensure product quality, safety, and efficacy. Examples include assay, impurities, water content, particle size, and polymorphic form.',
+  'scale-up observation':'Scale-up observations are important because lab and plant behavior can differ. Heat transfer, mixing, reaction time, filtration behavior, drying pattern, impurity profile, and yield changes must be compared and documented.',
+  'heat transfer':'Heat transfer is movement of heat during heating or cooling operations in a reactor. Proper heat transfer prevents hot spots, thermal degradation, runaway reactions, pressure buildup, impurity formation, and inconsistent conversion.',
+  'mixing effect':'Mixing affects reaction uniformity, heat distribution, impurity formation, suspension quality, and mass transfer. Poor mixing can create localized reactions and inconsistent product quality, especially during scale-up.',
+  'crystallization':'Crystallization is conversion of dissolved API into solid crystals under controlled conditions. It is used for purification and isolation while controlling particle size, purity, filtration behavior, and polymorphic form.',
+  'filtration':'Filtration separates solid product from mother liquor. Good filtration improves purity, reduces product loss, improves washing efficiency, and affects downstream drying performance.',
+  'drying':'Drying removes residual solvents or moisture from an API or intermediate using heat, vacuum, airflow, or fluid bed drying. Temperature, vacuum, airflow, drying time, moisture, and residual solvents must be controlled.',
+  'polymorphism':'Polymorphism is important because different crystal forms can show different solubility, dissolution, stability, bioavailability, filtration, and drying behavior. XRPD, DSC, FTIR, and TGA help identify and control forms.',
+  'salt formation':'Salt formation converts an API into a salt form using an acid or base to improve solubility, stability, dissolution, crystallization, or handling. Stoichiometry, pH, solvent, temperature, and moisture must be controlled.',
+  'purge study':'A purge study tracks impurity levels from one stage to another to demonstrate impurity removal. It evaluates crystallization, extraction, washing, filtration, and sometimes spiking studies to confirm removal capability.',
+  'mass balance':'Mass balance is reconciliation of all input and output materials. It helps track product recovery, solvent loss, sampling loss, filtration loss, impurity generation, and overall process efficiency.',
+  'yield improvement':'Yield improvement reduces manufacturing cost, improves efficiency, minimizes waste, and increases commercial feasibility. Losses are checked in reaction, work-up, crystallization, filtration, washing, and drying.',
+  'process safety':'Process safety identifies and controls chemical manufacturing hazards such as exotherms, pressure buildup, toxic gas evolution, flammable solvents, and thermal instability to ensure safe plant operation.',
+  'work-up design':'Work-up design affects impurity removal, yield, phase separation, product isolation, extraction efficiency, and downstream processing. Poor work-up can increase impurities and reduce recovery.',
+  'catalyst control':'Catalyst control means maintaining proper catalyst quality, quantity, reaction efficiency, and residual catalyst removal. Residual metals are commonly monitored by ICP-MS or ICP-OES.',
+  'chiral purity':'Chiral purity is important because different enantiomers can show different biological activity and toxicity. It is monitored by chiral HPLC or GC and controlled by pH, temperature, solvent, reaction time, and isolation conditions.',
+  'intermediate specification':'Intermediate specification defines acceptable quality limits before the intermediate proceeds to the next stage. It includes assay, impurities, moisture, residual solvents, physical appearance, and sometimes particle properties.',
+  'technology transfer package':'A technology transfer package ensures smooth transfer of process knowledge from R&D to manufacturing. It includes process parameters, CPPs, CQAs, analytical methods, safety precautions, scale-up observations, equipment needs, and troubleshooting guidance.'
+};
+
+const chemicalDocuments={
+  'process impurity':['Impurity profile report','LCMS/GCMS characterization data','Process development report','Analytical method validation','Fate and purge study','Batch analysis reports','Stability data','Regulatory impurity justification'],
+  'critical process parameter':['Process development report','DoE report','Risk assessment','Batch manufacturing record','Validation documents','Trend analysis data','Control strategy report'],
+  'polymorphism':['XRPD reports','DSC/TGA data','FTIR analysis','Solid-state characterization','Stability studies','Form selection report','Particle size analysis','Regulatory justification'],
+  'chiral purity':['Chiral HPLC/GC method','Validation report','Enantiomeric purity data','Batch analysis reports','Stability studies','Specification sheet','Process control strategy'],
+  'technology transfer package':['Process description','Batch manufacturing process','Analytical methods','Safety precautions','CPP and CQA details','Scale-up observations','Equipment requirements','Cleaning procedures','Troubleshooting guidelines'],
+  'nitrosamine risk':['Nitrosamine risk assessment','Process review report','Raw material evaluation','Analytical method validation','Nitrosamine testing reports','CAPA records','Supplier qualification documents'],
+  'solvent selection':['Solvent screening study','Solubility data','Safety assessment','Residual solvent analysis','Recovery studies','Environmental evaluation','Process development report'],
+  'DoE study':['Experimental design plan','Statistical analysis report','Raw experimental data','Optimization summary','Response surface plots','Confirmation batch results','Final conclusion report'],
+  'scale-up observation':['Scale-up batch reports','Process observation reports','Engineering observations','Heat and mass transfer studies','Deviation reports','Analytical comparison data','Safety assessment documents'],
+  'mixing effect':['Mixing study reports','Agitation optimization data','Scale-up observations','Engineering calculations','Process development reports','Batch comparison studies'],
+  'filtration':['Filtration study report','Batch observations','Filter media qualification','Washing optimization data','Process development report','Equipment cleaning records'],
+  'purge study':['Purge calculation report','Impurity spiking study','Analytical reports','Batch data','Process flow diagram','Validation reports','Risk assessment documents'],
+  'yield improvement':['Optimization reports','Batch comparison data','Recovery calculations','Process development reports','Root cause analysis','Scale-up observations','Impurity trend data'],
+  'work-up design':['Extraction study','Solvent swap optimization','Washing study','Phase separation observations','Recovery calculations','Process development report'],
+  'retrosynthetic analysis':['Literature review','Patent search report','Route comparison study','Synthetic scheme','Risk assessment','Cost analysis','Raw material availability study']
+};
+
+const analyticalRaw=String.raw`## 1. What is Analytical R&D?
+
+Analytical R&D is a department responsible for development, validation, transfer, and troubleshooting of analytical methods used for raw materials, intermediates, APIs, and finished products.
+
+---
+
+## 2. What are the major responsibilities of Analytical R&D?
+
+* Method development
+* Method validation
+* Stability testing
+* Impurity profiling
+* Cleaning validation support
+* Troubleshooting analytical issues
+* Method transfer
+* Documentation
+
+---
+
+## 3. What is method development?
+
+Method development is the process of creating a suitable analytical procedure for identification, assay, impurity, or dissolution analysis.
+
+---
+
+## 4. What is method validation?
+
+Method validation proves that an analytical method is suitable for its intended purpose according to ICH guidelines.
+
+---
+
+## 5. What are ICH guidelines?
+
+ICH guidelines are international regulatory guidelines for quality, safety, efficacy, and multidisciplinary pharmaceutical requirements.
+
+---
+
+## 6. What is ICH Q2(R2)?
+
+ICH Q2(R2) is a guideline for analytical method validation.
+
+---
+
+## 7. What are validation parameters?
+
+* Specificity
+* Accuracy
+* Precision
+* Linearity
+* Range
+* Robustness
+* Ruggedness
+* LOD
+* LOQ
+
+---
+
+## 8. What is specificity?
+
+Ability of method to measure analyte accurately in presence of impurities, degradants, and matrix components.
+
+---
+
+## 9. What is accuracy?
+
+Closeness between actual value and measured value.
+
+---
+
+## 10. What is precision?
+
+Degree of agreement among individual test results.
+
+---
+
+## 11. Types of precision?
+
+* Repeatability
+* Intermediate precision
+* Reproducibility
+
+---
+
+## 12. What is repeatability?
+
+Precision under same conditions within short interval of time.
+
+---
+
+## 13. What is intermediate precision?
+
+Precision performed on different days, analysts, instruments.
+
+---
+
+## 14. What is reproducibility?
+
+Precision between different laboratories.
+
+---
+
+## 15. What is linearity?
+
+Ability of method to produce results proportional to concentration.
+
+---
+
+## 16. What is range?
+
+Interval between upper and lower concentration levels with acceptable accuracy and precision.
+
+---
+
+## 17. What is robustness?
+
+Capacity of method to remain unaffected by small deliberate changes.
+
+---
+
+## 18. What is ruggedness?
+
+Reproducibility under normal but variable conditions.
+
+---
+
+## 19. What is LOD?
+
+Lowest concentration detected but not quantified.
+
+---
+
+## 20. What is LOQ?
+
+Lowest concentration quantified with acceptable precision and accuracy.
+
+---
+
+## 21. Difference between LOD and LOQ?
+
+LOD only detects analyte, LOQ quantifies accurately.
+
+---
+
+## 22. Formula for LOD and LOQ?
+
+LOD = 3.3 sigma / S, LOQ = 10 sigma / S
+
+Where:
+
+* sigma = standard deviation
+* S = slope
+
+---
+
+## 23. What is system suitability?
+
+Tests performed to verify HPLC/GC system performance before analysis.
+
+---
+
+## 24. Common SST parameters?
+
+* Theoretical plates
+* Tailing factor
+* Resolution
+* %RSD
+* Capacity factor
+
+---
+
+## 25. What are theoretical plates?
+
+Measure of column efficiency.
+
+---
+
+## 26. Formula for theoretical plates?
+
+N = 16(tR/W)^2
+
+---
+
+## 27. What is tailing factor?
+
+Measure of peak symmetry.
+
+---
+
+## 28. Acceptable tailing factor?
+
+Generally less than 2.
+
+---
+
+## 29. What is resolution?
+
+Separation between two peaks.
+
+---
+
+## 30. Acceptable resolution?
+
+Generally greater than 2.
+
+---
+
+## 31. What is %RSD?
+
+Relative standard deviation.
+
+---
+
+## 32. Formula of %RSD?
+
+%RSD = SD / Mean x 100
+
+---
+
+## 33. What is assay?
+
+Quantitative determination of active ingredient.
+
+---
+
+## 34. Difference between assay and purity?
+
+Assay measures active content; purity measures absence of impurities.
+
+---
+
+## 35. What is impurity profiling?
+
+Identification and quantification of impurities in drug substances/products.
+
+---
+
+## 36. Types of impurities?
+
+* Organic impurities
+* Inorganic impurities
+* Residual solvents
+
+---
+
+## 37. What are residual solvents?
+
+Volatile organic chemicals used during synthesis.
+
+---
+
+## 38. Which guideline covers residual solvents?
+
+ICH Q3C.
+
+---
+
+## 39. What is genotoxic impurity?
+
+Impurity capable of damaging genetic material.
+
+---
+
+## 40. Which guideline covers genotoxic impurities?
+
+ICH M7.
+
+---
+
+## 41. What is forced degradation?
+
+Intentional degradation to study stability-indicating nature of method.
+
+---
+
+## 42. Types of forced degradation?
+
+* Acid hydrolysis
+* Base hydrolysis
+* Oxidation
+* Thermal
+* Photolytic
+* Humidity
+
+---
+
+## 43. Why forced degradation is important?
+
+To identify degradation pathways and prove specificity.
+
+---
+
+## 44. What is stability indicating method?
+
+Method that separates API from degradation products.
+
+---
+
+## 45. What is HPLC?
+
+High Performance Liquid Chromatography used for separation and quantification.
+
+---
+
+## 46. Principle of HPLC?
+
+Separation based on interaction between stationary and mobile phases.
+
+---
+
+## 47. Types of HPLC?
+
+* Reverse phase
+* Normal phase
+* Ion exchange
+* Size exclusion
+
+---
+
+## 48. Most common HPLC mode?
+
+Reverse phase HPLC.
+
+---
+
+## 49. What is reverse phase HPLC?
+
+Nonpolar stationary phase with polar mobile phase.
+
+---
+
+## 50. Common stationary phases?
+
+* C18
+* C8
+* Phenyl
+* Cyano
+
+---
+
+## 51. Why C18 column widely used?
+
+Due to broad applicability and strong hydrophobic interaction.
+
+---
+
+## 52. What is mobile phase?
+
+Solvent system used to carry analyte through column.
+
+---
+
+## 53. Common HPLC solvents?
+
+* Water
+* Methanol
+* Acetonitrile
+* Buffer
+
+---
+
+## 54. Why buffer used in HPLC?
+
+To maintain pH and improve peak shape.
+
+---
+
+## 55. What is pH effect in HPLC?
+
+Affects ionization and retention of compounds.
+
+---
+
+## 56. What is gradient elution?
+
+Mobile phase composition changes during run.
+
+---
+
+## 57. What is isocratic elution?
+
+Constant mobile phase composition throughout run.
+
+---
+
+## 58. What is retention time?
+
+Time taken by analyte to reach detector.
+
+---
+
+## 59. What causes peak tailing?
+
+* Secondary interactions
+* Column contamination
+* Wrong pH
+* Dead volume
+
+---
+
+## 60. Causes of peak splitting?
+
+* Sample solvent mismatch
+* Column void
+* Injection issue
+
+---
+
+## 61. Causes of high back pressure?
+
+* Blocked column
+* Dirty frit
+* Buffer precipitation
+
+---
+
+## 62. What is ghost peak?
+
+Unexpected peak appearing in chromatogram.
+
+---
+
+## 63. Causes of ghost peaks?
+
+* Mobile phase contamination
+* Carryover
+* Dirty glassware
+
+---
+
+## 64. What is carryover?
+
+Residual analyte from previous injection appearing in next run.
+
+---
+
+## 65. How to reduce carryover?
+
+* Needle wash
+* Strong solvent wash
+* Proper cleaning
+
+---
+
+## 66. What detector commonly used in HPLC?
+
+UV detector.
+
+---
+
+## 67. Principle of UV detector?
+
+Measures absorbance of UV light by analyte.
+
+---
+
+## 68. What is PDA detector?
+
+Photodiode array detector records absorbance across wavelengths.
+
+---
+
+## 69. Advantage of PDA?
+
+Peak purity analysis and spectral comparison.
+
+---
+
+## 70. What is peak purity?
+
+Assessment whether peak contains single component.
+
+---
+
+## 71. What is GC?
+
+Gas chromatography for volatile compounds.
+
+---
+
+## 72. Difference between HPLC and GC?
+
+HPLC for nonvolatile compounds; GC for volatile compounds.
+
+---
+
+## 73. Common GC detectors?
+
+* FID
+* TCD
+* ECD
+
+---
+
+## 74. What is FID?
+
+Flame ionization detector.
+
+---
+
+## 75. Principle of GC?
+
+Separation based on volatility and partitioning.
+
+---
+
+## 76. What is KF titration?
+
+Karl Fischer titration for water determination.
+
+---
+
+## 77. Types of KF?
+
+* Volumetric
+* Coulometric
+
+---
+
+## 78. What is UV spectroscopy?
+
+Technique measuring UV-visible light absorbance.
+
+---
+
+## 79. What is Beer-Lambert law?
+
+A = epsilon b c
+
+---
+
+## 80. What is dissolution?
+
+Rate and extent of drug release into solution.
+
+---
+
+## 81. Why dissolution important?
+
+Predicts drug release behavior and bioavailability.
+
+---
+
+## 82. What are dissolution apparatus types?
+
+* Basket
+* Paddle
+* Reciprocating cylinder
+
+---
+
+## 83. What is calibration?
+
+Comparison with standard to ensure instrument accuracy.
+
+---
+
+## 84. Difference between calibration and validation?
+
+Calibration checks instrument accuracy; validation checks method suitability.
+
+---
+
+## 85. What is OOS?
+
+Out Of Specification result.
+
+---
+
+## 86. What is OOT?
+
+Out Of Trend result.
+
+---
+
+## 87. How do you investigate OOS?
+
+* Check calculation
+* Instrument performance
+* Sample preparation
+* Method compliance
+* Lab error investigation
+
+---
+
+## 88. What is GMP?
+
+Good Manufacturing Practice.
+
+---
+
+## 89. What is data integrity?
+
+Ensuring data is complete, consistent, accurate.
+
+---
+
+## 90. What is ALCOA+?
+
+* Attributable
+* Legible
+* Contemporaneous
+* Original
+* Accurate
+* Complete
+* Consistent
+* Enduring
+* Available
+
+---
+
+## 91. What is chromatography?
+
+Technique for separation of mixture components.
+
+---
+
+## 92. What is dilution factor?
+
+Factor by which concentration decreases after dilution.
+
+---
+
+## 93. What precautions taken during sample preparation?
+
+* Accurate weighing
+* Proper dilution
+* Filtration
+* Sonication
+* Avoid contamination
+
+---
+
+## 94. What filter commonly used in HPLC?
+
+0.45 um or 0.22 um membrane filter.
+
+---
+
+## 95. Difference between nylon and PVDF filters?
+
+Compatibility differs with solvents and analytes.
+
+---
+
+## 96. Why degassing required?
+
+To remove dissolved gases and prevent bubble formation.
+
+---
+
+## 97. What is sonication?
+
+Use of ultrasonic waves to dissolve sample or degas solvent.
+
+---
+
+## 98. What is method transfer?
+
+Transfer of analytical method between laboratories.
+
+---
+
+## 99. What challenges occur during method transfer?
+
+* Instrument differences
+* Analyst variability
+* Column variability
+
+---
+
+## 100. Why should we hire you for Analytical R&D?
+
+I have strong knowledge of analytical techniques, GMP documentation, troubleshooting, method development, and pharmaceutical compliance. My practical industrial experience helps me understand both scientific and regulatory expectations.`;
+
+const regulatoryRaw=String.raw`## 1. What is Regulatory Affairs?
+
+Regulatory Affairs ensures pharmaceutical products comply with regulatory guidelines and obtain approvals from health authorities.
+
+---
+
+## 2. What are the responsibilities of Regulatory Affairs?
+
+* Dossier preparation
+* Regulatory submissions
+* Product registration
+* Deficiency response
+* Labeling compliance
+* Coordination with health authorities
+
+---
+
+## 3. What is CTD?
+
+Common Technical Document used for regulatory submissions.
+
+---
+
+## 4. What are CTD modules?
+
+* Module 1: Regional information
+* Module 2: Summaries
+* Module 3: Quality
+* Module 4: Nonclinical
+* Module 5: Clinical
+
+---
+
+## 5. What is eCTD?
+
+Electronic Common Technical Document for electronic submissions.
+
+---
+
+## 6. Difference between CTD and eCTD?
+
+CTD is paper format; eCTD is electronic format.
+
+---
+
+## 7. What is ANDA?
+
+Abbreviated New Drug Application for generic drug approval.
+
+---
+
+## 8. What is NDA?
+
+New Drug Application for approval of new drug products.
+
+---
+
+## 9. What is DMF?
+
+Drug Master File containing confidential manufacturing information.
+
+---
+
+## 10. Types of DMF?
+
+* Type II: Drug substance
+* Type III: Packaging
+* Type IV: Excipients
+* Type V: FDA accepted reference info
+
+---
+
+## 11. What is CEP?
+
+Certificate of Suitability issued by EDQM for European markets.
+
+---
+
+## 12. What is ACTD?
+
+ASEAN Common Technical Dossier.
+
+---
+
+## 13. What is dossier?
+
+Collection of documents submitted for product approval.
+
+---
+
+## 14. What is variation?
+
+Post-approval change in registered product details.
+
+---
+
+## 15. Types of variations?
+
+* Minor variation
+* Major variation
+
+---
+
+## 16. What is post approval change?
+
+Any change made after product approval.
+
+---
+
+## 17. What is regulatory submission?
+
+Official filing of documents to health authorities.
+
+---
+
+## 18. What is deficiency letter?
+
+Questions or gaps raised by regulatory authority.
+
+---
+
+## 19. What is query response?
+
+Response submitted against authority deficiencies.
+
+---
+
+## 20. What is GMP?
+
+Good Manufacturing Practice.
+
+---
+
+## 21. What is cGMP?
+
+Current Good Manufacturing Practice.
+
+---
+
+## 22. What is ICH?
+
+International Council for Harmonisation.
+
+---
+
+## 23. What is ICH Q1?
+
+Guideline for stability studies.
+
+---
+
+## 24. What is ICH Q2?
+
+Guideline for analytical method validation.
+
+---
+
+## 25. What is ICH Q3A?
+
+Guideline for impurities in drug substances.
+
+---
+
+## 26. What is ICH Q3C?
+
+Guideline for residual solvents.
+
+---
+
+## 27. What is ICH M7?
+
+Guideline for genotoxic impurities.
+
+---
+
+## 28. What is stability study?
+
+Study to determine shelf life of product.
+
+---
+
+## 29. Types of stability studies?
+
+* Accelerated
+* Long term
+* Intermediate
+
+---
+
+## 30. What is shelf life?
+
+Period during which product remains within specifications.
+
+---
+
+## 31. What is retest period?
+
+Time during which API can be retested for compliance.
+
+---
+
+## 32. What is label claim?
+
+Amount of active ingredient stated on label.
+
+---
+
+## 33. What is bioequivalence?
+
+Comparison of bioavailability between two products.
+
+---
+
+## 34. What is bioavailability?
+
+Rate and extent of drug absorption.
+
+---
+
+## 35. What is change control?
+
+System to manage changes in regulated processes.
+
+---
+
+## 36. What is CAPA?
+
+Corrective and Preventive Action.
+
+---
+
+## 37. What is deviation?
+
+Departure from approved procedure.
+
+---
+
+## 38. What is OOS?
+
+Out Of Specification result.
+
+---
+
+## 39. What is OOT?
+
+Out Of Trend result.
+
+---
+
+## 40. What is data integrity?
+
+Ensuring data accuracy and reliability.
+
+---
+
+## 41. What is ALCOA+?
+
+Principles of data integrity:
+
+* Attributable
+* Legible
+* Contemporaneous
+* Original
+* Accurate
+* Complete
+* Consistent
+* Enduring
+* Available
+
+---
+
+## 42. What is artwork approval?
+
+Approval of packaging and labeling materials.
+
+---
+
+## 43. What is labeling compliance?
+
+Ensuring labels meet regulatory requirements.
+
+---
+
+## 44. What is market authorization?
+
+Official approval to market a product.
+
+---
+
+## 45. What is health authority?
+
+Government agency regulating pharmaceuticals.
+
+Examples:
+
+* US Food and Drug Administration
+* European Medicines Agency
+* Central Drugs Standard Control Organization
+
+---
+
+## 46. What is audit?
+
+Systematic examination of compliance activities.
+
+---
+
+## 47. Types of audits?
+
+* Internal audit
+* External audit
+* Regulatory audit
+
+---
+
+## 48. What is inspection readiness?
+
+Preparedness for regulatory inspection.
+
+---
+
+## 49. What is pharmacovigilance?
+
+Monitoring drug safety after marketing.
+
+---
+
+## 50. Why should we hire you in Regulatory Affairs?
+
+I have good understanding of regulatory guidelines, dossier preparation, documentation practices, and pharmaceutical compliance. I can coordinate effectively with cross-functional teams and ensure timely regulatory submissions.
+
+---
+
+## 51. What is lifecycle management?
+
+Management of a pharmaceutical product from development to discontinuation.
+
+---
+
+## 52. What is annual product review (APR/PQR)?
+
+Yearly review of product quality data and manufacturing performance.
+
+---
+
+## 53. What is a regulatory strategy?
+
+Plan for obtaining and maintaining product approvals in different markets.
+
+---
+
+## 54. What is submission tracking?
+
+Monitoring status and timelines of regulatory submissions.
+
+---
+
+## 55. What is country-specific registration?
+
+Product registration according to requirements of individual countries.
+
+---
+
+## 56. What is dossier compilation?
+
+Preparation and arrangement of documents in regulatory format.
+
+---
+
+## 57. What is a technical package?
+
+Collection of quality, manufacturing, analytical, and stability documents for submission.
+
+---
+
+## 58. What is a deficiency response timeline?
+
+Time given by regulatory authority to answer queries.
+
+---
+
+## 59. What is site registration?
+
+Approval of manufacturing facility by regulatory authority.
+
+---
+
+## 60. What is product registration renewal?
+
+Extension of approved marketing authorization after expiry period.
+
+---
+
+## 61. What is a commitment letter?
+
+Written assurance submitted to regulatory authority regarding future action.
+
+---
+
+## 62. What is a declaration?
+
+Official statement confirming compliance or authenticity of information.
+
+---
+
+## 63. What is a legalized document?
+
+Document authenticated by government or embassy for international submission.
+
+---
+
+## 64. What is notarization?
+
+Certification of document authenticity by a notary.
+
+---
+
+## 65. What is GMP certificate?
+
+Certificate showing compliance with GMP requirements.
+
+---
+
+## 66. What is FSC?
+
+Free Sale Certificate proving product is freely sold in originating country.
+
+---
+
+## 67. What is COPP?
+
+Certificate of Pharmaceutical Product issued as per WHO scheme.
+
+---
+
+## 68. What is BSE/TSE declaration?
+
+Statement confirming absence of animal-origin contamination risks.
+
+---
+
+## 69. What is elemental impurity?
+
+Metal impurity present in pharmaceutical product.
+
+---
+
+## 70. Which guideline covers elemental impurities?
+
+ICH Q3D.
+
+---
+
+## 71. What is nitrosamine impurity?
+
+Potential carcinogenic impurity formed during manufacturing or storage.
+
+---
+
+## 72. Why are nitrosamines important?
+
+Because they can pose cancer risk even at low levels.
+
+---
+
+## 73. What is risk assessment in Regulatory Affairs?
+
+Evaluation of potential regulatory or quality risks.
+
+---
+
+## 74. What is change notification?
+
+Communication to authority regarding approved product changes.
+
+---
+
+## 75. What is line extension?
+
+New strength, dosage form, or formulation of existing product.
+
+---
+
+## 76. What is orphan drug?
+
+Drug developed for rare diseases.
+
+---
+
+## 77. What is fast track approval?
+
+Accelerated review process for important therapies.
+
+---
+
+## 78. What is priority review?
+
+Faster regulatory review for products with significant benefit.
+
+---
+
+## 79. What is investigational new drug (IND)?
+
+Application to begin clinical trials in humans.
+
+---
+
+## 80. What is clinical trial application (CTA)?
+
+Request for authorization to conduct clinical studies.
+
+---
+
+## 81. What is generic drug?
+
+Drug equivalent to innovator product in dosage, strength, safety, and efficacy.
+
+---
+
+## 82. What is innovator drug?
+
+Original patented drug developed first.
+
+---
+
+## 83. What is patent exclusivity?
+
+Period during which innovator has exclusive marketing rights.
+
+---
+
+## 84. What is Paragraph IV filing?
+
+ANDA filing challenging innovator patent.
+
+---
+
+## 85. What is Orange Book?
+
+Publication by US Food and Drug Administration listing approved drug products and therapeutic equivalence.
+
+---
+
+## 86. What is therapeutic equivalence?
+
+Products expected to have same clinical effect and safety.
+
+---
+
+## 87. What is reference listed drug (RLD)?
+
+Approved drug product used as comparison for generic submission.
+
+---
+
+## 88. What is reference standard?
+
+Highly characterized material used for analytical comparison.
+
+---
+
+## 89. What is pharmacopeia?
+
+Official publication containing drug standards and monographs.
+
+Examples:
+
+* United States Pharmacopeia
+* British Pharmacopoeia Commission
+* Indian Pharmacopoeia Commission
+
+---
+
+## 90. What is monograph?
+
+Official specification and testing procedure for a drug substance/product.
+
+---
+
+## 91. What is regulatory intelligence?
+
+Collection and analysis of changing regulatory information.
+
+---
+
+## 92. What is gap analysis?
+
+Comparison between current compliance status and regulatory requirements.
+
+---
+
+## 93. What is product recall?
+
+Removal of defective product from market.
+
+---
+
+## 94. Types of recalls?
+
+* Class I
+* Class II
+* Class III
+
+---
+
+## 95. What is Class I recall?
+
+Recall for products with serious health risk.
+
+---
+
+## 96. What is market complaint?
+
+Complaint received from market regarding product quality.
+
+---
+
+## 97. What is serialization?
+
+Unique coding system for tracking pharmaceutical products.
+
+---
+
+## 98. What is track and trace?
+
+System for monitoring product movement through supply chain.
+
+---
+
+## 99. What skills are important for Regulatory Affairs?
+
+* Documentation
+* Communication
+* Regulatory knowledge
+* Attention to detail
+* Time management
+
+---
+
+## 100. What challenges are faced in Regulatory Affairs?
+
+* Changing regulations
+* Tight timelines
+* Global submission differences
+* Deficiency handling
+* Coordination with multiple departments`;
+
+const formulationRaw=String.raw`## 1. What is Formulation R&D?
+
+Formulation R&D develops dosage forms like tablets, capsules, injections, syrups, creams, etc. with desired quality, stability, and efficacy.
+
+---
+
+## 2. What are responsibilities of Formulation R&D?
+
+* Preformulation studies
+* Formulation development
+* Process optimization
+* Scale-up
+* Stability studies
+* Technology transfer
+* Troubleshooting
+
+---
+
+## 3. What is preformulation study?
+
+Study of physicochemical properties of drug before formulation development.
+
+---
+
+## 4. Why is preformulation important?
+
+It helps select suitable excipients, process, and dosage form.
+
+---
+
+## 5. What parameters are checked in preformulation?
+
+* Solubility
+* pKa
+* Melting point
+* Particle size
+* Hygroscopicity
+* Stability
+* Polymorphism
+
+---
+
+## 6. What is polymorphism?
+
+Ability of compound to exist in multiple crystal forms.
+
+---
+
+## 7. Why polymorphism important?
+
+Different polymorphs may affect solubility, dissolution, and stability.
+
+---
+
+## 8. What is hygroscopicity?
+
+Ability of material to absorb moisture from atmosphere.
+
+---
+
+## 9. What is flow property?
+
+Ability of powder to flow uniformly.
+
+---
+
+## 10. How do you evaluate flow properties?
+
+* Angle of repose
+* Carr's index
+* Hausner ratio
+
+---
+
+## 11. Formula for Carr's Index?
+
+Carr Index = (Tapped Density - Bulk Density) / Tapped Density x 100
+
+---
+
+## 12. Formula for Hausner Ratio?
+
+Hausner Ratio = Tapped Density / Bulk Density
+
+---
+
+## 13. What is angle of repose?
+
+Maximum angle formed between powder pile and horizontal surface.
+
+---
+
+## 14. What is compatibility study?
+
+Study to evaluate interaction between API and excipients.
+
+---
+
+## 15. How do you perform compatibility study?
+
+Using:
+
+* FTIR
+* DSC
+* HPLC
+* Physical observation
+
+---
+
+## 16. What is formulation?
+
+Combination of API and excipients into suitable dosage form.
+
+---
+
+## 17. What are excipients?
+
+Inactive ingredients used in formulation.
+
+---
+
+## 18. Types of excipients?
+
+* Diluent
+* Binder
+* Disintegrant
+* Lubricant
+* Glidant
+* Coating agent
+
+---
+
+## 19. What is diluent?
+
+Excipient used to increase bulk.
+
+---
+
+## 20. Examples of diluents?
+
+* Lactose
+* MCC
+* DCP
+
+---
+
+## 21. What is binder?
+
+Excipient that provides cohesiveness to granules.
+
+---
+
+## 22. Examples of binders?
+
+* PVP
+* Starch paste
+* HPMC
+
+---
+
+## 23. What is disintegrant?
+
+Excipient that breaks tablet after administration.
+
+---
+
+## 24. Examples of disintegrants?
+
+* Crospovidone
+* CCS
+* SSG
+
+---
+
+## 25. What is lubricant?
+
+Reduces friction during compression.
+
+---
+
+## 26. Example of lubricant?
+
+Magnesium stearate.
+
+---
+
+## 27. What is glidant?
+
+Improves powder flow.
+
+---
+
+## 28. Example of glidant?
+
+Colloidal silicon dioxide.
+
+---
+
+## 29. What is granulation?
+
+Process of converting powder into granules.
+
+---
+
+## 30. Types of granulation?
+
+* Wet granulation
+* Dry granulation
+
+---
+
+## 31. What is wet granulation?
+
+Granulation using liquid binder solution.
+
+---
+
+## 32. Advantages of wet granulation?
+
+* Better flow
+* Better compressibility
+* Uniform mixing
+
+---
+
+## 33. What is dry granulation?
+
+Granulation without liquid addition.
+
+---
+
+## 34. When dry granulation preferred?
+
+For moisture or heat sensitive drugs.
+
+---
+
+## 35. What is direct compression?
+
+Tablet compression without granulation.
+
+---
+
+## 36. Advantages of direct compression?
+
+* Simple
+* Cost effective
+* Fewer steps
+
+---
+
+## 37. What is compression force?
+
+Force applied during tablet compression.
+
+---
+
+## 38. What is tablet hardness?
+
+Force required to break tablet.
+
+---
+
+## 39. Acceptable hardness range?
+
+Depends on formulation, generally 4-10 kg/cm2.
+
+---
+
+## 40. What is friability?
+
+Tendency of tablet to crumble.
+
+---
+
+## 41. Acceptable friability limit?
+
+Generally less than 1%.
+
+---
+
+## 42. Formula for friability?
+
+% Friability = (Initial Weight - Final Weight) / Initial Weight x 100
+
+---
+
+## 43. What is disintegration test?
+
+Measures time taken for tablet to break apart.
+
+---
+
+## 44. What is dissolution test?
+
+Measures drug release in dissolution media.
+
+---
+
+## 45. Difference between disintegration and dissolution?
+
+Disintegration breaks tablet; dissolution measures drug release.
+
+---
+
+## 46. What is coating?
+
+Application of outer layer on tablet.
+
+---
+
+## 47. Types of coating?
+
+* Film coating
+* Sugar coating
+* Enteric coating
+
+---
+
+## 48. Why coating done?
+
+* Taste masking
+* Protection
+* Appearance
+* Modified release
+
+---
+
+## 49. What is enteric coating?
+
+Coating resistant to stomach acid.
+
+---
+
+## 50. What is sustained release formulation?
+
+Formulation releasing drug slowly over time.
+
+---
+
+## 51. What is immediate release formulation?
+
+Formulation releasing drug rapidly after administration.
+
+---
+
+## 52. What is bioavailability?
+
+Extent and rate of drug absorption.
+
+---
+
+## 53. What factors affect dissolution?
+
+* Particle size
+* pH
+* Agitation
+* Solubility
+
+---
+
+## 54. What is BCS classification?
+
+Drug classification based on solubility and permeability.
+
+---
+
+## 55. Types of BCS classes?
+
+* Class I
+* Class II
+* Class III
+* Class IV
+
+---
+
+## 56. Which BCS class has high solubility and permeability?
+
+BCS Class I.
+
+---
+
+## 57. What is particle size reduction?
+
+Reducing particle size to improve dissolution and uniformity.
+
+---
+
+## 58. What is micronization?
+
+Reduction of particle size to micron level.
+
+---
+
+## 59. What is blending?
+
+Uniform mixing of API and excipients.
+
+---
+
+## 60. What is segregation?
+
+Separation of particles due to size or density difference.
+
+---
+
+## 61. What causes sticking during compression?
+
+* Excess moisture
+* Low melting API
+* Improper lubrication
+
+---
+
+## 62. What causes picking?
+
+Material sticking to punch face.
+
+---
+
+## 63. What causes capping?
+
+Separation of tablet top or bottom.
+
+---
+
+## 64. Causes of lamination?
+
+Air entrapment or improper compression.
+
+---
+
+## 65. What is assay in formulation?
+
+Amount of active drug present in dosage form.
+
+---
+
+## 66. What is content uniformity?
+
+Uniform distribution of API among dosage units.
+
+---
+
+## 67. What is blend uniformity?
+
+Uniform distribution of API in powder blend.
+
+---
+
+## 68. What is overage?
+
+Extra API added to compensate degradation.
+
+---
+
+## 69. What is stability study?
+
+Study to determine shelf life.
+
+---
+
+## 70. Types of stability studies?
+
+* Accelerated
+* Long-term
+* Intermediate
+
+---
+
+## 71. Which guideline covers stability studies?
+
+ICH Q1.
+
+---
+
+## 72. What is shelf life?
+
+Period during which product remains within specification.
+
+---
+
+## 73. What is QbD?
+
+Quality by Design approach for product/process development.
+
+---
+
+## 74. What are CQAs?
+
+Critical Quality Attributes affecting product quality.
+
+---
+
+## 75. What are CPPs?
+
+Critical Process Parameters affecting process performance.
+
+---
+
+## 76. What is DoE?
+
+Design of Experiments for optimization studies.
+
+---
+
+## 77. Why DoE important?
+
+To understand interaction between variables systematically.
+
+---
+
+## 78. What is scale-up?
+
+Increasing batch size from lab to commercial level.
+
+---
+
+## 79. Challenges during scale-up?
+
+* Mixing
+* Heat transfer
+* Drying variation
+* Compression issues
+
+---
+
+## 80. What is technology transfer?
+
+Transfer of product/process knowledge between sites.
+
+---
+
+## 81. What is process validation?
+
+Documented evidence proving process consistency.
+
+---
+
+## 82. What is cleaning validation?
+
+Verification that equipment cleaning removes residues effectively.
+
+---
+
+## 83. What is hold time study?
+
+Study determining acceptable storage time during manufacturing.
+
+---
+
+## 84. What is in-process check?
+
+Checks performed during manufacturing process.
+
+---
+
+## 85. Common IPCs in tablet manufacturing?
+
+* Weight variation
+* Hardness
+* Thickness
+* Friability
+
+---
+
+## 86. What is master formula record?
+
+Official manufacturing instruction document.
+
+---
+
+## 87. What is batch manufacturing record?
+
+Actual record of manufacturing activities.
+
+---
+
+## 88. What is deviation?
+
+Departure from approved process or procedure.
+
+---
+
+## 89. What is CAPA?
+
+Corrective and Preventive Action.
+
+---
+
+## 90. What is OOS?
+
+Out Of Specification result.
+
+---
+
+## 91. What is GMP?
+
+Good Manufacturing Practice.
+
+---
+
+## 92. What is data integrity?
+
+Ensuring complete and accurate records.
+
+---
+
+## 93. What is ALCOA+?
+
+Data integrity principles:
+
+* Attributable
+* Legible
+* Contemporaneous
+* Original
+* Accurate
+* Complete
+* Consistent
+* Enduring
+* Available
+
+---
+
+## 94. What instruments commonly used in Formulation R&D?
+
+* HPLC
+* UV
+* Dissolution apparatus
+* Friabilator
+* Hardness tester
+
+---
+
+## 95. What is moisture content analysis?
+
+Measurement of water present in material.
+
+---
+
+## 96. What is LOD in formulation?
+
+Loss on drying due to moisture or volatile content.
+
+---
+
+## 97. What is bulk density?
+
+Mass of powder divided by bulk volume.
+
+---
+
+## 98. What is tapped density?
+
+Density after mechanical tapping.
+
+---
+
+## 99. What skills are important for Formulation R&D?
+
+* Problem solving
+* Process understanding
+* Documentation
+* QbD knowledge
+* Troubleshooting
+
+---
+
+## 100. Why should we hire you for Formulation R&D?
+
+I have strong understanding of formulation principles, excipient functionality, process optimization, troubleshooting, and pharmaceutical guidelines. I can contribute effectively to product development and scale-up activities.`;
+
+const qaRaw=String.raw`## 1. What is Quality Assurance?
+
+Quality Assurance ensures pharmaceutical products are consistently manufactured and controlled according to GMP standards.
+
+---
+
+## 2. Difference between QA and QC?
+
+QA focuses on systems, compliance, and prevention; QC focuses on testing and analysis.
+
+---
+
+## 3. What are responsibilities of QA?
+
+* GMP compliance
+* Documentation review
+* Deviation handling
+* CAPA management
+* Change control
+* Audits
+* Validation review
+* Batch release
+
+---
+
+## 4. What is GMP?
+
+Good Manufacturing Practice ensuring product quality and safety.
+
+---
+
+## 5. What is cGMP?
+
+Current Good Manufacturing Practice emphasizing updated systems and technologies.
+
+---
+
+## 6. What is GDP?
+
+Good Documentation Practice.
+
+---
+
+## 7. What are GDP principles?
+
+* Clear
+* Accurate
+* Legible
+* Traceable
+* Error-free
+
+---
+
+## 8. What is ALCOA+?
+
+Data integrity principles:
+
+* Attributable
+* Legible
+* Contemporaneous
+* Original
+* Accurate
+* Complete
+* Consistent
+* Enduring
+* Available
+
+---
+
+## 9. What is SOP?
+
+Standard Operating Procedure.
+
+---
+
+## 10. Why SOP important?
+
+Ensures consistency and compliance in operations.
+
+---
+
+## 11. What is BMR?
+
+Batch Manufacturing Record documenting manufacturing activities.
+
+---
+
+## 12. What is BPR?
+
+Batch Packing Record documenting packaging activities.
+
+---
+
+## 13. What is batch release?
+
+Final QA approval before product distribution.
+
+---
+
+## 14. What is deviation?
+
+Departure from approved procedure or specification.
+
+---
+
+## 15. Types of deviations?
+
+* Minor
+* Major
+* Critical
+
+---
+
+## 16. What is planned deviation?
+
+Pre-approved temporary change from procedure.
+
+---
+
+## 17. What is unplanned deviation?
+
+Unexpected departure from approved process.
+
+---
+
+## 18. What is CAPA?
+
+Corrective and Preventive Action.
+
+---
+
+## 19. Difference between corrective and preventive action?
+
+Corrective removes existing issue; preventive avoids recurrence.
+
+---
+
+## 20. What is root cause analysis?
+
+Investigation to identify actual cause of problem.
+
+---
+
+## 21. Common root cause tools?
+
+* Fishbone diagram
+* 5 Why analysis
+* Fault tree analysis
+
+---
+
+## 22. What is change control?
+
+System for managing changes affecting quality.
+
+---
+
+## 23. Why change control important?
+
+Ensures changes do not negatively affect product quality.
+
+---
+
+## 24. Types of changes?
+
+* Minor
+* Major
+* Critical
+
+---
+
+## 25. What is incident?
+
+Unexpected event affecting operations or quality.
+
+---
+
+## 26. What is OOS?
+
+Out Of Specification result.
+
+---
+
+## 27. What is OOT?
+
+Out Of Trend result.
+
+---
+
+## 28. Difference between OOS and OOT?
+
+OOS fails specification; OOT deviates from historical trend.
+
+---
+
+## 29. What is market complaint?
+
+Complaint received from customer regarding product quality.
+
+---
+
+## 30. What is product recall?
+
+Removal of defective product from market.
+
+---
+
+## 31. Types of recalls?
+
+* Class I
+* Class II
+* Class III
+
+---
+
+## 32. What is Class I recall?
+
+Recall for serious health risk products.
+
+---
+
+## 33. What is self inspection?
+
+Internal audit to verify GMP compliance.
+
+---
+
+## 34. What is audit?
+
+Systematic examination of compliance activities.
+
+---
+
+## 35. Types of audits?
+
+* Internal
+* External
+* Regulatory
+* Vendor audit
+
+---
+
+## 36. What is vendor qualification?
+
+Evaluation and approval of suppliers.
+
+---
+
+## 37. What is qualification?
+
+Documented verification that equipment/system works properly.
+
+---
+
+## 38. Types of qualification?
+
+* DQ
+* IQ
+* OQ
+* PQ
+
+---
+
+## 39. What is DQ?
+
+Design Qualification.
+
+---
+
+## 40. What is IQ?
+
+Installation Qualification.
+
+---
+
+## 41. What is OQ?
+
+Operational Qualification.
+
+---
+
+## 42. What is PQ?
+
+Performance Qualification.
+
+---
+
+## 43. What is validation?
+
+Documented evidence proving process/system suitability.
+
+---
+
+## 44. Types of validation?
+
+* Process validation
+* Cleaning validation
+* Analytical validation
+* Computer validation
+
+---
+
+## 45. What is process validation?
+
+Verification that process consistently produces quality product.
+
+---
+
+## 46. Stages of process validation?
+
+* Process design
+* Process qualification
+* Continued verification
+
+---
+
+## 47. What is cleaning validation?
+
+Verification that cleaning removes residues effectively.
+
+---
+
+## 48. What is hold time study?
+
+Study determining acceptable storage time of materials/products.
+
+---
+
+## 49. What is line clearance?
+
+Verification that previous product/materials are removed before next operation.
+
+---
+
+## 50. Why line clearance important?
+
+Prevents mix-up and contamination.
+
+---
+
+## 51. What is contamination?
+
+Unwanted foreign material in product.
+
+---
+
+## 52. Types of contamination?
+
+* Physical
+* Chemical
+* Microbial
+
+---
+
+## 53. What is cross contamination?
+
+Contamination from another product/material.
+
+---
+
+## 54. What is status labeling?
+
+Labels indicating equipment/material status.
+
+---
+
+## 55. What is calibration?
+
+Comparison against standard to ensure instrument accuracy.
+
+---
+
+## 56. Difference between calibration and validation?
+
+Calibration checks instrument accuracy; validation checks process/method suitability.
+
+---
+
+## 57. What is preventive maintenance?
+
+Planned maintenance to avoid equipment failure.
+
+---
+
+## 58. What is qualification matrix?
+
+Record of employee training status.
+
+---
+
+## 59. What is training effectiveness?
+
+Evaluation of employee understanding after training.
+
+---
+
+## 60. What is data integrity?
+
+Ensuring data is complete, accurate, and reliable.
+
+---
+
+## 61. What is audit trail?
+
+Electronic record of data changes.
+
+---
+
+## 62. Why audit trail important?
+
+Ensures traceability and data integrity.
+
+---
+
+## 63. What is electronic record?
+
+Digital GMP documentation system.
+
+---
+
+## 64. What is electronic signature?
+
+Digitally authenticated approval.
+
+---
+
+## 65. What is risk assessment?
+
+Evaluation of quality or compliance risk.
+
+---
+
+## 66. What is QRM?
+
+Quality Risk Management.
+
+---
+
+## 67. Which guideline covers QRM?
+
+ICH Q9.
+
+---
+
+## 68. What is QMS?
+
+Quality Management System.
+
+---
+
+## 69. Elements of QMS?
+
+* Documentation
+* Training
+* CAPA
+* Audit
+* Change control
+
+---
+
+## 70. What is annual product review (APR/PQR)?
+
+Yearly review of product quality data.
+
+---
+
+## 71. What is trend analysis?
+
+Monitoring recurring patterns in quality data.
+
+---
+
+## 72. What is specification?
+
+Defined acceptance criteria for product/material.
+
+---
+
+## 73. What is sampling?
+
+Collection of representative material portion.
+
+---
+
+## 74. What is quarantine status?
+
+Material isolated until approval/rejection.
+
+---
+
+## 75. What is released status?
+
+Material approved for use/distribution.
+
+---
+
+## 76. What is rejected status?
+
+Material failed to meet specification.
+
+---
+
+## 77. What is reprocessing?
+
+Repeating process step to meet specifications.
+
+---
+
+## 78. What is rework?
+
+Additional processing outside approved process.
+
+---
+
+## 79. Difference between reprocessing and rework?
+
+Reprocessing follows approved process; rework uses non-routine process.
+
+---
+
+## 80. What is stability study?
+
+Study determining shelf life and storage conditions.
+
+---
+
+## 81. Types of stability studies?
+
+* Accelerated
+* Intermediate
+* Long-term
+
+---
+
+## 82. Which guideline covers stability studies?
+
+ICH Q1.
+
+---
+
+## 83. What is expiry date?
+
+Date after which product should not be used.
+
+---
+
+## 84. What is retest date?
+
+Date for retesting API quality.
+
+---
+
+## 85. What is environmental monitoring?
+
+Monitoring cleanroom environment for contamination.
+
+---
+
+## 86. What is cleanroom classification?
+
+Classification based on particle limits.
+
+---
+
+## 87. What is HEPA filter?
+
+High Efficiency Particulate Air filter.
+
+---
+
+## 88. What is water system validation?
+
+Verification that pharmaceutical water meets quality requirements.
+
+---
+
+## 89. Types of pharmaceutical water?
+
+* Purified water
+* WFI
+
+---
+
+## 90. What is WFI?
+
+Water for Injection.
+
+---
+
+## 91. What is document control?
+
+Management of GMP documents and revisions.
+
+---
+
+## 92. What is archival?
+
+Secure storage of records.
+
+---
+
+## 93. What is retention period?
+
+Required storage duration for records.
+
+---
+
+## 94. What is regulatory inspection?
+
+Inspection by health authority.
+
+Examples:
+
+* US Food and Drug Administration
+* Central Drugs Standard Control Organization
+* European Medicines Agency
+
+---
+
+## 95. What is observation during audit?
+
+Non-compliance identified during inspection.
+
+---
+
+## 96. What is warning letter?
+
+Official notice issued by regulatory authority for major violations.
+
+---
+
+## 97. What skills are important for QA?
+
+* Documentation
+* GMP knowledge
+* Attention to detail
+* Investigation skills
+* Communication
+
+---
+
+## 98. What is batch reconciliation?
+
+Comparison of theoretical and actual yield/material usage.
+
+---
+
+## 99. Formula for percentage yield?
+
+% Yield = Actual Yield / Theoretical Yield x 100
+
+---
+
+## 100. Why should we hire you for QA?
+
+I have strong understanding of GMP, documentation practices, deviation handling, CAPA, audits, and compliance systems. I can contribute effectively to maintaining product quality and regulatory compliance.`;
+
+const productionRaw=String.raw`## 1. What is pharmaceutical production?
+
+Pharmaceutical production is the process of manufacturing medicines according to approved procedures and GMP requirements.
+
+---
+
+## 2. What are responsibilities of Production department?
+
+* Manufacturing operations
+* Process monitoring
+* Equipment operation
+* Documentation
+* Line clearance
+* Yield monitoring
+* GMP compliance
+
+---
+
+## 3. What is GMP?
+
+Good Manufacturing Practice ensuring product quality and safety.
+
+---
+
+## 4. Why GMP important in production?
+
+To prevent contamination, mix-ups, and quality failures.
+
+---
+
+## 5. What is SOP?
+
+Standard Operating Procedure.
+
+---
+
+## 6. Why SOP important?
+
+Ensures consistent manufacturing operations.
+
+---
+
+## 7. What is BMR?
+
+Batch Manufacturing Record.
+
+---
+
+## 8. What is BPR?
+
+Batch Packing Record.
+
+---
+
+## 9. What is line clearance?
+
+Verification that area/equipment is free from previous product/materials.
+
+---
+
+## 10. Why line clearance important?
+
+Prevents cross contamination and mix-up.
+
+---
+
+## 11. What is dispensing?
+
+Weighing and issuing raw materials for manufacturing.
+
+---
+
+## 12. What precautions are taken during dispensing?
+
+* Material verification
+* Cleanliness
+* Balance calibration
+* Proper labeling
+
+---
+
+## 13. What is status labeling?
+
+Labels indicating equipment/material status.
+
+---
+
+## 14. Types of status labels?
+
+* Cleaned
+* Under process
+* Released
+* Rejected
+
+---
+
+## 15. What is granulation?
+
+Conversion of powders into granules.
+
+---
+
+## 16. Types of granulation?
+
+* Wet granulation
+* Dry granulation
+
+---
+
+## 17. What is wet granulation?
+
+Granulation using binder solution.
+
+---
+
+## 18. What is dry granulation?
+
+Granulation without liquid addition.
+
+---
+
+## 19. What is direct compression?
+
+Tablet manufacturing without granulation step.
+
+---
+
+## 20. What is blending?
+
+Uniform mixing of API and excipients.
+
+---
+
+## 21. What is segregation?
+
+Separation of particles due to size or density differences.
+
+---
+
+## 22. What is compression?
+
+Process of converting granules into tablets.
+
+---
+
+## 23. What is tablet hardness?
+
+Force required to break tablet.
+
+---
+
+## 24. What is friability?
+
+Tendency of tablet to crumble.
+
+---
+
+## 25. Acceptable friability limit?
+
+Generally less than 1%.
+
+---
+
+## 26. Formula for friability?
+
+% Friability = (Initial Weight - Final Weight) / Initial Weight x 100
+
+---
+
+## 27. What is coating?
+
+Application of outer protective layer on tablets.
+
+---
+
+## 28. Types of coating?
+
+* Film coating
+* Sugar coating
+* Enteric coating
+
+---
+
+## 29. What is capsule filling?
+
+Filling powder/granules into capsule shells.
+
+---
+
+## 30. What is in-process check (IPC)?
+
+Checks performed during manufacturing.
+
+---
+
+## 31. Common IPCs in tablet manufacturing?
+
+* Weight variation
+* Hardness
+* Thickness
+* Friability
+* Disintegration
+
+---
+
+## 32. What is yield?
+
+Amount of product obtained after manufacturing.
+
+---
+
+## 33. Formula for percentage yield?
+
+% Yield = Actual Yield / Theoretical Yield x 100
+
+---
+
+## 34. What is reconciliation?
+
+Comparison between theoretical and actual quantities.
+
+---
+
+## 35. Why reconciliation important?
+
+Detects losses, mix-ups, and pilferage.
+
+---
+
+## 36. What is deviation?
+
+Departure from approved process/procedure.
+
+---
+
+## 37. Types of deviations?
+
+* Minor
+* Major
+* Critical
+
+---
+
+## 38. What is CAPA?
+
+Corrective and Preventive Action.
+
+---
+
+## 39. What is change control?
+
+System to manage process/equipment changes.
+
+---
+
+## 40. What is process validation?
+
+Verification that process consistently produces quality product.
+
+---
+
+## 41. Stages of process validation?
+
+* Process design
+* Qualification
+* Continued verification
+
+---
+
+## 42. What is cleaning validation?
+
+Verification that cleaning removes residues effectively.
+
+---
+
+## 43. What is hold time study?
+
+Study determining acceptable storage time during manufacturing.
+
+---
+
+## 44. What is contamination?
+
+Presence of unwanted foreign material.
+
+---
+
+## 45. What is cross contamination?
+
+Contamination from another product/material.
+
+---
+
+## 46. How do you prevent cross contamination?
+
+* Line clearance
+* Air handling
+* Cleaning procedures
+* Segregation
+
+---
+
+## 47. What is environmental monitoring?
+
+Monitoring manufacturing area cleanliness.
+
+---
+
+## 48. What is differential pressure?
+
+Pressure difference maintained between rooms to control contamination.
+
+---
+
+## 49. What is HVAC?
+
+Heating, Ventilation, and Air Conditioning system.
+
+---
+
+## 50. Why HVAC important?
+
+Controls temperature, humidity, and contamination.
+
+---
+
+## 51. What is HEPA filter?
+
+High Efficiency Particulate Air filter.
+
+---
+
+## 52. What is cleanroom classification?
+
+Classification based on airborne particle limits.
+
+---
+
+## 53. What is preventive maintenance?
+
+Scheduled maintenance to avoid breakdown.
+
+---
+
+## 54. What is calibration?
+
+Ensuring instrument accuracy using standards.
+
+---
+
+## 55. Difference between calibration and validation?
+
+Calibration checks instrument accuracy; validation checks process/system suitability.
+
+---
+
+## 56. What is equipment qualification?
+
+Verification that equipment performs properly.
+
+---
+
+## 57. Types of qualification?
+
+* DQ
+* IQ
+* OQ
+* PQ
+
+---
+
+## 58. What is IQ?
+
+Installation Qualification.
+
+---
+
+## 59. What is OQ?
+
+Operational Qualification.
+
+---
+
+## 60. What is PQ?
+
+Performance Qualification.
+
+---
+
+## 61. What is batch numbering?
+
+Unique identification system for each batch.
+
+---
+
+## 62. What is dispensing error?
+
+Incorrect weighing or issuance of material.
+
+---
+
+## 63. What is mixing time optimization?
+
+Adjustment of blending time for uniformity.
+
+---
+
+## 64. What causes sticking during compression?
+
+* Excess moisture
+* Insufficient lubrication
+* Low melting API
+
+---
+
+## 65. What causes capping?
+
+Air entrapment or improper compression force.
+
+---
+
+## 66. What causes lamination?
+
+Separation of tablet layers due to air entrapment.
+
+---
+
+## 67. What causes picking?
+
+Material sticking to punch surface.
+
+---
+
+## 68. What is over lubrication?
+
+Excess lubricant causing poor hardness/dissolution.
+
+---
+
+## 69. What is under lubrication?
+
+Insufficient lubricant causing sticking and friction.
+
+---
+
+## 70. What is bulk density?
+
+Mass of powder divided by bulk volume.
+
+---
+
+## 71. What is tapped density?
+
+Density after mechanical tapping.
+
+---
+
+## 72. What is angle of repose?
+
+Measure of powder flow property.
+
+---
+
+## 73. Formula for Carr's Index?
+
+Carr Index = (Tapped Density - Bulk Density) / Tapped Density x 100
+
+---
+
+## 74. Formula for Hausner Ratio?
+
+Hausner Ratio = Tapped Density / Bulk Density
+
+---
+
+## 75. What is sifting?
+
+Passing material through sieve to remove lumps.
+
+---
+
+## 76. What is milling?
+
+Reducing particle size using mill.
+
+---
+
+## 77. Types of mills?
+
+* Multi mill
+* Comminuting mill
+* Jet mill
+
+---
+
+## 78. What is fluid bed dryer (FBD)?
+
+Equipment used for drying granules using hot air.
+
+---
+
+## 79. What is fluid bed processor (FBP)?
+
+Equipment used for granulation, drying, and coating.
+
+---
+
+## 80. What is rapid mixer granulator (RMG)?
+
+Equipment for wet granulation.
+
+---
+
+## 81. What is compression machine?
+
+Machine used for tablet compression.
+
+---
+
+## 82. What is blister packing?
+
+Packing tablets/capsules in formed cavities.
+
+---
+
+## 83. What is strip packing?
+
+Packing using aluminum foil strips.
+
+---
+
+## 84. What is leak test?
+
+Test to verify integrity of package sealing.
+
+---
+
+## 85. What is serialization?
+
+Unique coding for product traceability.
+
+---
+
+## 86. What is GMP gowning?
+
+Protective garments worn in manufacturing area.
+
+---
+
+## 87. Why gowning important?
+
+Prevents contamination from personnel.
+
+---
+
+## 88. What is personal hygiene in GMP?
+
+Maintaining cleanliness to avoid contamination.
+
+---
+
+## 89. What is data integrity?
+
+Ensuring complete and accurate records.
+
+---
+
+## 90. What is ALCOA+?
+
+* Attributable
+* Legible
+* Contemporaneous
+* Original
+* Accurate
+* Complete
+* Consistent
+* Enduring
+* Available
+
+---
+
+## 91. What is OEE?
+
+Overall Equipment Effectiveness.
+
+---
+
+## 92. What factors affect OEE?
+
+* Availability
+* Performance
+* Quality
+
+---
+
+## 93. What is downtime?
+
+Time during which equipment is not operational.
+
+---
+
+## 94. What is scale-up?
+
+Increasing batch size from lab to commercial production.
+
+---
+
+## 95. Challenges during scale-up?
+
+* Heat transfer
+* Mixing variation
+* Drying inconsistency
+
+---
+
+## 96. What is technology transfer?
+
+Transfer of manufacturing process between sites.
+
+---
+
+## 97. What skills are important in Production?
+
+* GMP knowledge
+* Troubleshooting
+* Documentation
+* Process understanding
+* Team management
+
+---
+
+## 98. What is shift handover?
+
+Transfer of production information between shifts.
+
+---
+
+## 99. What precautions are taken during manufacturing?
+
+* Line clearance
+* Equipment cleaning
+* IPC checks
+* Documentation review
+
+---
+
+## 100. Why should we hire you for Production?
+
+I have strong understanding of GMP, manufacturing operations, troubleshooting, documentation, process monitoring, and compliance requirements. I can contribute effectively to smooth and compliant production activities.`;
+
+const qcRaw=String.raw`## 1. What is Quality Control?
+
+Quality Control ensures raw materials, intermediates, APIs, and finished products meet predefined specifications through testing and analysis.
+
+---
+
+## 2. What are responsibilities of QC?
+
+* Sampling
+* Testing
+* Instrument calibration
+* Stability analysis
+* Documentation
+* OOS investigation
+* Release/rejection recommendation
+
+---
+
+## 3. Difference between QA and QC?
+
+QA focuses on systems and compliance; QC focuses on testing and analysis.
+
+---
+
+## 4. What is GMP?
+
+Good Manufacturing Practice.
+
+---
+
+## 5. What is GLP?
+
+Good Laboratory Practice.
+
+---
+
+## 6. What is GDP?
+
+Good Documentation Practice.
+
+---
+
+## 7. What is ALCOA+?
+
+Data integrity principles:
+
+* Attributable
+* Legible
+* Contemporaneous
+* Original
+* Accurate
+* Complete
+* Consistent
+* Enduring
+* Available
+
+---
+
+## 8. What is specification?
+
+Predefined acceptance criteria for a material/product.
+
+---
+
+## 9. What is assay?
+
+Determination of active ingredient content.
+
+---
+
+## 10. What is impurity?
+
+Unwanted chemical present in product.
+
+---
+
+## 11. Types of impurities?
+
+* Organic impurities
+* Inorganic impurities
+* Residual solvents
+
+---
+
+## 12. What is residual solvent?
+
+Volatile organic solvent remaining after manufacturing.
+
+---
+
+## 13. Which guideline covers residual solvents?
+
+ICH Q3C.
+
+---
+
+## 14. What is genotoxic impurity?
+
+Impurity capable of damaging DNA.
+
+---
+
+## 15. Which guideline covers genotoxic impurities?
+
+ICH M7.
+
+---
+
+## 16. What is OOS?
+
+Out Of Specification result.
+
+---
+
+## 17. What is OOT?
+
+Out Of Trend result.
+
+---
+
+## 18. Difference between OOS and OOT?
+
+OOS fails specification; OOT deviates from historical trend.
+
+---
+
+## 19. What is calibration?
+
+Ensuring instrument accuracy using standards.
+
+---
+
+## 20. What is qualification?
+
+Verification that equipment/system performs properly.
+
+---
+
+## 21. Types of qualification?
+
+* DQ
+* IQ
+* OQ
+* PQ
+
+---
+
+## 22. What is IQ?
+
+Installation Qualification.
+
+---
+
+## 23. What is OQ?
+
+Operational Qualification.
+
+---
+
+## 24. What is PQ?
+
+Performance Qualification.
+
+---
+
+## 25. What is validation?
+
+Documented evidence proving suitability of method/process.
+
+---
+
+## 26. What is analytical method validation?
+
+Demonstrating analytical method suitability.
+
+---
+
+## 27. Validation parameters?
+
+* Accuracy
+* Precision
+* Specificity
+* Linearity
+* Robustness
+* LOD
+* LOQ
+
+---
+
+## 28. What is accuracy?
+
+Closeness of measured value to true value.
+
+---
+
+## 29. What is precision?
+
+Agreement among repeated measurements.
+
+---
+
+## 30. Types of precision?
+
+* Repeatability
+* Intermediate precision
+* Reproducibility
+
+---
+
+## 31. What is specificity?
+
+Ability to measure analyte in presence of impurities/degradants.
+
+---
+
+## 32. What is linearity?
+
+Ability to produce results proportional to concentration.
+
+---
+
+## 33. What is robustness?
+
+Method's ability to remain unaffected by small changes.
+
+---
+
+## 34. What is LOD?
+
+Lowest detectable concentration.
+
+---
+
+## 35. What is LOQ?
+
+Lowest quantifiable concentration.
+
+---
+
+## 36. Formula for LOD and LOQ?
+
+LOD = 3.3 sigma / S, LOQ = 10 sigma / S
+
+---
+
+## 37. What is system suitability?
+
+Tests verifying chromatographic system performance.
+
+---
+
+## 38. Common system suitability parameters?
+
+* Theoretical plates
+* Tailing factor
+* Resolution
+* %RSD
+
+---
+
+## 39. What are theoretical plates?
+
+Measure of column efficiency.
+
+---
+
+## 40. Formula for theoretical plates?
+
+N = 16(tR/W)^2
+
+---
+
+## 41. What is tailing factor?
+
+Measure of peak symmetry.
+
+---
+
+## 42. Acceptable tailing factor?
+
+Generally less than 2.
+
+---
+
+## 43. What is resolution?
+
+Separation between two peaks.
+
+---
+
+## 44. Acceptable resolution?
+
+Generally greater than 2.
+
+---
+
+## 45. What is %RSD?
+
+Relative Standard Deviation.
+
+---
+
+## 46. Formula for %RSD?
+
+%RSD = SD / Mean x 100
+
+---
+
+## 47. What is HPLC?
+
+High Performance Liquid Chromatography.
+
+---
+
+## 48. Principle of HPLC?
+
+Separation based on interaction between stationary and mobile phases.
+
+---
+
+## 49. Types of HPLC?
+
+* Reverse phase
+* Normal phase
+* Ion exchange
+* Size exclusion
+
+---
+
+## 50. Most common HPLC mode?
+
+Reverse phase HPLC.
+
+---
+
+## 51. What is reverse phase HPLC?
+
+Nonpolar stationary phase with polar mobile phase.
+
+---
+
+## 52. Common HPLC columns?
+
+* C18
+* C8
+* Phenyl
+
+---
+
+## 53. Common mobile phase solvents?
+
+* Water
+* Methanol
+* Acetonitrile
+* Buffer
+
+---
+
+## 54. Why buffer used in HPLC?
+
+Maintains pH and improves peak shape.
+
+---
+
+## 55. What is retention time?
+
+Time taken by analyte to reach detector.
+
+---
+
+## 56. What is gradient elution?
+
+Changing mobile phase composition during run.
+
+---
+
+## 57. What is isocratic elution?
+
+Constant mobile phase composition during run.
+
+---
+
+## 58. What causes peak tailing?
+
+* Column contamination
+* Wrong pH
+* Secondary interactions
+
+---
+
+## 59. What causes high back pressure?
+
+* Blocked column
+* Buffer precipitation
+* Dirty frit
+
+---
+
+## 60. What is ghost peak?
+
+Unexpected peak in chromatogram.
+
+---
+
+## 61. What is carryover?
+
+Residual analyte from previous injection.
+
+---
+
+## 62. How do you reduce carryover?
+
+* Needle wash
+* Strong solvent flushing
+* Cleaning
+
+---
+
+## 63. What is PDA detector?
+
+Photodiode Array detector.
+
+---
+
+## 64. Advantage of PDA detector?
+
+Peak purity analysis and spectral comparison.
+
+---
+
+## 65. What is GC?
+
+Gas Chromatography.
+
+---
+
+## 66. Principle of GC?
+
+Separation based on volatility and partitioning.
+
+---
+
+## 67. Common GC detectors?
+
+* FID
+* TCD
+* ECD
+
+---
+
+## 68. What is KF titration?
+
+Karl Fischer titration for water determination.
+
+---
+
+## 69. Types of KF titration?
+
+* Volumetric
+* Coulometric
+
+---
+
+## 70. What is UV spectroscopy?
+
+Technique measuring UV-visible absorbance.
+
+---
+
+## 71. What is Beer-Lambert law?
+
+A = epsilon b c
+
+---
+
+## 72. What is dissolution test?
+
+Measures drug release into dissolution medium.
+
+---
+
+## 73. Why dissolution important?
+
+Predicts drug release and bioavailability.
+
+---
+
+## 74. Types of dissolution apparatus?
+
+* Basket
+* Paddle
+
+---
+
+## 75. What is disintegration test?
+
+Measures time required for tablet to break apart.
+
+---
+
+## 76. What is friability test?
+
+Measures tablet resistance to abrasion.
+
+---
+
+## 77. Acceptable friability limit?
+
+Generally less than 1%.
+
+---
+
+## 78. Formula for friability?
+
+% Friability = (Initial Weight - Final Weight) / Initial Weight x 100
+
+---
+
+## 79. What is stability study?
+
+Study to determine shelf life and storage conditions.
+
+---
+
+## 80. Types of stability studies?
+
+* Accelerated
+* Intermediate
+* Long-term
+
+---
+
+## 81. Which guideline covers stability studies?
+
+ICH Q1.
+
+---
+
+## 82. What is shelf life?
+
+Period during which product remains within specification.
+
+---
+
+## 83. What is standardization?
+
+Determination of exact concentration of solution.
+
+---
+
+## 84. What is primary standard?
+
+Highly pure stable compound used for standardization.
+
+---
+
+## 85. What is secondary standard?
+
+Standardized against primary standard.
+
+---
+
+## 86. What is volumetric analysis?
+
+Quantitative analysis based on titration.
+
+---
+
+## 87. What is normality?
+
+Gram equivalent weight per liter solution.
+
+---
+
+## 88. Formula for molarity?
+
+Molarity = Moles of Solute / Liters of Solution
+
+---
+
+## 89. What is pH?
+
+Measure of acidity or alkalinity.
+
+---
+
+## 90. Formula for pH?
+
+pH = -log[H+]
+
+---
+
+## 91. What precautions are taken during sample preparation?
+
+* Accurate weighing
+* Proper dilution
+* Avoid contamination
+* Proper filtration
+
+---
+
+## 92. Why filtration important?
+
+Removes particulate matter before analysis.
+
+---
+
+## 93. Common HPLC filters?
+
+0.45 um and 0.22 um membrane filters.
+
+---
+
+## 94. Why degassing required?
+
+Removes dissolved gases preventing bubble formation.
+
+---
+
+## 95. What is sonication?
+
+Use of ultrasonic waves for dissolution or degassing.
+
+---
+
+## 96. What is pharmacopoeia?
+
+Official publication containing drug standards.
+
+Examples:
+
+* United States Pharmacopeia
+* Indian Pharmacopoeia Commission
+* British Pharmacopoeia Commission
+
+---
+
+## 97. What is monograph?
+
+Official specification and test procedure for drug/product.
+
+---
+
+## 98. What skills are important in QC?
+
+* Analytical skills
+* Documentation
+* Instrument handling
+* Troubleshooting
+* GMP knowledge
+
+---
+
+## 99. What challenges are faced in QC?
+
+* OOS investigations
+* Instrument issues
+* Tight timelines
+* Method troubleshooting
+
+---
+
+## 100. Why should we hire you for QC?
+
+I have strong analytical knowledge, instrument handling skills, GMP understanding, troubleshooting capability, and experience in pharmaceutical testing and documentation.`;
+
+const clinicalRaw=String.raw`## 1. What is Clinical Research?
+
+Clinical Research studies safety and efficacy of drugs in humans.
+
+---
+
+## 2. What are phases of clinical trials?
+
+* Phase I
+* Phase II
+* Phase III
+* Phase IV
+
+---
+
+## 3. What is Phase I trial?
+
+First human study mainly for safety and dosage evaluation.
+
+---
+
+## 4. What is Phase II trial?
+
+Study evaluating efficacy and side effects in patients.
+
+---
+
+## 5. What is Phase III trial?
+
+Large-scale study confirming efficacy and monitoring adverse reactions.
+
+---
+
+## 6. What is Phase IV trial?
+
+Post-marketing surveillance study.
+
+---
+
+## 7. What is protocol?
+
+Detailed plan for conducting clinical trial.
+
+---
+
+## 8. What is informed consent?
+
+Process where participant voluntarily agrees after understanding study details.
+
+---
+
+## 9. What is ICF?
+
+Informed Consent Form.
+
+---
+
+## 10. What is GCP?
+
+Good Clinical Practice guideline for ethical and scientific trial conduct.
+
+---
+
+## 11. What is IEC?
+
+Institutional Ethics Committee reviewing trial ethics.
+
+---
+
+## 12. What is IRB?
+
+Institutional Review Board.
+
+---
+
+## 13. What is investigator?
+
+Doctor responsible for conducting clinical trial at site.
+
+---
+
+## 14. What is sponsor?
+
+Organization funding and managing clinical study.
+
+---
+
+## 15. What is CRO?
+
+Contract Research Organization conducting clinical activities on behalf of sponsor.
+
+---
+
+## 16. What is case report form (CRF)?
+
+Document collecting subject trial data.
+
+---
+
+## 17. What is source data?
+
+Original clinical records of subject.
+
+---
+
+## 18. What is source data verification (SDV)?
+
+Checking CRF data against source documents.
+
+---
+
+## 19. What is randomization?
+
+Assignment of subjects into treatment groups randomly.
+
+---
+
+## 20. What is blinding?
+
+Concealing treatment allocation.
+
+---
+
+## 21. Types of blinding?
+
+* Single blind
+* Double blind
+* Triple blind
+
+---
+
+## 22. What is placebo?
+
+Inactive substance used as control.
+
+---
+
+## 23. What is inclusion criteria?
+
+Conditions allowing subject participation.
+
+---
+
+## 24. What is exclusion criteria?
+
+Conditions preventing subject participation.
+
+---
+
+## 25. What is adverse event (AE)?
+
+Any unwanted medical occurrence during study.
+
+---
+
+## 26. What is serious adverse event (SAE)?
+
+Event causing death, hospitalization, disability, or life threat.
+
+---
+
+## 27. SAE reporting timeline?
+
+Usually within 24 hours to sponsor.
+
+---
+
+## 28. What is protocol deviation?
+
+Departure from approved protocol.
+
+---
+
+## 29. What is protocol violation?
+
+Major noncompliance affecting subject safety or data integrity.
+
+---
+
+## 30. What is monitoring?
+
+Oversight ensuring trial compliance and data quality.
+
+---
+
+## 31. What is audit in clinical research?
+
+Independent examination of trial activities and records.
+
+---
+
+## 32. What is clinical trial registry?
+
+Database registering clinical studies publicly.
+
+Example:
+
+* ClinicalTrials.gov
+
+---
+
+## 33. What is endpoint?
+
+Outcome measured in clinical trial.
+
+---
+
+## 34. What is primary endpoint?
+
+Main outcome used to evaluate treatment effect.
+
+---
+
+## 35. What is secondary endpoint?
+
+Additional outcome measurement.
+
+---
+
+## 36. What is Pharmacovigilance?
+
+Science related to detection, assessment, understanding, and prevention of adverse effects.
+
+---
+
+## 37. What is ADR?
+
+Adverse Drug Reaction.
+
+---
+
+## 38. Difference between AE and ADR?
+
+AE may not be drug related; ADR is suspected to be drug related.
+
+---
+
+## 39. What is signal detection?
+
+Identification of possible new safety issue.
+
+---
+
+## 40. What is causality assessment?
+
+Evaluation of relationship between drug and event.
+
+---
+
+## 41. Types of ADRs?
+
+* Type A
+* Type B
+* Type C
+* Type D
+
+---
+
+## 42. What is Type A ADR?
+
+Dose-dependent predictable reaction.
+
+---
+
+## 43. What is Type B ADR?
+
+Unpredictable bizarre reaction.
+
+---
+
+## 44. What is MedDRA?
+
+Medical Dictionary for Regulatory Activities.
+
+---
+
+## 45. What is WHO-UMC scale?
+
+Causality assessment system by WHO.
+
+---
+
+## 46. What is seriousness criteria?
+
+Criteria classifying event as serious.
+
+---
+
+## 47. What are seriousness criteria?
+
+* Death
+* Hospitalization
+* Disability
+* Congenital anomaly
+* Life threatening
+
+---
+
+## 48. What is expedited reporting?
+
+Rapid reporting of serious unexpected events.
+
+---
+
+## 49. What is PSUR?
+
+Periodic Safety Update Report.
+
+---
+
+## 50. What is PBRER?
+
+Periodic Benefit Risk Evaluation Report.
+
+---
+
+## 51. What is SUSAR?
+
+Suspected Unexpected Serious Adverse Reaction.
+
+---
+
+## 52. What is ICSR?
+
+Individual Case Safety Report.
+
+---
+
+## 53. What is literature screening?
+
+Review of published articles for safety information.
+
+---
+
+## 54. What is aggregate reporting?
+
+Compilation of safety data trends.
+
+---
+
+## 55. What is signal validation?
+
+Verification whether detected signal is genuine.
+
+---
+
+## 56. What is risk management plan (RMP)?
+
+Plan minimizing drug safety risks.
+
+---
+
+## 57. What is pharmacovigilance audit?
+
+Audit of PV system compliance.
+
+---
+
+## 58. Which guideline governs Pharmacovigilance?
+
+ICH E2 series.
+
+---
+
+## 59. What is case processing?
+
+Review and entry of adverse event reports into database.
+
+---
+
+## 60. What is narrative writing?
+
+Preparation of medical event summary.
+
+---
+
+## 61. What is Medical Affairs?
+
+Department bridging medical science and commercial teams.
+
+---
+
+## 62. Responsibilities of Medical Affairs?
+
+* Medical communication
+* Scientific support
+* KOL interaction
+* Medical training
+* Literature review
+
+---
+
+## 63. What is KOL?
+
+Key Opinion Leader.
+
+---
+
+## 64. What is medical information service?
+
+Providing scientific response to healthcare professionals.
+
+---
+
+## 65. What is scientific literature review?
+
+Evaluation of published scientific data.
+
+---
+
+## 66. What is publication planning?
+
+Management of scientific publications strategy.
+
+---
+
+## 67. What is off-label use?
+
+Use of drug outside approved indication.
+
+---
+
+## 68. What is promotional review?
+
+Review of marketing materials for medical accuracy.
+
+---
+
+## 69. What is MSL?
+
+Medical Science Liaison.
+
+---
+
+## 70. Responsibilities of MSL?
+
+* Scientific discussion
+* KOL engagement
+* Clinical support
+* Medical education
+
+---
+
+## 71. What skills are important for Medical Affairs?
+
+* Communication
+* Scientific understanding
+* Presentation skills
+* Literature analysis
+
+---
+
+## 72. What is ethics in clinical research?
+
+Protection of subject rights, safety, and well-being.
+
+---
+
+## 73. What is Declaration of Helsinki?
+
+Ethical principles for human research.
+
+---
+
+## 74. What is informed consent process?
+
+Explaining study and obtaining voluntary agreement.
+
+---
+
+## 75. What is confidentiality?
+
+Protection of participant information.
+
+---
+
+## 76. What is SAE reconciliation?
+
+Comparison of SAE data across systems/documents.
+
+---
+
+## 77. What is database lock?
+
+Finalization of clinical database before analysis.
+
+---
+
+## 78. What is coding in Pharmacovigilance?
+
+Assigning standardized medical terminology.
+
+---
+
+## 79. What is duplicate check in PV?
+
+Checking repeated reporting of same case.
+
+---
+
+## 80. What is follow-up in PV?
+
+Collection of additional safety information.
+
+---
+
+## 81. What is unblinding?
+
+Revealing treatment allocation.
+
+---
+
+## 82. What is clinical data management?
+
+Handling clinical trial data collection and cleaning.
+
+---
+
+## 83. What is SAE reconciliation important?
+
+Ensures consistent safety reporting.
+
+---
+
+## 84. What is inspection readiness?
+
+Preparedness for regulatory inspection.
+
+---
+
+## 85. What is CAPA?
+
+Corrective and Preventive Action.
+
+---
+
+## 86. What is deviation?
+
+Departure from approved procedure.
+
+---
+
+## 87. What is audit trail?
+
+Record of data changes.
+
+---
+
+## 88. What is data integrity?
+
+Ensuring data accuracy and reliability.
+
+---
+
+## 89. What is ALCOA+?
+
+* Attributable
+* Legible
+* Contemporaneous
+* Original
+* Accurate
+* Complete
+* Consistent
+* Enduring
+* Available
+
+---
+
+## 90. What is clinical study report (CSR)?
+
+Comprehensive report of clinical study results.
+
+---
+
+## 91. What is benefit-risk assessment?
+
+Evaluation of therapeutic benefit versus safety risk.
+
+---
+
+## 92. What is informed consent withdrawal?
+
+Participant leaving study voluntarily.
+
+---
+
+## 93. What is protocol amendment?
+
+Official change in approved protocol.
+
+---
+
+## 94. What is medical coding?
+
+Conversion of medical terms into standardized codes.
+
+---
+
+## 95. What is query management?
+
+Resolution of data discrepancies.
+
+---
+
+## 96. What is SAE follow-up report?
+
+Additional information submitted after initial SAE report.
+
+---
+
+## 97. What regulatory authorities oversee clinical research?
+
+* US Food and Drug Administration
+* European Medicines Agency
+* Central Drugs Standard Control Organization
+
+---
+
+## 98. What challenges are faced in Clinical Research/PV?
+
+* Tight timelines
+* Data accuracy
+* Safety reporting
+* Regulatory compliance
+
+---
+
+## 99. Why is communication important in these roles?
+
+Because coordination with investigators, physicians, regulators, and teams is essential.
+
+---
+
+## 100. Why should we hire you for Clinical Research / Pharmacovigilance / Medical Affairs?
+
+I have strong scientific knowledge, understanding of clinical and safety processes, attention to detail, communication skills, and ability to work in compliance-driven environments.`;
+
+function htmlEscape(value){
+  return String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function formatAnalyticalAnswer(text){
+  const lines=text.trim().split(/\n+/).map(line=>line.trim()).filter(Boolean);
+  let html='',bullets=[];
+  function flush(){
+    if(bullets.length){
+      html+=`<ul>${bullets.map(item=>`<li>${htmlEscape(item)}</li>`).join('')}</ul>`;
+      bullets=[];
+    }
+  }
+  lines.forEach(line=>{
+    if(line.startsWith('* '))bullets.push(line.slice(2));
+    else{
+      flush();
+      html+=`<p>${htmlEscape(line)}</p>`;
+    }
+  });
+  flush();
+  return html;
+}
+
+const analyticalQa=analyticalRaw.split(/\n---\n/g).map(block=>{
+  const match=block.trim().match(/^##\s*\d+\.\s*([^\n]+)\n+([\s\S]+)$/);
+  return match?{q:match[1].trim(),a:formatAnalyticalAnswer(match[2])}:null;
+}).filter(Boolean);
+
+const regulatoryQa=regulatoryRaw.split(/\n---\n/g).map(block=>{
+  const match=block.trim().match(/^##\s*\d+\.\s*([^\n]+)\n+([\s\S]+)$/);
+  return match?{q:match[1].trim(),a:formatAnalyticalAnswer(match[2])}:null;
+}).filter(Boolean);
+
+const formulationQa=formulationRaw.split(/\n---\n/g).map(block=>{
+  const match=block.trim().match(/^##\s*\d+\.\s*([^\n]+)\n+([\s\S]+)$/);
+  return match?{q:match[1].trim(),a:formatAnalyticalAnswer(match[2])}:null;
+}).filter(Boolean);
+
+const qaQa=qaRaw.split(/\n---\n/g).map(block=>{
+  const match=block.trim().match(/^##\s*\d+\.\s*([^\n]+)\n+([\s\S]+)$/);
+  return match?{q:match[1].trim(),a:formatAnalyticalAnswer(match[2])}:null;
+}).filter(Boolean);
+
+const productionQa=productionRaw.split(/\n---\n/g).map(block=>{
+  const match=block.trim().match(/^##\s*\d+\.\s*([^\n]+)\n+([\s\S]+)$/);
+  return match?{q:match[1].trim(),a:formatAnalyticalAnswer(match[2])}:null;
+}).filter(Boolean);
+
+const qcQa=qcRaw.split(/\n---\n/g).map(block=>{
+  const match=block.trim().match(/^##\s*\d+\.\s*([^\n]+)\n+([\s\S]+)$/);
+  return match?{q:match[1].trim(),a:formatAnalyticalAnswer(match[2])}:null;
+}).filter(Boolean);
+
+const clinicalQa=clinicalRaw.split(/\n---\n/g).map(block=>{
+  const match=block.trim().match(/^##\s*\d+\.\s*([^\n]+)\n+([\s\S]+)$/);
+  return match?{q:match[1].trim(),a:formatAnalyticalAnswer(match[2])}:null;
+}).filter(Boolean);
+
+function analyticalQaCards(dept){
+  return analyticalQa.map((item,i)=>{
+    const plain=item.a.replace(/<[^>]+>/g,' ');
+    return `<div class="qa-card" data-search="${(dept.title+' '+item.q+' '+plain).toLowerCase().replace(/"/g,'&quot;')}"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${item.q}</div><div class="qa-a">${item.a}</div></div>`;
+  }).join('');
+}
+
+function regulatoryQaCards(dept){
+  return regulatoryQa.map((item,i)=>{
+    const plain=item.a.replace(/<[^>]+>/g,' ');
+    return `<div class="qa-card" data-search="${(dept.title+' '+item.q+' '+plain).toLowerCase().replace(/"/g,'&quot;')}"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${item.q}</div><div class="qa-a">${item.a}</div></div>`;
+  }).join('');
+}
+
+function formulationQaCards(dept){
+  return formulationQa.map((item,i)=>{
+    const plain=item.a.replace(/<[^>]+>/g,' ');
+    return `<div class="qa-card" data-search="${(dept.title+' '+item.q+' '+plain).toLowerCase().replace(/"/g,'&quot;')}"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${item.q}</div><div class="qa-a">${item.a}</div></div>`;
+  }).join('');
+}
+
+function qaQaCards(dept){
+  return qaQa.map((item,i)=>{
+    const plain=item.a.replace(/<[^>]+>/g,' ');
+    return `<div class="qa-card" data-search="${(dept.title+' '+item.q+' '+plain).toLowerCase().replace(/"/g,'&quot;')}"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${item.q}</div><div class="qa-a">${item.a}</div></div>`;
+  }).join('');
+}
+
+function productionQaCards(dept){
+  return productionQa.map((item,i)=>{
+    const plain=item.a.replace(/<[^>]+>/g,' ');
+    return `<div class="qa-card" data-search="${(dept.title+' '+item.q+' '+plain).toLowerCase().replace(/"/g,'&quot;')}"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${item.q}</div><div class="qa-a">${item.a}</div></div>`;
+  }).join('');
+}
+
+function qcQaCards(dept){
+  return qcQa.map((item,i)=>{
+    const plain=item.a.replace(/<[^>]+>/g,' ');
+    return `<div class="qa-card" data-search="${(dept.title+' '+item.q+' '+plain).toLowerCase().replace(/"/g,'&quot;')}"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${item.q}</div><div class="qa-a">${item.a}</div></div>`;
+  }).join('');
+}
+
+function clinicalQaCards(dept){
+  return clinicalQa.map((item,i)=>{
+    const plain=item.a.replace(/<[^>]+>/g,' ');
+    return `<div class="qa-card" data-search="${(dept.title+' '+item.q+' '+plain).toLowerCase().replace(/"/g,'&quot;')}"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${item.q}</div><div class="qa-a">${item.a}</div></div>`;
+  }).join('');
+}
+
+function bulletList(items){
+  return `<ul>${items.map(item=>`<li>${item}</li>`).join('')}</ul>`;
+}
+
+function chemicalQuestion(topic,deptTitle,i){
+  const starters=['What is','Why is','How do you control','What documents are needed for','What are risks in','How do you investigate','What is the audit expectation for','How do you troubleshoot'];
+  const starter=starters[i%starters.length];
+  const label=chemicalTopicLabels[topic]||topic;
+  if(starter==='What is')return `What is ${label} in ${deptTitle}?`;
+  if(starter==='Why is')return `Why is ${label} important in ${deptTitle}?`;
+  return `${starter} ${label}?`;
+}
+
+function chemicalAnswer(topic,i){
+  const starter=i%8;
+  const base=chemicalBaseAnswers[topic]||`In API R&D, ${topic} must be evaluated scientifically because it can affect quality, safety, yield, impurity profile, scalability, and regulatory compliance.`;
+  if(starter===0||starter===1)return base;
+  if(starter===2)return `Control is done by defining the objective, evaluating process risk, fixing suitable operating ranges, monitoring analytical results, and documenting the control strategy. ${base}`;
+  if(starter===3){
+    const docs=chemicalDocuments[topic]||['Process development report','Risk assessment','Batch data','Analytical reports','Control strategy','Deviation or investigation report where applicable'];
+    return `Documents generally include:${bulletList(docs)}`;
+  }
+  if(starter===4)return `Main risks include poor quality, impurity carryover, batch failure, low yield, stability concern, safety hazard, regulatory observation, and difficulty during scale-up. ${base}`;
+  if(starter===5)return `Investigation starts by comparing lab and plant data, reviewing raw materials, reaction conditions, analytical trend, equipment behavior, work-up, isolation, and historical batches. Root cause is confirmed with experiments or analytical evidence. ${base}`;
+  if(starter===6)return `Auditors expect scientific justification, traceable records, approved procedures, validated or suitable analytical methods, reviewed batch data, risk assessment, and evidence that the process is reproducible and controlled. ${base}`;
+  return `Troubleshooting is done stepwise: define the problem, review development history, compare good and bad batches, check material quality, equipment condition, operating ranges, analytical method suitability, and then confirm the corrective action. ${base}`;
+}
+
+function chemicalQaCards(dept){
+  let html='';
+  for(let i=0;i<200;i++){
+    const topic=dept.topics[i%dept.topics.length];
+    const q=chemicalQuestion(topic,dept.title,i);
+    const a=chemicalAnswer(topic,i);
+    html+=`<div class="qa-card" data-search="${(dept.title+' '+topic+' '+q+' '+a.replace(/<[^>]+>/g,' ')).toLowerCase().replace(/"/g,'&quot;')}"><div class="qa-q"><span class="qa-index">${String(i+1).padStart(3,'0')}</span>${q}</div><div class="qa-a">${a}</div></div>`;
+  }
+  return html;
+}
+
 const answerTemplates=[
   t=>`In interview, define ${t} in one line, then connect it to product quality, patient safety, compliance, cost, and reproducibility. A strong answer includes what is checked, how it is documented, and how risk is controlled.`,
   t=>`${t} is important because it can directly affect quality, yield, impurity profile, regulatory acceptability, or manufacturing robustness. Explain the practical impact and give one real example from lab, plant, or documentation.`,
@@ -207,6 +5056,14 @@ function makeAnswer(topic,i){
   return answerTemplates[i%answerTemplates.length](topic);
 }
 function qaCards(dept){
+  if(dept.id==='chemical')return chemicalQaCards(dept);
+  if(dept.id==='analytical')return analyticalQaCards(dept);
+  if(dept.id==='regulatory')return regulatoryQaCards(dept);
+  if(dept.id==='formulation')return formulationQaCards(dept);
+  if(dept.id==='qa')return qaQaCards(dept);
+  if(dept.id==='qc')return qcQaCards(dept);
+  if(dept.id==='production')return productionQaCards(dept);
+  if(dept.id==='clinical')return clinicalQaCards(dept);
   let html='';
   for(let i=0;i<200;i++){
     const topic=dept.topics[i%dept.topics.length];
@@ -216,58 +5073,79 @@ function qaCards(dept){
   }
   return html;
 }
+
+function qaCount(dept){
+  if(dept.id==='analytical')return analyticalQa.length;
+  if(dept.id==='regulatory')return regulatoryQa.length;
+  if(dept.id==='formulation')return formulationQa.length;
+  if(dept.id==='qa')return qaQa.length;
+  if(dept.id==='qc')return qcQa.length;
+  if(dept.id==='production')return productionQa.length;
+  if(dept.id==='clinical')return clinicalQa.length;
+  return 200;
+}
+
+function qaList(dept){
+  return qaCards(dept).replaceAll('qa-card','qa-item');
+}
+
 function renderInterviewBank(){
+  renderDepartmentList();
+}
+
+function renderDepartmentList(){
   const main=document.querySelector('main');
   if(!main)return;
   main.innerHTML=`<section class="hero">
     <div class="kicker">Department-wise Interview Preparation</div>
     <h1>Pharma Interview Questions by Department</h1>
-    <p>Each department contains 200 interview Q&A cards. Total bank: ${deptSeeds.length*200} Q&A covering R&D, analytical, regulatory, formulation, QA, QC, production, technology transfer, IP, clinical/PV, packaging/supply chain, and EHS/validation.</p>
-    <div class="jump-row">${deptSeeds.map(d=>`<a href="#${d.id}">${d.no} ${d.title.split('/')[0].trim()}</a>`).join('')}</div>
+    <p>Select a department to open its 200 interview Q&A. Departments are kept simple here so revision feels clean on mobile and desktop.</p>
+  </section>
+  <section class="dept-list" aria-label="Departments">
+    ${deptSeeds.map(d=>`<button class="dept-row" type="button" onclick="openInterviewDepartment('${d.id}')"><span>${d.no}</span><span><strong>${d.title}</strong><small>${d.sub}</small></span><span class="dept-row-arrow">›</span></button>`).join('')}
+  </section>
+  <div class="tip"><strong>Interview tip:</strong> Har answer ko 3-part format me bolo: definition, practical example, and quality/regulatory impact.</div>`;
+}
+
+function openInterviewDepartment(id){
+  const dept=deptSeeds.find(d=>d.id===id)||deptSeeds[0];
+  const main=document.querySelector('main');
+  if(!main)return;
+  document.body.classList.remove('show-all-answers');
+  const total=qaCount(dept);
+  main.innerHTML=`<section class="dept-page-head">
+    <button class="dept-back" type="button" onclick="renderDepartmentList()">← Departments</button>
+    <div class="result-count">Showing ${total} Q&A</div>
+  </section>
+  <section class="hero">
+    <div class="kicker">${dept.no} Interview Department</div>
+    <h1>${dept.title}</h1>
+    <p>${dept.sub}</p>
   </section>
   <section class="interview-controls" aria-label="Interview filters">
-    <input id="interviewSearch" type="search" placeholder="Search 2400 Q&A: HPLC, CAPA, route, stability..." autocomplete="off">
-    <select id="deptFilter" aria-label="Department filter">
-      <option value="all">All departments</option>
-      ${deptSeeds.map(d=>`<option value="${d.id}">${d.no} ${d.title}</option>`).join('')}
-    </select>
-    <button class="answer-toggle" id="answerToggle" type="button">Show Answers</button>
-    <div class="result-count" id="resultCount">Showing ${deptSeeds.length*200} Q&A</div>
+    <input id="interviewSearch" type="search" placeholder="Search this department Q&A..." autocomplete="off">
+    <div class="result-count" id="resultCount">Showing ${total} Q&A</div>
   </section>
-  <section class="dept-map" aria-label="Department map">${deptSeeds.map(d=>`<a class="dept-link" href="#${d.id}"><strong>${d.no} ${d.title}</strong><span>${d.sub}</span></a>`).join('')}</section>
-  ${deptSeeds.map(d=>`<section class="dept" id="${d.id}"><div class="dept-head"><div class="dept-no">${d.no}</div><div class="dept-title"><h2>${d.title}</h2><p>${d.sub}</p></div></div><div class="dept-tools"><div class="dept-count">200 Q&A</div></div><div class="tag-row">${d.tags.map(tag=>`<span class="tag">${tag}</span>`).join('')}</div><div class="qa-grid">${qaCards(d)}</div></section>`).join('')}
-  <div class="tip"><strong>Interview tip:</strong> Har answer ko 3-part format me bolo: definition, practical example, and quality/regulatory impact.</div>`;
+  <section class="qa-list" id="${dept.id}">${qaList(dept)}</section>`;
   setupInterviewControls();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 function setupInterviewControls(){
   const search=document.getElementById('interviewSearch');
-  const dept=document.getElementById('deptFilter');
   const count=document.getElementById('resultCount');
-  const toggle=document.getElementById('answerToggle');
   function apply(){
     const q=(search?.value||'').trim().toLowerCase();
-    const selected=dept?.value||'all';
     let visible=0;
-    document.querySelectorAll('.dept').forEach(section=>{
-      const deptOk=selected==='all'||section.id===selected;
-      let sectionVisible=0;
-      section.querySelectorAll('.qa-card').forEach(card=>{
-        const match=deptOk&&(!q||card.dataset.search.includes(q));
-        card.classList.toggle('is-hidden',!match);
-        if(match){visible++;sectionVisible++;}
-      });
-      section.classList.toggle('is-hidden',sectionVisible===0);
+    document.querySelectorAll('.qa-item').forEach(item=>{
+      const match=!q||item.dataset.search.includes(q);
+      item.classList.toggle('is-hidden',!match);
+      if(match)visible++;
     });
     if(count)count.textContent=`Showing ${visible} Q&A`;
   }
   search?.addEventListener('input',apply);
-  dept?.addEventListener('change',apply);
-  toggle?.addEventListener('click',()=>{
-    document.body.classList.toggle('show-all-answers');
-    toggle.textContent=document.body.classList.contains('show-all-answers')?'Hide Answers':'Show Answers';
-  });
-  document.querySelectorAll('.qa-card').forEach(card=>{
-    card.addEventListener('click',()=>card.classList.toggle('open'));
+  document.querySelectorAll('.qa-item').forEach(item=>{
+    item.addEventListener('click',()=>item.classList.toggle('open'));
   });
   apply();
 }

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Subrat Biswas — Research Scientist</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#070b10;--bg2:#0d131b;--bg3:#121b25;
+  --text:#eef6f8;--text2:#a9bac2;--text3:#6f838d;
+  --accent:#d8b56d;--accent2:#56c7bd;--border:#20303a;
+  --card:#0f1720;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));z-index:200;box-shadow:0 0 18px rgba(86,199,189,.45)}
+.cursor-light{position:fixed;left:0;top:0;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(86,199,189,.16),rgba(216,181,109,.08) 38%,transparent 68%);filter:blur(4px);transform:translate(-50%,-50%);opacity:.72;transition:opacity .2s}
+.bio-particles{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.82;mix-blend-mode:screen}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.6),transparent 85%)}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 82% 18%,rgba(86,199,189,.16),transparent 30%),radial-gradient(circle at 18% 82%,rgba(216,181,109,.1),transparent 30%)}
+nav,main,footer{position:relative;z-index:1}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,11,16,0.84);backdrop-filter:blur(16px);border-bottom:1px solid rgba(86,199,189,.18);padding:0 2rem}
+.nav-inner{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:56px}
+.nav-logo{font-size:15px;font-family:Inter,"Segoe UI",Arial,sans-serif;color:var(--text2);letter-spacing:0.05em}
+.nav-links{display:flex;gap:1.8rem}
+.nav-links a{font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:13px;color:var(--text2);letter-spacing:0.04em;transition:color 0.2s,transform .2s;position:relative}
+.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .22s}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);text-decoration:none;transform:translateY(-1px)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+
+main{max-width:1180px;margin:0 auto;padding:0 2rem}
+
+section{padding:5.4rem 0;border-bottom:1px solid rgba(86,199,189,.14);position:relative}
+section:last-child{border-bottom:none}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1)}
+.reveal.in-view{opacity:1;transform:translateY(0)}
+.reveal .skill-card,.reveal .proj-card,.reveal .reg-card,.reveal .edu-item,.reveal .exp-item,.reveal .contact-item{transition-delay:calc(var(--i,0) * 55ms)}
+section:not(#hero)::before{content:"";position:absolute;left:-2rem;right:-2rem;top:3.7rem;height:1px;background:linear-gradient(90deg,transparent,rgba(86,199,189,.45),rgba(216,181,109,.32),transparent);transform:scaleX(0);opacity:0;transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .45s}
+section:not(#hero) .sec-header{position:relative;cursor:default;transform:translateX(-10px);opacity:.82;transition:transform .65s cubic-bezier(.2,.7,.2,1),opacity .45s}
+section:not(#hero) .sec-header::after{content:"";display:block;width:0;height:1px;margin-top:1rem;background:linear-gradient(90deg,var(--accent),transparent);transition:width .75s cubic-bezier(.2,.7,.2,1)}
+section:not(#hero)>:not(.sec-header){max-height:0;opacity:0;overflow:hidden;transform:translateY(24px) scale(.975);filter:blur(6px);transform-origin:top center;transition:max-height 1.15s cubic-bezier(.16,1,.3,1),opacity .72s ease,transform .9s cubic-bezier(.16,1,.3,1),filter .8s ease}
+section:not(#hero)>:not(.sec-header)>*{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .65s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i,0) * 75ms + 180ms)}
+section:not(#hero).section-open::before{transform:scaleX(1);opacity:1}
+section:not(#hero).section-open .sec-header{transform:translateX(0);opacity:1}
+section:not(#hero).section-open .sec-header::after{width:100%}
+section:not(#hero).section-open>:not(.sec-header){max-height:3600px;opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+section:not(#hero).section-open>:not(.sec-header)>*{opacity:1;transform:translateY(0)}
+section:not(#hero).section-open{animation:sectionPulse 1s ease both}
+@keyframes sectionPulse{0%{background:linear-gradient(90deg,rgba(200,169,110,.12),transparent);box-shadow:inset 0 1px 0 rgba(200,169,110,.2)}100%{background:transparent;box-shadow:none}}
+
+/* HERO */
+#hero{padding-top:8rem;padding-bottom:5rem;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-inner{width:100%;position:relative;z-index:2}
+.molecule-stage{position:absolute;right:-40px;top:18%;width:min(38vw,360px);aspect-ratio:1;border:1px solid rgba(200,169,110,.16);border-radius:50%;opacity:.95;pointer-events:none;animation:floatStage 7s ease-in-out infinite}
+.molecule-stage::before,.molecule-stage::after{content:"";position:absolute;inset:12%;border:1px solid rgba(143,184,154,.2);border-radius:50%;animation:spin 18s linear infinite}
+.molecule-stage::after{inset:28%;border-color:rgba(200,169,110,.24);animation-duration:11s;animation-direction:reverse}
+.atom{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 22px rgba(200,169,110,.8)}
+.atom.a1{left:18%;top:30%}.atom.a2{right:24%;top:18%;background:var(--accent2)}.atom.a3{right:12%;bottom:28%}.atom.a4{left:26%;bottom:16%;background:var(--accent2)}
+.bond{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(240,237,232,.42),transparent);transform-origin:left}
+.bond.b1{left:21%;top:33%;width:56%;transform:rotate(-16deg)}.bond.b2{right:16%;top:22%;width:48%;transform:rotate(68deg)}.bond.b3{left:29%;bottom:20%;width:58%;transform:rotate(-20deg)}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes floatStage{50%{transform:translateY(-14px) rotate(2deg)}}
+.hero-tag{font-family:sans-serif;font-size:12px;letter-spacing:0.12em;color:var(--accent2);text-transform:uppercase;margin-bottom:1.2rem}
+.hero-name{font-size:clamp(2.5rem,5vw,4rem);font-weight:850;line-height:1.12;margin-bottom:1rem;color:var(--text);letter-spacing:0}
+.hero-title{font-size:1.16rem;color:var(--text2);margin-bottom:0.5rem;font-family:Inter,"Segoe UI",Arial,sans-serif}
+.hero-org{font-size:1.02rem;color:var(--text3);font-family:Inter,"Segoe UI",Arial,sans-serif;margin-bottom:2rem}
+.hero-desc{max-width:680px;font-size:1.08rem;color:var(--text2);line-height:1.82;margin-bottom:2.5rem}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:13px;padding:10px 22px;border-radius:4px;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer;will-change:transform}
+.btn-primary{background:var(--accent);color:#0d0d0d;border:1px solid var(--accent);font-weight:600}
+.btn-primary:hover{background:transparent;color:var(--accent);text-decoration:none;transform:translateY(-2px);box-shadow:0 18px 34px rgba(200,169,110,.14)}
+.btn-outline{background:transparent;color:var(--text2);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent2);color:var(--accent2);text-decoration:none;transform:translateY(-2px)}
+.hero-stats{display:flex;gap:3rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.stat-num{font-size:1.9rem;font-weight:400;color:var(--accent);font-variant-numeric:tabular-nums}
+.stat-label{font-family:sans-serif;font-size:12px;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-top:2px}
+
+/* SECTION HEADERS */
+.sec-header{margin-bottom:3rem}
+.sec-tag{font-family:sans-serif;font-size:11px;letter-spacing:0.14em;color:var(--accent2);text-transform:uppercase;margin-bottom:0.6rem}
+.sec-title{font-size:1.9rem;font-weight:850;color:var(--text);letter-spacing:0}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:4rem}
+.about-text p{color:var(--text2);margin-bottom:1rem;line-height:1.82;font-size:1rem}
+.skills-grid{display:grid;gap:1rem}
+.skill-card{background:linear-gradient(145deg,var(--card),rgba(18,27,37,.76));border:1px solid var(--border);border-radius:8px;padding:1rem 1.2rem;transition:transform .25s,border-color .25s,box-shadow .25s}
+.skill-card:hover{transform:translateY(-5px);border-color:rgba(200,169,110,.55);box-shadow:0 20px 44px rgba(0,0,0,.28)}
+.skill-label{font-family:sans-serif;font-size:11px;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase;margin-bottom:0.5rem}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:12px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:20px}
+
+/* EXPERIENCE */
+.exp-list{display:flex;flex-direction:column;gap:2.5rem}
+.exp-item{display:grid;grid-template-columns:180px 1fr;gap:2rem;position:relative}
+.exp-item::before{content:"";position:absolute;left:198px;top:8px;bottom:-28px;width:1px;background:linear-gradient(var(--accent),transparent);opacity:.28}
+.exp-item::after{content:"";position:absolute;left:192px;top:7px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:1px solid var(--accent);box-shadow:0 0 0 6px rgba(200,169,110,.08)}
+.exp-meta{font-family:sans-serif}
+.exp-period{font-size:12px;color:var(--text3);margin-bottom:0.4rem;letter-spacing:0.03em}
+.exp-company{font-size:13px;color:var(--accent2);font-weight:500}
+.exp-content{}
+.exp-role{font-size:1.16rem;color:var(--text);margin-bottom:0.3rem;font-weight:800}
+.exp-loc{font-family:sans-serif;font-size:12px;color:var(--text3);margin-bottom:1rem}
+.exp-bullets{list-style:none;padding:0}
+.exp-bullets li{font-size:15px;color:var(--text2);padding:4px 0;padding-left:1.2rem;position:relative;line-height:1.7}
+.exp-bullets li::before{content:'—';position:absolute;left:0;color:var(--accent);font-size:12px}
+.exp-badge{display:inline-flex;align-items:center;gap:6px;font-family:sans-serif;font-size:12px;background:rgba(200,169,110,0.1);border:1px solid rgba(200,169,110,0.3);color:var(--accent);padding:4px 12px;border-radius:20px;margin-top:1rem}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
+.proj-card{background:linear-gradient(145deg,var(--card),rgba(13,19,27,.92));border:1px solid var(--border);border-radius:10px;padding:1.5rem;transition:border-color 0.2s,transform .24s,box-shadow .24s;transform-style:preserve-3d}
+.proj-card:hover{border-color:var(--accent);transform:perspective(900px) rotateX(2deg) rotateY(-2deg) translateY(-6px);box-shadow:0 26px 52px rgba(0,0,0,.32)}
+.proj-title{font-size:1.08rem;color:var(--text);margin-bottom:0.5rem;font-weight:850}
+.proj-desc{font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:1rem}
+.proj-apis{display:flex;flex-wrap:wrap;gap:5px}
+.api-tag{font-family:sans-serif;font-size:11px;background:rgba(143,184,154,0.08);border:1px solid rgba(143,184,154,0.25);color:var(--accent2);padding:2px 9px;border-radius:12px}
+
+/* PUBLICATIONS / REGULATORY */
+.reg-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem}
+.reg-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;text-align:center;transition:transform .22s,border-color .22s}
+.reg-card:hover{transform:translateY(-5px);border-color:var(--accent2)}
+.reg-icon{font-size:1.6rem;margin-bottom:0.5rem}
+.reg-title{font-family:sans-serif;font-size:13px;color:var(--text);font-weight:500;margin-bottom:0.3rem}
+.reg-desc{font-family:sans-serif;font-size:12px;color:var(--text3)}
+
+/* EDUCATION */
+.edu-list{display:flex;flex-direction:column;gap:1.5rem}
+.edu-item{display:flex;justify-content:space-between;align-items:flex-start;padding:1.2rem 1.5rem;background:var(--card);border:1px solid var(--border);border-radius:8px;transition:transform .22s,border-color .22s}
+.edu-item:hover{transform:translateX(6px);border-color:rgba(200,169,110,.5)}
+.edu-degree{font-size:1rem;color:var(--text);margin-bottom:0.25rem}
+.edu-uni{font-family:sans-serif;font-size:13px;color:var(--accent2)}
+.edu-year{font-family:sans-serif;font-size:12px;color:var(--text3);text-align:right}
+.edu-cgpa{font-family:sans-serif;font-size:13px;color:var(--accent);margin-top:4px}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,.85fr);gap:4rem}
+.contact-info{display:flex;flex-direction:column;gap:1.2rem}
+.contact-item{display:flex;align-items:flex-start;gap:1rem}
+.contact-item:not(:has(.c-val)){display:none}
+.contact-item{transition:transform .2s}.contact-item:hover{transform:translateX(6px)}
+.c-icon{font-size:1.2rem;margin-top:2px}
+.c-label{font-family:sans-serif;font-size:11px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px}
+.c-val{font-size:15px;color:var(--text2)}
+.contact-note{color:var(--text2);font-size:1rem;line-height:1.8;margin-bottom:1.5rem}
+
+footer{text-align:center;padding:2rem;font-family:sans-serif;font-size:12px;color:var(--text3);border-top:1px solid var(--border)}
+
+@media(max-width:680px){
+  .about-grid,.projects-grid,.contact-grid{grid-template-columns:1fr}
+  .exp-item{grid-template-columns:1fr;gap:0.5rem}
+  .exp-item::before,.exp-item::after,.molecule-stage{display:none}
+  .reg-grid{grid-template-columns:1fr 1fr}
+  .hero-stats{gap:1.5rem}
+  nav{padding:0 1rem}
+  main{padding:0 1.2rem}
+}
+@media(min-width:1180px){
+  #hero{min-height:92vh}
+  .hero-desc{max-width:680px}
+  .hero-stats{max-width:760px}
+}
+</style>
+</head>
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<canvas class="bio-particles" id="bioParticles" aria-hidden="true"></canvas>
+<div class="cursor-light" id="cursorLight"></div>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">SB</span>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="molecule-stage" aria-hidden="true">
+    <span class="atom a1"></span><span class="atom a2"></span><span class="atom a3"></span><span class="atom a4"></span>
+    <span class="bond b1"></span><span class="bond b2"></span><span class="bond b3"></span>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-tag">Research Scientist · API Development</div>
+    <h1 class="hero-name">Subrat Biswas</h1>
+    <div class="hero-title">Senior Research Scientist</div>
+    <div class="hero-org">Sun Pharmaceutical Industries Limited, Gurugram</div>
+    <p class="hero-desc">
+      Results-driven pharmaceutical scientist with 4.7+ years specializing in API Process Development, non-infringing route development, scale-up, and technology transfer. Experienced in complex molecule synthesis including oncology and high-potency APIs.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://www.linkedin.com/in/subratbiswas99/" target="_blank" class="btn btn-primary">
+        ↗ LinkedIn Profile
+      </a>
+      <a href="mailto:Subratbiswas99@gmail.com" class="btn btn-outline">
+        ✉ Get in Touch
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">4.7+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">APIs Developed</div>
+      </div>
+      <div>
+        <div class="stat-num">100kg</div>
+        <div class="stat-label">Commercial Scale</div>
+      </div>
+      <div>
+        <div class="stat-num">12</div>
+        <div class="stat-label">Novel Impurity Entities</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-header">
+    <div class="sec-tag">About</div>
+    <h2 class="sec-title">Technical Expertise</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I work at the intersection of chemistry and pharmaceutical development — designing scalable, compliant, and cost-effective synthetic routes for Active Pharmaceutical Ingredients from early feasibility to commercial manufacturing.
+      </p>
+      <p>
+        My work spans impurity profiling, QbD-driven process optimization, and regulatory documentation for global markets including USFDA, EMA, and ANVISA.
+      </p>
+      <p>
+        I hold an M.Sc. in Organic & Medicinal Chemistry and complement my bench science with skills in Python, MS Project, and AI/ML fundamentals for business applications.
+      </p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-label">Process</div>
+        <div class="skill-tags">
+          <span class="tag">API Development</span>
+          <span class="tag">Process Optimization</span>
+          <span class="tag">Scale-Up</span>
+          <span class="tag">Impurity Profiling</span>
+          <span class="tag">QbD / FMEA</span>
+          <span class="tag">Tech Transfer</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-label">Analytical</div>
+        <div class="skill-tags">
+          <span class="tag">HPLC</span><span class="tag">GC</span><span class="tag">LC-MS</span>
+          <span class="tag">NMR</span><span class="tag">FTIR</span>
+          <span class="tag">XRD</span><span class="tag">DSC</span><span class="tag">TGA</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-label">Regulatory</div>
+        <div class="skill-tags">
+          <span class="tag">ICH Q8/Q9/Q10/Q11</span>
+          <span class="tag">ICH M7</span><span class="tag">Q3D</span>
+          <span class="tag">cGMP</span><span class="tag">DMF Filing</span>
+          <span class="tag">NDA/ANDA</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-label">Software</div>
+        <div class="skill-tags">
+          <span class="tag">SciFinder</span><span class="tag">Reaxys</span>
+          <span class="tag">ChemDraw</span><span class="tag">Python</span>
+          <span class="tag">MS Project</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sec-header">
+    <div class="sec-tag">Experience</div>
+    <h2 class="sec-title">Professional Journey</h2>
+  </div>
+  <div class="exp-list">
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Nov 2022 – Present</div>
+        <div class="exp-company">Sun Pharma</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Senior Research Scientist</div>
+        <div class="exp-loc">Sun Pharmaceutical Industries Limited, Gurugram</div>
+        <ul class="exp-bullets">
+          <li>Patent & journal review for non-infringing route development and IP risk mitigation</li>
+          <li>Feasibility studies, process development, and optimization — improved yield up to 80%</li>
+          <li>Lab-scale validation batches ensuring scalability, reproducibility, and robustness</li>
+          <li>Structural elucidation using NMR, FTIR, and MS; solid-state analysis via XRD, TGA, DSC</li>
+          <li>Impurity profiling — nitrosamines, genotoxic (ICH M7), and elemental impurities (Q3D)</li>
+          <li>Synthesis and characterization of process-related impurities and intermediate standards</li>
+          <li>QbD studies to define CPPs and CQAs; carryover studies for cross-contamination risk</li>
+          <li>Authored DMF, PrePIF, QbD reports, and process packages for regulatory submissions</li>
+          <li>Scaled up APIs from lab (0.5g–100g) to pilot (500g–5kg) to commercial (up to 100kg)</li>
+        </ul>
+        <div class="exp-badge">🏆 Spotlight Award — 12 deuterated novel impurity entities for Deucravacitinib</div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Sep 2021 – Nov 2022</div>
+        <div class="exp-company">Multi Organics</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">R&D Chemist</div>
+        <div class="exp-loc">Multi Organics Pvt. Ltd., Chandrapur</div>
+        <ul class="exp-bullets">
+          <li>Synthesized API intermediates and performed route scouting</li>
+          <li>Conducted impurity synthesis and analytical characterization</li>
+          <li>Executed purification via crystallization, distillation, and chromatography</li>
+          <li>Scaled 5 API intermediates from mg scale to 200 kg, achieving >99.0% purity by HPLC</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Mar 2020 – Sep 2021</div>
+        <div class="exp-company">Chegg India</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Subject Matter Expert — Chemistry</div>
+        <div class="exp-loc">Chegg India (Remote)</div>
+        <ul class="exp-bullets">
+          <li>Solved advanced chemistry problems including complex reaction mechanisms</li>
+          <li>Delivered structured explanations and reviewed academic content for quality</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-header">
+    <div class="sec-tag">Projects</div>
+    <h2 class="sec-title">Key Molecules Developed</h2>
+  </div>
+  <div class="projects-grid">
+
+    <div class="proj-card">
+      <div class="proj-title">Deucravacitinib</div>
+      <div class="proj-desc">End-to-end API development with novel deuterated impurity synthesis. Received Sun Pharma Spotlight Award for synthesizing 12 deuterated novel impurity entities. Full lab-to-tech transfer.</div>
+      <div class="proj-apis"><span class="api-tag">Deuteration</span><span class="api-tag">ICH M7</span><span class="api-tag">Scale-up</span></div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-title">Gefapixant Citrate</div>
+      <div class="proj-desc">Process development and pilot-scale batches for this P2X3 antagonist. Impurity profiling and genotoxic impurity control strategy developed in compliance with ICH M7.</div>
+      <div class="proj-apis"><span class="api-tag">Process Dev</span><span class="api-tag">Pilot Scale</span><span class="api-tag">DMF</span></div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-title">Zastaprazan Citrate</div>
+      <div class="proj-desc">Non-infringing synthetic route development with patent landscape review. QbD-driven optimization with defined CPPs and CQAs for robust manufacturing.</div>
+      <div class="proj-apis"><span class="api-tag">Route Dev</span><span class="api-tag">QbD</span><span class="api-tag">FMEA</span></div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-title">Xanomeline & Suvorexant</div>
+      <div class="proj-desc">Lab-to-commercial scale-up achieving 50–80 kg batches. Technology transfer documentation and process reproducibility validation for commercial manufacturing readiness.</div>
+      <div class="proj-apis"><span class="api-tag">Commercial Scale</span><span class="api-tag">Tech Transfer</span><span class="api-tag">cGMP</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- REGULATORY -->
+<section id="regulatory">
+  <div class="sec-header">
+    <div class="sec-tag">Regulatory</div>
+    <h2 class="sec-title">Global Market Exposure</h2>
+  </div>
+  <div class="reg-grid">
+    <div class="reg-card">
+      <div class="reg-icon">🇺🇸</div>
+      <div class="reg-title">USFDA</div>
+      <div class="reg-desc">NDA/ANDA filing support, DMF compilation</div>
+    </div>
+    <div class="reg-card">
+      <div class="reg-icon">🇪🇺</div>
+      <div class="reg-title">EMA — Europe</div>
+      <div class="reg-desc">EU regulatory documentation & PrePIF</div>
+    </div>
+    <div class="reg-card">
+      <div class="reg-icon">🇧🇷</div>
+      <div class="reg-title">ANVISA — Brazil</div>
+      <div class="reg-desc">LATAM regulatory submissions support</div>
+    </div>
+  </div>
+  <div style="margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:0.8rem">
+    <span class="tag">ICH Q8 — Pharmaceutical Development</span>
+    <span class="tag">ICH Q9 — Quality Risk Management</span>
+    <span class="tag">ICH Q10 — Pharmaceutical Quality System</span>
+    <span class="tag">ICH Q11 — Development of Drug Substances</span>
+    <span class="tag">ICH M7 — Genotoxic Impurities</span>
+    <span class="tag">ICH Q3A — Impurities in New Drug Substances</span>
+    <span class="tag">ICH Q3D — Elemental Impurities</span>
+    <span class="tag">ICH Q1 — Stability Studies</span>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="sec-header">
+    <div class="sec-tag">Education</div>
+    <h2 class="sec-title">Academic Background</h2>
+  </div>
+  <div class="edu-list">
+    <div class="edu-item">
+      <div>
+        <div class="edu-degree">M.Sc. Chemistry — Organic & Medicinal Chemistry</div>
+        <div class="edu-uni">Rashtrasant Tukadoji Maharaj Nagpur University, Nagpur</div>
+      </div>
+      <div class="edu-year">
+        <div>Jul 2017 – Jun 2019</div>
+        <div class="edu-cgpa">CGPA: 7.84 / 10</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div>
+        <div class="edu-degree">B.Sc. Chemistry</div>
+        <div class="edu-uni">Sardar Patel Mahavidyalaya, Chandrapur</div>
+      </div>
+      <div class="edu-year">
+        <div>Jul 2014 – Jun 2017</div>
+        <div class="edu-cgpa">CGPA: 8.16 / 10</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:2rem">
+    <div class="sec-tag" style="margin-bottom:1rem">Certifications & Additional Learning</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.8rem">
+      <span class="tag">AI for Business Applications</span>
+      <span class="tag">AI Foundations: Machine Learning</span>
+      <span class="tag">Microsoft Project Certification</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-header">
+    <div class="sec-tag">Contact</div>
+    <h2 class="sec-title">Get in Touch</h2>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <p class="contact-note">I'm open to collaborations, research opportunities, and discussions on API development, process chemistry, and pharmaceutical sciences.</p>
+      <a href="https://www.linkedin.com/in/subratbiswas99/" target="_blank" class="btn btn-primary">↗ Connect on LinkedIn</a>
+    </div>
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="c-icon">✉</div>
+        <div>
+          <div class="c-label">Email</div>
+          <div class="c-val"><a href="mailto:Subratbiswas99@gmail.com">Subratbiswas99@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="c-icon">📞</div>
+        <div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="c-icon">📍</div>
+        <div>
+          <div class="c-label">Location</div>
+          <div class="c-val">Sector 17, Gurugram, Haryana 122001</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="c-icon">💼</div>
+        <div>
+          <div class="c-label">LinkedIn</div>
+          <div class="c-val"><a href="https://www.linkedin.com/in/subratbiswas99/" target="_blank">linkedin.com/in/subratbiswas99</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  © 2025 Subrat Biswas &nbsp;·&nbsp; Senior Research Scientist, Sun Pharmaceutical Industries
+</footer>
+
+<script>
+const progress=document.getElementById('scrollProgress');
+const cursor=document.getElementById('cursorLight');
+const navLinks=[...document.querySelectorAll('.nav-links a')];
+const sections=[...document.querySelectorAll('section')];
+function initBioParticles(){
+  const canvas=document.getElementById('bioParticles');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const state={dots:[],mouse:{x:null,y:null}};
+  const palette=['255,255,255','86,199,189','216,181,109'];
+  function resize(){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const w=window.innerWidth;
+    const h=window.innerHeight;
+    canvas.width=Math.max(1,Math.floor(w*dpr));
+    canvas.height=Math.max(1,Math.floor(h*dpr));
+    canvas.style.width=w+'px';
+    canvas.style.height=h+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const count=Math.max(76,Math.min(150,Math.round(w*h/11500)));
+    state.dots=Array.from({length:count},(_,i)=>({
+      x:Math.random()*w,
+      y:Math.random()*h,
+      vx:(Math.random()-.5)*1.2,
+      vy:(Math.random()-.5)*1.2,
+      r:Math.random()*1.7+0.8,
+      c:palette[i%palette.length]
+    }));
+  }
+  function draw(){
+    const w=canvas.clientWidth;
+    const h=canvas.clientHeight;
+    ctx.clearRect(0,0,w,h);
+    state.dots.forEach(dot=>{
+      dot.x+=dot.vx;
+      dot.y+=dot.vy;
+      if(dot.x<0){dot.x=w;dot.y=Math.random()*h}
+      if(dot.x>w){dot.x=0;dot.y=Math.random()*h}
+      if(dot.y<0){dot.y=h;dot.x=Math.random()*w}
+      if(dot.y>h){dot.y=0;dot.x=Math.random()*w}
+      if(state.mouse.x!==null){
+        const dx=state.mouse.x-dot.x;
+        const dy=state.mouse.y-dot.y;
+        const d=Math.hypot(dx,dy);
+        if(d<170&&d>0){
+          dot.x+=(dx/d)*0.46;
+          dot.y+=(dy/d)*0.46;
+        }
+      }
+    });
+    for(let i=0;i<state.dots.length;i++){
+      for(let j=i+1;j<state.dots.length;j++){
+        const a=state.dots[i],b=state.dots[j];
+        const dist=Math.hypot(a.x-b.x,a.y-b.y);
+        if(dist<145){
+          ctx.strokeStyle=`rgba(255,255,255,${(1-dist/145)*0.2})`;
+          ctx.lineWidth=1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    state.dots.forEach(dot=>{
+      ctx.fillStyle=`rgba(${dot.c},0.76)`;
+      ctx.beginPath();
+      ctx.arc(dot.x,dot.y,dot.r,0,Math.PI*2);
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);
+  window.addEventListener('mousemove',event=>{state.mouse.x=event.clientX;state.mouse.y=event.clientY;});
+  window.addEventListener('mouseleave',()=>{state.mouse.x=null;state.mouse.y=null;});
+  resize();
+  draw();
+}
+function updateProgress(){
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  const pct=max>0?(window.scrollY/max)*100:0;
+  progress.style.width=pct+'%';
+}
+function setActiveNav(){
+  let current='hero';
+  sections.forEach(section=>{
+    if(section.getBoundingClientRect().top<window.innerHeight*.42)current=section.id;
+  });
+  navLinks.forEach(link=>link.classList.toggle('active',link.getAttribute('href')==='#'+current));
+}
+sections.forEach(section=>section.classList.add('reveal'));
+document.getElementById('hero')?.classList.add('section-open');
+document.querySelectorAll('.skill-card,.proj-card,.reg-card,.edu-item,.exp-item,.contact-item').forEach((el,i)=>el.style.setProperty('--i',i%6));
+sections.forEach(section=>{
+  [...section.children].forEach((child,i)=>child.style.setProperty('--i',i));
+});
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      entry.target.classList.add('section-open');
+    }
+  });
+},{threshold:.28,rootMargin:'0px 0px -12% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+window.addEventListener('scroll',()=>{updateProgress();setActiveNav();},{passive:true});
+window.addEventListener('mousemove',event=>{
+  cursor.style.left=event.clientX+'px';
+  cursor.style.top=event.clientY+'px';
+});
+window.addEventListener('mouseleave',()=>cursor.style.opacity='0');
+window.addEventListener('mouseenter',()=>cursor.style.opacity='.8');
+initBioParticles();
+updateProgress();
+setActiveNav();
+</script>
+</body>
+</html>

@@ -16,6 +16,7 @@
 --border-radius-lg:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
+html,body{max-width:100%;overflow-x:hidden;}
 body,#app{font-family:'Source Sans 3','Inter','Segoe UI',Arial,sans-serif;color:var(--color-text-primary);background:var(--color-background-tertiary);}
 #app{display:flex;flex-direction:column;padding-top:54px;}
 .topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-secondary);padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.16);}
@@ -26,6 +27,14 @@ body,#app{font-family:'Source Sans 3','Inter','Segoe UI',Arial,sans-serif;color:
 .topbar-title{font-family:'Lora','Playfair Display',Georgia,serif;font-size:15px;font-weight:600;}
 .topbar-sub{font-size:11px;color:var(--color-text-tertiary);}
 .header-nav{display:flex;align-items:center;gap:6px;margin-left:auto;}
+.mobile-menu-btn{display:none;margin-left:auto;width:38px;height:34px;border:1px solid #8fb6c2;border-radius:var(--border-radius-md);background:transparent;color:var(--color-text-secondary);align-items:center;justify-content:center;cursor:pointer;}
+.mobile-menu-btn span{position:relative;display:block;width:18px;height:2px;background:currentColor;border-radius:4px;transition:background .18s;}
+.mobile-menu-btn span::before,.mobile-menu-btn span::after{content:'';position:absolute;left:0;width:18px;height:2px;background:currentColor;border-radius:4px;transition:transform .18s,top .18s;}
+.mobile-menu-btn span::before{top:-6px;}
+.mobile-menu-btn span::after{top:6px;}
+.mobile-menu-btn.open span{background:transparent;}
+.mobile-menu-btn.open span::before{top:0;transform:rotate(45deg);}
+.mobile-menu-btn.open span::after{top:0;transform:rotate(-45deg);}
 .header-nav a{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border:1px solid transparent;border-radius:var(--border-radius-md);color:var(--color-text-secondary);font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background 0.15s,border-color 0.15s,color 0.15s,transform 0.15s;}
 .header-nav a:hover{background:#e6fbff;border-color:#005f73;color:#005f73;transform:translateY(-1px);}
 .header-nav a.active{background:#005f73;border-color:#005f73;color:#fff;}
@@ -524,6 +533,7 @@ body:not(.light-mode) .topbar-title,
 body:not(.light-mode) .topbar-sub,
 body:not(.light-mode) .header-nav a,
 body:not(.light-mode) .nav-dropdown-trigger,
+body:not(.light-mode) .mobile-menu-btn,
 body:not(.light-mode) .back-btn{
 color:#ffffff!important;
 }
@@ -575,25 +585,80 @@ body,#app{font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;tex
 .software-detail li{font-size:16px;line-height:1.72;}
 .home-profile-type{font-size:clamp(19px,1.55vw,24px);line-height:1.62;font-weight:600;}
 @media(max-width:760px){
-.topbar{align-items:flex-start;flex-wrap:wrap;}
-.header-nav{order:3;width:100%;margin-left:0;overflow:auto;padding-top:4px;}
-.header-nav a,.nav-dropdown-trigger{font-size:12px;padding:0 9px;min-height:32px;}
-.nav-dropdown-menu{position:fixed;top:94px;left:12px;width:calc(100vw - 24px);}
-.website-frame{height:70vh;min-height:520px;}
-.home-website-frame{height:70vh;min-height:560px;}
-.library-frame-title{color:#17324a;}
-.home-profile-hero{padding:28px 18px;min-height:calc(100vh - 116px);}
-.home-profile-title{font-size:34px;}
-.home-profile-type{font-size:17px;line-height:1.58;min-height:720px;}
-.software-wrap{grid-template-columns:1fr;min-height:auto;}
-.software-detail{min-height:auto;}
-.ai-body,.ai-body p,.ai-body li,.ai-body td{font-size:15px;}
-.back-btn{margin-left:0;}
-.page{padding:12px;}
-.index-sidebar{position:relative;top:auto;left:auto;bottom:auto;width:100%;max-height:260px;margin-bottom:12px;}
-.index-scroll{height:190px;}
+body,#app{font-size:15px;line-height:1.55;}
+#app{padding-top:112px;}
+.topbar{align-items:center;flex-wrap:wrap;padding:9px 10px;gap:8px;}
+.mobile-menu-btn{display:inline-flex;}
+.topbar-icon{width:30px;height:30px;border-radius:7px;}
+.topbar-icon svg{width:21px;height:21px;}
+.topbar-title{font-size:16px;line-height:1.05;}
+.topbar-sub{font-size:10px;line-height:1.15;max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.header-nav{order:4;display:none;width:100%;margin-left:0;overflow:visible;padding:8px;background:#07111f;border:1px solid rgba(143,182,194,.42);border-radius:12px;box-shadow:0 16px 34px rgba(0,0,0,.28);gap:6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.header-nav.mobile-open{display:grid;grid-template-columns:1fr;}
+.header-nav::-webkit-scrollbar{display:none;}
+.header-nav a,.nav-dropdown-trigger{width:100%;justify-content:space-between;flex:0 0 auto;font-size:13px;padding:0 12px;min-height:38px;border-radius:9px;}
+.nav-dropdown-wrap{width:100%;}
+.theme-switch{flex:0 0 auto;width:82px;height:28px;}
+.theme-switch::before{width:20px;height:20px;}
+body.light-mode .theme-switch::before{left:56px;}
+.back-btn{order:2;margin-left:auto;font-size:12px;min-height:30px;padding:4px 9px;}
+.nav-dropdown-menu{position:static;width:100%;max-height:0;overflow:hidden;padding:0 8px;border:0;box-shadow:none;opacity:1;pointer-events:none;transform:none;border-radius:10px;background:rgba(255,255,255,.04)!important;transition:max-height .18s ease,padding .18s ease;}
+.nav-dropdown-wrap:hover .nav-dropdown-menu,.nav-dropdown-wrap:focus-within .nav-dropdown-menu,.nav-dropdown-menu.open{max-height:360px;overflow:auto;padding:8px;pointer-events:auto;transform:none;}
+.nav-dropdown-menu a{padding:11px 12px;font-size:13px;white-space:normal;}
+.page,.page.full-width,.page.medicinal-index-mode{width:100%;padding:10px;max-width:100%;}
+.page.with-index-sidebar,.page.full-width.with-index-sidebar{padding-left:10px;max-width:100%;}
+.hero{padding:16px 14px;border-radius:10px;margin-bottom:12px;}
+.hero-h{font-size:23px;}
+.hero-p{font-size:14px;line-height:1.65;}
+.home-profile-hero{padding:28px 14px;min-height:auto;border-radius:10px;margin-bottom:10px;}
+.home-profile-hero .molecule-bg{width:560px;max-width:none;right:-210px;opacity:.14;}
+.home-profile-kicker{font-size:11px;line-height:1.45;letter-spacing:.1em;margin-bottom:12px;}
+.home-profile-title{font-size:clamp(31px,10vw,42px);line-height:1.08;margin-bottom:18px;}
+.home-profile-type{font-size:16px;line-height:1.62;min-height:0;max-width:100%;}
+.home-profile-type p{margin-bottom:16px;}
+.home-profile-type .tool-list{gap:6px;margin-bottom:16px;}
+.home-profile-type .tool-row{grid-template-columns:.55em minmax(0,1fr);column-gap:.3em;}
+.website-page-grid{grid-template-columns:1fr;gap:8px;}
+.website-frame-wrap{border-radius:10px;}
+.website-frame{height:72vh;min-height:460px;}
+.home-website-frame{height:72vh;min-height:480px;}
+.library-frame-title{color:#17324a;align-items:flex-start;flex-direction:column;gap:2px;}
+body:not(.light-mode) .library-frame-title{color:#eafcff;}
+.ch-grid,.page.medicinal-index-mode .ch-grid{grid-template-columns:1fr;gap:8px;}
+.med-index-list{gap:8px;}
+.med-part-head,.med-chapter-head{align-items:flex-start;}
+.med-part-no,.med-ch-num{min-width:auto;}
+.med-part-title,.med-ch-title{font-size:13px;line-height:1.3;}
+.med-part-count,.med-topic-count{display:none;}
+.med-subtopics{grid-template-columns:1fr;padding:0 10px 10px;}
 #chapterView.show{display:block;}
-.sidebar{width:100%;margin-bottom:12px;}
+.sidebar{position:relative;top:auto;width:100%;max-height:260px;margin-bottom:10px;border-radius:10px;}
+.main-content{width:100%;}
+.ch-header{padding:13px 14px;border-radius:10px;}
+.ch-title{font-size:20px;}
+.note-card{padding:15px 13px;border-radius:10px;}
+.note-topic-title{font-size:19px;margin-bottom:12px;}
+.ai-body,.ai-body p,.ai-body li,.ai-body td{font-size:15px;line-height:1.72;}
+.ai-body table{display:block;width:100%;overflow-x:auto;white-space:nowrap;}
+.ai-body .resource-list{grid-template-columns:1fr;}
+.software-wrap{grid-template-columns:1fr;min-height:auto;gap:10px;}
+.software-list{max-height:310px;overflow:auto;padding-right:2px;}
+.software-detail{min-height:auto;padding:15px 14px;border-radius:10px;}
+.software-detail h3{font-size:26px;}
+.software-detail p{font-size:15px;line-height:1.7;}
+.software-detail li{font-size:15px;line-height:1.65;}
+.index-sidebar{position:relative;top:auto;left:auto;bottom:auto;width:100%;max-height:260px;margin-bottom:12px;border-radius:10px;}
+.index-sidebar.collapsed{transform:none;}
+.index-scroll{height:190px;}
+}
+@media(max-width:420px){
+#app{padding-top:118px;}
+.topbar-sub{display:none;}
+.header-nav a,.nav-dropdown-trigger{font-size:11px;padding:0 9px;}
+.home-profile-title{font-size:30px;}
+.home-profile-type{font-size:15px;}
+.software-btn{grid-template-columns:34px 1fr;padding:9px;}
+.software-num{width:30px;height:28px;}
 }
 </style>
 
@@ -612,10 +677,12 @@ body,#app{font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;tex
       <div class="topbar-title">Shubh.Online</div>
       <div class="topbar-sub">crafting cures using molcules...</div>
     </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" type="button" onclick="toggleMobileMenu()" aria-label="Open menu" aria-expanded="false"><span></span></button>
     <div class="header-nav" aria-label="Main navigation">
       <a class="active" href="#" onclick="showHome();return false;">Home</a>
-      <a href="#" onclick="openWebsiteDirect('portfolio');return false;">Bio</a>
-      <a href="#" onclick="openMyLibrary();return false;">My Library</a>
+      <a href="bio.html" onclick="openWebsiteDirect('portfolio');return false;">Bio</a>
+      <a href="#library" onclick="openMyLibrary();return false;">My Library</a>
+      <a href="interview.html" onclick="openWebsiteDirect('interview');return false;">Interview Prep</a>
       <div class="nav-dropdown-wrap">
         <button class="nav-dropdown-trigger" type="button" onclick="toggleNavMenu('organicMenu')">Chemistry</button>
         <div class="nav-dropdown-menu" id="organicMenu">
@@ -631,12 +698,6 @@ body,#app{font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;tex
           <a href="#" onclick="openWebsiteDirect('part09');return false;">09 - Pharma Industrial</a>
           <a href="#" onclick="openWebsiteDirect('part10');return false;">10 - Advanced Concepts</a>
           <a href="#" onclick="openWebsiteDirect('common');return false;">CR - Common Reactions</a>
-        </div>
-      </div>
-      <div class="nav-dropdown-wrap">
-        <button class="nav-dropdown-trigger" type="button" onclick="toggleNavMenu('careerMenu')">Career</button>
-        <div class="nav-dropdown-menu" id="careerMenu">
-          <a href="#" onclick="openWebsiteDirect('interview');return false;">Interview Prep</a>
         </div>
       </div>
       <a href="#" onclick="openInfoPage('contact');return false;">Contact</a>
@@ -996,6 +1057,28 @@ function toggleThemeMode(){
   syncCornerTheme();
 }
 
+function setShareHash(route){
+  if(!route||!history.replaceState)return;
+  const next='#'+route;
+  if(location.hash!==next)history.replaceState(null,'',next);
+}
+
+function setMobileMenu(open){
+  const nav=document.querySelector('.header-nav');
+  const btn=document.getElementById('mobileMenuBtn');
+  if(!nav||!btn)return;
+  nav.classList.toggle('mobile-open',open);
+  btn.classList.toggle('open',open);
+  btn.setAttribute('aria-expanded',open?'true':'false');
+  btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+  if(!open)closeOrganicMenu();
+}
+
+function toggleMobileMenu(){
+  const nav=document.querySelector('.header-nav');
+  setMobileMenu(!nav?.classList.contains('mobile-open'));
+}
+
 function setHeaderActive(label){
   document.querySelectorAll('.header-nav a').forEach(a=>{
     a.classList.toggle('active',a.textContent.trim()===label);
@@ -1020,6 +1103,19 @@ function toggleOrganicMenu(){
 function closeOrganicMenu(){
   document.querySelectorAll('.nav-dropdown-menu.open').forEach(menu=>menu.classList.remove('open'));
 }
+
+document.addEventListener('click',event=>{
+  const topbar=document.querySelector('.topbar');
+  if(window.innerWidth<=760&&topbar&&!topbar.contains(event.target))setMobileMenu(false);
+});
+
+document.querySelector('.header-nav')?.addEventListener('click',event=>{
+  if(window.innerWidth<=760&&event.target.closest('a'))setTimeout(()=>setMobileMenu(false),0);
+});
+
+window.addEventListener('resize',()=>{
+  if(window.innerWidth>760)setMobileMenu(false);
+});
 
 function setIndexSidebarVisible(show){
   document.querySelector('.index-sidebar')?.classList.toggle('hidden',!show);
@@ -1330,7 +1426,7 @@ const websitePages=[
   {id:'pdf',title:'PDF Notes',group:'Resources',src:'pdf-notes.html'},
   {id:'structure',title:'Online Structure Editor',group:'Tools',src:'structure-editor.html'},
   {id:'medicinal',title:'Medicinal Chemistry',group:'Medicinal Chemistry',src:'medicinal_chemistry_book.html'},
-  {id:'portfolio',title:'Portfolio / Bio',group:'Bio',src:'portfolio.html'},
+  {id:'portfolio',title:'Portfolio / Bio',group:'Bio',src:'bio.html'},
   {id:'part01',title:'Part 01 - General Organic Chemistry',group:'Organic Chemistry Atlas',src:'parts/part-01-goc.html'},
   {id:'part02',title:'Part 02 - Stereochemistry',group:'Organic Chemistry Atlas',src:'parts/part-02-stereochemistry.html'},
   {id:'part03',title:'Part 03 - Functional Group Chemistry',group:'Organic Chemistry Atlas',src:'parts/part-03-functional-groups.html'},
@@ -1368,6 +1464,7 @@ function myLibraryHtml(activeId='home'){
 
 function openMyLibrary(id='home'){
   const active=myLibrarySubjects.find(s=>s.id===id)||myLibrarySubjects[0];
+  setShareHash(id==='home'?'library':'library-'+id);
   showGeneratedPage(active.title,'Desktop Chemistry Library',myLibraryHtml(active.id),'My Library');
   closeOrganicMenu();
 }
@@ -1394,6 +1491,8 @@ function openWebsitePage(id='index'){
 
 function openWebsiteDirect(id='index'){
   const active=websitePages.find(p=>p.id===id)||websitePages[0];
+  const shareRoute=id==='portfolio'?'bio':id;
+  setShareHash(shareRoute);
   if(active.inline){
     showHome();
     return;
@@ -1721,9 +1820,9 @@ function initHomeParticles(){
     state.dots=Array.from({length:count},(_,i)=>({
       x:Math.random()*rect.width,
       y:Math.random()*rect.height,
-      vx:(Math.random()-.5)*0.35,
-      vy:(Math.random()-.5)*0.35,
-      r:Math.random()*1.8+0.8,
+      vx:(Math.random()-.5)*1.25,
+      vy:(Math.random()-.5)*1.25,
+      r:Math.random()*2.4+1.4,
       c:colors[i%colors.length]
     }));
   }
@@ -1740,9 +1839,9 @@ function initHomeParticles(){
         const dx=dot.x-state.mouse.x;
         const dy=dot.y-state.mouse.y;
         const d=Math.hypot(dx,dy);
-        if(d<130&&d>0){
-          dot.x+=(dx/d)*0.18;
-          dot.y+=(dy/d)*0.18;
+        if(d<160&&d>0){
+          dot.x+=(dx/d)*0.55;
+          dot.y+=(dy/d)*0.55;
         }
       }
     });
@@ -1781,6 +1880,7 @@ function initHomeParticles(){
 }
 
 function showHome(){
+  setShareHash('home');
   setFullWidth(true);
   document.querySelector('.page')?.classList.remove('medicinal-index-mode');
   document.getElementById('chapterView').classList.remove('website-mode');
@@ -1900,12 +2000,14 @@ function openCategory(type){
 
 function openInfoPage(type){
   if(type==='bio'){
+    setShareHash('bio');
     showGeneratedPage('Bio','About this handbook',`
 <div class="section"><div class="sec-head"><div class="sec-icon"><i class="ti ti-user" aria-hidden="true"></i></div><div class="sec-label">About</div></div>
 <p>This handbook is designed as a practical organic chemistry companion for functional group conversions, mechanisms, reagents, exam revision, and pharmaceutical route thinking.</p>
 <p>It is structured like a compact textbook: select a chapter, open a topic, and study the overview, mechanism, conditions, examples, mistakes, and industrial relevance in one place.</p></div>`, 'Bio');
     return;
   }
+  setShareHash('contact');
   showGeneratedPage('Contact','Get in touch',`
 <div class="section"><div class="sec-head"><div class="sec-icon"><i class="ti ti-mail" aria-hidden="true"></i></div><div class="sec-label">Contact</div></div>
 <p>Open to collaborations, research opportunities, and discussions on API development, process chemistry, computational drug design, and pharmaceutical sciences.</p>
@@ -1958,14 +2060,57 @@ function softwarePageHtml(activeIdx=0){
 }
 
 function openSoftwarePage(){
+  setShareHash('software');
   showGeneratedPage('Software','Computational chemistry and AI/ML toolkit',softwarePageHtml(0),'Software');
+}
+
+function openSharedRoute(){
+  const route=decodeURIComponent((location.hash||'').replace(/^#/,'')).trim().toLowerCase();
+  if(!route)return false;
+  if(route==='home'){
+    showHome();
+    return true;
+  }
+  if(route==='bio'||route==='portfolio'){
+    openWebsiteDirect('portfolio');
+    return true;
+  }
+  if(route==='interview'){
+    openWebsiteDirect('interview');
+    return true;
+  }
+  if(route==='library'||route==='my-library'){
+    openMyLibrary();
+    return true;
+  }
+  if(route.startsWith('library-')){
+    openMyLibrary(route.replace('library-',''));
+    return true;
+  }
+  if(route==='contact'){
+    openInfoPage('contact');
+    return true;
+  }
+  if(route==='software'){
+    openSoftwarePage();
+    return true;
+  }
+  const page=websitePages.find(p=>p.id.toLowerCase()===route);
+  if(page){
+    openWebsiteDirect(page.id);
+    return true;
+  }
+  return false;
 }
 
 buildIndex();
 buildSidebarIndex();
 setFullWidth(true);
 syncCornerTheme();
-initHomeParticles();
-startHomeTypewriter();
+if(!openSharedRoute()){
+  initHomeParticles();
+  startHomeTypewriter();
+}
+window.addEventListener('hashchange',openSharedRoute);
 </script>
 
